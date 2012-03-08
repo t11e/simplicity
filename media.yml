@@ -63,13 +63,6 @@ groups:
       - js/simplicity/simplicityMapQuestGeocoder.js
       - js/simplicity/simplicityYahooGeocoder.js
       - js/simplicity/simplicityNokiaGeocoder.js
-      # Shape Creators
-      - js/simplicity/simplicityMapShapeCreator.js
-      - js/simplicity/simplicityMapShapeCreatorUi.js
-      - js/simplicity/simplicityMapShapeCreatorRadiusAsSelectUi.js
-      - js/simplicity/simplicityMapShapeCreatorRadiusAsButtonsetUi.js
-      - js/simplicity/simplicityGoogleShapeCreator.js
-      - js/simplicity/simplicityNokiaMapShapeCreator.js
 
   - groupName: simplicity_css
     mediaType: css
@@ -79,6 +72,25 @@ groups:
       - css/simplicity/simplicityPagination.css
       - css/simplicity/simplicitySlider.css
       - css/simplicity/simplicityFancySelect.css
+
+  - groupName: simplicity_polygons_js
+    mediaType: js
+    outputFileName: js/build/simplicity-polygons.js
+    outputFileNameMinified: js/build/simplicity-polygons.min.js
+    sourceFileNames:
+      # Shape Creators
+      - js/simplicity/simplicityMapShapeCreator.js
+      - js/simplicity/simplicityMapShapeCreatorUi.js
+      - js/simplicity/simplicityMapShapeCreatorRadiusAsSelectUi.js
+      - js/simplicity/simplicityMapShapeCreatorRadiusAsButtonsetUi.js
+      - js/simplicity/simplicityGoogleShapeCreator.js
+      - js/simplicity/simplicityNokiaMapShapeCreator.js
+
+  - groupName: simplicity_polygons_css
+    mediaType: css
+    outputFileName: css/build/simplicity-polygons.css
+    outputFileNameMinified: css/build/simplicity-polygons.min.css
+    sourceFileNames:
       - css/simplicity/simplicityMapShapeCreatorUi.css
 
   - groupName: simplicityLoadJs_js
