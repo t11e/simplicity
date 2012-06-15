@@ -1,0 +1,146 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.ui.simplicityYahooMap
+<span class='line'>  3</span>  * @namespace A Yahoo! map.
+<span class='line'>  4</span>  * &lt;p>
+<span class='line'>  5</span>  * Yahho! Map widget that creates the map and listens for &lt;code>simplicitySearchResponse&lt;/code> events
+<span class='line'>  6</span>  * which it uses to add markers to the map for the search results.
+<span class='line'>  7</span>  *
+<span class='line'>  8</span>  * @example
+<span class='line'>  9</span>  *   &lt;div id="map" style="width: 300px; height: 300px;">&lt;/div>
+<span class='line'> 10</span>  *   &lt;script type="text/javascript">
+<span class='line'> 11</span>  *     $('#map').simplicityYahooMap();
+<span class='line'> 12</span>  *   &lt;/script>
+<span class='line'> 13</span>  *
+<span class='line'> 14</span>  * @see Yahoo! Maps Web Services - AJAX API &lt;a href="http://developer.yahoo.com/maps/ajax/">documentation&lt;/a>.
+<span class='line'> 15</span>  */</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">  </span><span class="NAME">$.widget</span><span class="PUNC">(</span><span class="STRN">"ui.simplicityYahooMap"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.ui.simplicityWidget</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 19</span>      * Widget options.
+<span class='line'> 20</span>      *
+<span class='line'> 21</span>      * &lt;dl>
+<span class='line'> 22</span>      *   &lt;dt>map&lt;/dt>
+<span class='line'> 23</span>      *   &lt;dd>
+<span class='line'> 24</span>      *     Optional map instance, if not provided one will be created. Defaults to &lt;code>''&lt;/code>.
+<span class='line'> 25</span>      *   &lt;/dd>
+<span class='line'> 26</span>      *   &lt;dt>mapOptions&lt;/dt>
+<span class='line'> 27</span>      *   &lt;dd>
+<span class='line'> 28</span>      *     Options used when creating the map. Defaults to &lt;code>''&lt;/code> which is expanded at
+<span class='line'> 29</span>      *     runtime to
+<span class='line'> 30</span>      *     &lt;pre>
+<span class='line'> 31</span>      *     {
+<span class='line'> 32</span>      *       center: new YGeoPoint(0, 0),
+<span class='line'> 33</span>      *       zoom: 16,
+<span class='line'> 34</span>      *       mapTypeId: YAHOO_MAP_REG
+<span class='line'> 35</span>      *     }
+<span class='line'> 36</span>      *     &lt;/pre>
+<span class='line'> 37</span>      *     Can be either an &lt;code>Object&lt;/code> or a &lt;code>function&lt;/code>.
+<span class='line'> 38</span>      *   &lt;/dd>
+<span class='line'> 39</span>      * &lt;/dl>
+<span class='line'> 40</span>      * @name $.ui.simplicityYahooMap.options
+<span class='line'> 41</span>      */</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">      </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">      </span><span class="NAME">mapOptions</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">      </span><span class="COMM">// The following options are for internal use only</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">      </span><span class="NAME">apiKey</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">      </span><span class="NAME">mapVersion</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'3.8'</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">      </span><span class="NAME">this._addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-yahoo-map'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.map</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">        </span><span class="NAME">this._map</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">        </span><span class="NAME">this._initWhenAvailable</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 58</span>      * Lazy initialization method used to create the map only when the necessary JavaScript
+<span class='line'> 59</span>      * is available. Intended to be called from any of this widgets public methods that need to
+<span class='line'> 60</span>      * access the this._map.
+<span class='line'> 61</span>      *
+<span class='line'> 62</span>      * @name $.ui.simplicityYahooMap._initWhenAvailable
+<span class='line'> 63</span>      * @function
+<span class='line'> 64</span>      * @private
+<span class='line'> 65</span>      */</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">    </span><span class="NAME">_initWhenAvailable</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">wasAvailable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">wasAvailable</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">        </span><span class="COMM">// Already available, do nothing</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.map</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">this._map</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">YMap</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">defaultMapOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">          </span><span class="NAME">center</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">YGeoPoint</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">          </span><span class="NAME">zoom</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">16</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">          </span><span class="NAME">mapType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">YAHOO_MAP_REG</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mapOptions</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.mapOptions</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">          </span><span class="NAME">mapOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">defaultMapOptions</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$.isFunction</span><span class="PUNC">(</span><span class="NAME">this.options.mapOptions</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">          </span><span class="NAME">mapOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.extend</span><span class="PUNC">(</span><span class="NAME">defaultMapOptions</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.mapOptions.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">          </span><span class="NAME">mapOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.extend</span><span class="PUNC">(</span><span class="NAME">defaultMapOptions</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.mapOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">        </span><span class="NAME">this._map</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">YMap</span><span class="PUNC">(</span><span class="NAME">this.element</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">        </span><span class="NAME">this._map.setMapType</span><span class="PUNC">(</span><span class="NAME">mapOptions.mapType</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">        </span><span class="NAME">this._map.drawZoomAndCenter</span><span class="PUNC">(</span><span class="NAME">mapOptions.center</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mapOptions.zoom</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">        </span><span class="NAME">this._trigger</span><span class="PUNC">(</span><span class="STRN">'create'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">          </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">isAvailable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">isAvailable</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 97</span>      * Return the actual map object.
+<span class='line'> 98</span>      *
+<span class='line'> 99</span>      * @name $.ui.simplicityYahooMap.map
+<span class='line'>100</span>      * @function
+<span class='line'>101</span>      */</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">    </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">      </span><span class="NAME">this._initWhenAvailable</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>107</span>      * Try to dynamically load the necessary JavaScript from the upstream vendor that will
+<span class='line'>108</span>      * allow the map to function.
+<span class='line'>109</span>      *
+<span class='line'>110</span>      * @name $.ui.simplicityYahooMap.loadMap
+<span class='line'>111</span>      * @function
+<span class='line'>112</span>      * @private
+<span class='line'>113</span>      */</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">    </span><span class="NAME">loadMap</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">YMap</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'http://api.maps.yahoo.com/ajaxymap?v='</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.options.mapVersion</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">$.simplicityLoadJs</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">            </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'&appid=YOUR_APP_ID'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">            </span><span class="NAME">alert</span><span class="PUNC">(</span><span class="STRN">'Dynamic loading of Yahoo! maps is not supported. Enable this widget by adding the following script tag to your page:\n\n'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">              </span><span class="STRN">'&lt;script type="text/javascript" src="'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'">&lt;/script>'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.apiKey</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">              </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">src</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'&appid='</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.options.apiKey</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">            </span><span class="NAME">$.simplicityLoadJs</span><span class="PUNC">(</span><span class="NAME">src</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">              </span><span class="NAME">this.refreshMap</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">    </span><span class="NAME">destroy</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">      </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">      </span><span class="NAME">$.ui.simplicityWidget.prototype.destroy.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span></pre></body></html>

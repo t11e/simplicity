@@ -1,0 +1,173 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.ui.simplicityBingMapResults
+<span class='line'>  3</span>  * @namespace A Bing map.
+<span class='line'>  4</span>  * &lt;p>
+<span class='line'>  5</span>  * Widget that listens for &lt;code>simplicitySearchResponse&lt;/code> events which it uses to add markers to the map for the search results.
+<span class='line'>  6</span>  *
+<span class='line'>  7</span>  * @example
+<span class='line'>  8</span>  *   &lt;div id="map" style="position: absolute; width: 300px; height: 300px;">&lt;/div>
+<span class='line'>  9</span>  *   &lt;script type="text/javascript">
+<span class='line'> 10</span>  *     $('#map').simplicityBingMapResults({
+<span class='line'> 11</span>  *       credentials: 'Your credentials go here'
+<span class='line'> 12</span>  *     });
+<span class='line'> 13</span>  *   &lt;/script>
+<span class='line'> 14</span>  *
+<span class='line'> 15</span>  * @see Bing Maps AJAX Control v7 &lt;a href="http://msdn.microsoft.com/en-us/library/gg427610.aspx">documentation&lt;/a>.
+<span class='line'> 16</span>  */</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">  </span><span class="NAME">$.widget</span><span class="PUNC">(</span><span class="STRN">"ui.simplicityBingMapResults"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.ui.simplicityWidget</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 20</span>      * Widget options.
+<span class='line'> 21</span>      *
+<span class='line'> 22</span>      * &lt;dl>
+<span class='line'> 23</span>      *   &lt;dt>searchElement&lt;/dt>
+<span class='line'> 24</span>      *   &lt;dd>
+<span class='line'> 25</span>      *     The simplicityDiscoverySearch widget that this widget binds it's events to. Defaults to &lt;code>'body'&lt;/code>.
+<span class='line'> 26</span>      *   &lt;/dd>
+<span class='line'> 27</span>      *   &lt;dt>latitudeField&lt;/dt>
+<span class='line'> 28</span>      *   &lt;dd>
+<span class='line'> 29</span>      *     Field to find the latitude of the result item in the &lt;code>simplicityResultSet&lt;/code>
+<span class='line'> 30</span>      *     item properties. Defaults to &lt;code>'latitude'&lt;/code>.
+<span class='line'> 31</span>      *   &lt;/dd>
+<span class='line'> 32</span>      *   &lt;dt>longitudeField&lt;/dt>
+<span class='line'> 33</span>      *   &lt;dd>
+<span class='line'> 34</span>      *     Field to find the longitude of the result item in the &lt;code>simplicityResultSet&lt;/code>
+<span class='line'> 35</span>      *     item properties. Defaults to &lt;code>'longitude'&lt;/code>.
+<span class='line'> 36</span>      *   &lt;/dd>
+<span class='line'> 37</span>      *   &lt;dt>map&lt;/dt>
+<span class='line'> 38</span>      *   &lt;dd>
+<span class='line'> 39</span>      *     Optional map instance, if not provided one will be created. Defaults to &lt;code>''&lt;/code>.
+<span class='line'> 40</span>      *   &lt;/dd>
+<span class='line'> 41</span>      *   &lt;dt>updateBounds&lt;dt>
+<span class='line'> 42</span>      *   &lt;dd>
+<span class='line'> 43</span>      *     When true the map is panned and zoomed to best fit the search
+<span class='line'> 44</span>      *     results that are added as part of the &lt;code>simplicityResultSet&lt;/code>
+<span class='line'> 45</span>      *     event handler. Defaults to &lt;code>true&lt;/code>.
+<span class='line'> 46</span>      *   &lt;/dd>
+<span class='line'> 47</span>      * &lt;/dl>
+<span class='line'> 48</span>      * @name $.ui.simplicityBingMapResults.options
+<span class='line'> 49</span>      */</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">      </span><span class="NAME">searchElement</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">      </span><span class="NAME">latitudeField</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'latitude'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">      </span><span class="NAME">longitudeField</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'longitude'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">      </span><span class="NAME">updateBounds</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">      </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">      </span><span class="NAME">this._addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-bing-map-results'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">      </span><span class="NAME">this._map</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.map</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">this.options.map</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.element.simplicityBingMap</span><span class="PUNC">(</span><span class="STRN">'map'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">      </span><span class="NAME">this._markers</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">      </span><span class="KEYW">this</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.searchElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicitySearchResponse'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._resultSetHandler</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="STRN">'simplicitybingmapboundscoordinatorcalculatebounds'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._calcBoundsHandler</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 66</span>      * Return the actual map object.
+<span class='line'> 67</span>      *
+<span class='line'> 68</span>      * @name $.ui.simplicityBingMapResults.map
+<span class='line'> 69</span>      * @function
+<span class='line'> 70</span>      */</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">    </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 75</span>      * Makes the widget re-handle the last &lt;code>simplicityResultSet&lt;/code> event to reapply
+<span class='line'> 76</span>      * any map markers.
+<span class='line'> 77</span>      *
+<span class='line'> 78</span>      * @name $.ui.simplicityBingMapResults.refreshMap
+<span class='line'> 79</span>      * @function
+<span class='line'> 80</span>      */</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="NAME">refreshMap</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">      </span><span class="NAME">this.removeMarkers</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">      </span><span class="NAME">this.addMarkers</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 86</span>      * Event handler for the &lt;code>simplicitySearchResponse&lt;/code> event. Extracts the coordinates
+<span class='line'> 87</span>      * of each result item by using the property fields defined by the
+<span class='line'> 88</span>      * &lt;code>latitudeField&lt;/code> and &lt;code>longitudeField&lt;/code> options of this widget and
+<span class='line'> 89</span>      * places a marker on the map for each valid coordinate. The map is then reset to best
+<span class='line'> 90</span>      * display the current set of markers.
+<span class='line'> 91</span>      *
+<span class='line'> 92</span>      * @name $.ui.simplicityBingMapResults._resultSetHandler
+<span class='line'> 93</span>      * @function
+<span class='line'> 94</span>      * @private
+<span class='line'> 95</span>      */</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">    </span><span class="NAME">_resultSetHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">      </span><span class="NAME">this.removeMarkers</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">      </span><span class="NAME">this.addMarkers</span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">    </span><span class="NAME">_calcBoundsHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ui</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">ui.locations</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this.options.updateBounds</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">        </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">this._markers</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">marker</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">          </span><span class="NAME">ui.locations.push</span><span class="PUNC">(</span><span class="NAME">marker.getLocation</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>108</span>      * Removes any markers that were added to the map by &lt;code>addMarkers&lt;/code>.
+<span class='line'>109</span>      *
+<span class='line'>110</span>      * @name $.ui.simplicityBingMapResults.removeMarkers
+<span class='line'>111</span>      * @function
+<span class='line'>112</span>      */</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">    </span><span class="NAME">removeMarkers</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">      </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">this._markers</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">marker</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">eventData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">          </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">          </span><span class="NAME">marker</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">marker</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">        </span><span class="NAME">this._trigger</span><span class="PUNC">(</span><span class="STRN">'removemarker'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eventData</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">        </span><span class="NAME">marker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">eventData.marker</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">marker</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">          </span><span class="NAME">this._map.entities.remove</span><span class="PUNC">(</span><span class="NAME">marker</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">      </span><span class="NAME">this._markers.length</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>128</span>      * Adds any markers that can be extracted from the given &lt;code>searchResponse&lt;/code>.
+<span class='line'>129</span>      *
+<span class='line'>130</span>      * @name $.ui.simplicityBingMapResults.addMarkers
+<span class='line'>131</span>      * @function
+<span class='line'>132</span>      */</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">    </span><span class="NAME">addMarkers</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">        </span><span class="NAME">searchResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.searchElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityDiscoverySearch</span><span class="PUNC">(</span><span class="STRN">'searchResponse'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">locations</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.fitOnResultSet</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">      </span><span class="NAME">$.fn.simplicityDiscoverySearchItemEnumerator</span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">row.properties</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">latitude</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">this.options.latitudeField</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">longitude</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">this.options.longitudeField</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">latitude</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">longitude</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">point</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Microsoft.Maps.Location</span><span class="PUNC">(</span><span class="NAME">latitude</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">longitude</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Microsoft.Maps.Pushpin</span><span class="PUNC">(</span><span class="NAME">point</span><span class="PUNC">,</span><span class="WHIT">  </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">text</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">row.index1.toString</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">zIndex</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NAME">row.index1</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">eventData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">                </span><span class="NAME">row</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">                </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">                </span><span class="NAME">marker</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">            </span><span class="NAME">this._trigger</span><span class="PUNC">(</span><span class="STRN">'marker'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">eventData</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">            </span><span class="NAME">marker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">eventData.marker</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">marker</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">              </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">locations</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">                </span><span class="NAME">locations.push</span><span class="PUNC">(</span><span class="NAME">point</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">              </span><span class="NAME">this._markers.push</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">              </span><span class="NAME">this._map.entities.push</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>166</span> </span></pre></body></html>

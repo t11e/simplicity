@@ -1,0 +1,85 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.ui.simplicityPageSnapBack
+<span class='line'>  3</span>  * @namespace Widget that causes the current page to reset to the first when the search state changes.
+<span class='line'>  4</span>  * Without  simplicityPageSnapBack, the current search page will not change when executing a
+<span class='line'>  5</span>  * new search.
+<span class='line'>  6</span>  * &lt;p>
+<span class='line'>  7</span>  * This widget listens for the &lt;code>simplicityStateChanging&lt;/code> event and uses it to determine
+<span class='line'>  8</span>  * if anything other than the page changed in the state. If it did then the page parameter is removed
+<span class='line'>  9</span>  * effectively snapping the page back to the first page of the results.
+<span class='line'> 10</span>  *
+<span class='line'> 11</span>  * @example
+<span class='line'> 12</span>  *   $('body').simplicityState();
+<span class='line'> 13</span>  *   // Create all simplicityInputs widgets
+<span class='line'> 14</span>  *   $('body')
+<span class='line'> 15</span>  *     .simplicityState('mergeQueryParams')
+<span class='line'> 16</span>  *     .simplicityHistory()
+<span class='line'> 17</span>  *     .simplicityState('triggerChangeEvent')
+<span class='line'> 18</span>  *     &lt;b>.simplicityPageSnapBack()&lt;/b>
+<span class='line'> 19</span>  *     .simplicityDiscoverySearch({
+<span class='line'> 20</span>  *       url: 'search_controller.php'
+<span class='line'> 21</span>  *     })
+<span class='line'> 22</span>  *     .simplicityDiscoverySearch('search');
+<span class='line'> 23</span>  */</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">  </span><span class="NAME">$.widget</span><span class="PUNC">(</span><span class="STRN">"ui.simplicityPageSnapBack"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.ui.simplicityWidget</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 27</span>      * Widget options.
+<span class='line'> 28</span>      *
+<span class='line'> 29</span>      * &lt;dl>
+<span class='line'> 30</span>      *   &lt;dt>stateElement&lt;/dt>
+<span class='line'> 31</span>      *   &lt;dd>
+<span class='line'> 32</span>      *     The simplicityState widget that this widget binds it's events to. Defaults to &lt;code>'body'&lt;/code>.
+<span class='line'> 33</span>      *   &lt;/dd>
+<span class='line'> 34</span>      *   &lt;dt>pageParam&lt;/dt>
+<span class='line'> 35</span>      *   &lt;dd>
+<span class='line'> 36</span>      *     The parameter in the state where the current page is stored. Defaults to &lt;code>'page'&lt;/code>.
+<span class='line'> 37</span>      *   &lt;/dd>
+<span class='line'> 38</span>      *   &lt;dt>debug&lt;/dt>
+<span class='line'> 39</span>      *   &lt;dd>
+<span class='line'> 40</span>      *     Enable logging of key events to console.log. Defaults to &lt;code>false&lt;/code>.
+<span class='line'> 41</span>      *   &lt;/dd>
+<span class='line'> 42</span>      * &lt;/dl>
+<span class='line'> 43</span>      * @name $.ui.simplicityPageSnapBack.options
+<span class='line'> 44</span>      */</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">      </span><span class="NAME">stateElement</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">      </span><span class="NAME">pageParam</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'page'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">      </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">      </span><span class="KEYW">this</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-page-snap-back'</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicityStateChanging'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._stateChangingHandler</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 56</span>      * Event handler for the &lt;code>simplicityStateChanging&lt;/code> event. Removes the page parameter,
+<span class='line'> 57</span>      * resetting the state to the first page if the new state changes anything other than
+<span class='line'> 58</span>      * the page parameter.
+<span class='line'> 59</span>      *
+<span class='line'> 60</span>      * @name $.ui.simplicityPageSnapBack._stateChangingHandler
+<span class='line'> 61</span>      * @function
+<span class='line'> 62</span>      * @private
+<span class='line'> 63</span>      */</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">    </span><span class="NAME">_stateChangingHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">prevState</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">newState</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prevCopy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">prevState</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">newCopy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">newState</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">      </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">prevCopy</span><span class="PUNC">[</span><span class="NAME">this.options.pageParam</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">      </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">newCopy</span><span class="PUNC">[</span><span class="NAME">this.options.pageParam</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.simplicityEquiv</span><span class="PUNC">(</span><span class="NAME">prevCopy</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">newCopy</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">          </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityPageSnapBack: State changed, snapping page back'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">        </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">newState</span><span class="PUNC">[</span><span class="NAME">this.options.pageParam</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span></pre></body></html>

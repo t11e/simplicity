@@ -1,0 +1,83 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.ui.simplicityBingMapBoundsCoordinator
+<span class='line'>  3</span>  * @namespace A Bing map.
+<span class='line'>  4</span>  * &lt;p>
+<span class='line'>  5</span>  * An invisible jquery ui widget which coordinates the updating of a Bing Map's bounds after a discovery search
+<span class='line'>  6</span>  * response is parsed and dispatched (the simplicitySearchResponseHandled event from the simplicityDiscoverySearch
+<span class='line'>  7</span>  * widget. Triggers a simplicitybingmapboundscoordinatorcalculatebounds event which other components can use to
+<span class='line'>  8</span>  * modify the map bounds.
+<span class='line'>  9</span>  *
+<span class='line'> 10</span>  * @example
+<span class='line'> 11</span>  *   &lt;div id="map" style="position: absolute; width: 300px; height: 300px;">&lt;/div>
+<span class='line'> 12</span>  *   &lt;script type="text/javascript">
+<span class='line'> 13</span>  *     $('#map').simplicityBingMapBoundsCoordinator({
+<span class='line'> 14</span>  *       credentials: 'Your credentials go here'
+<span class='line'> 15</span>  *     });
+<span class='line'> 16</span>  *   &lt;/script>
+<span class='line'> 17</span>  *
+<span class='line'> 18</span>  * @see Bing Maps AJAX Control v7 &lt;a href="http://msdn.microsoft.com/en-us/library/gg427610.aspx">documentation&lt;/a>.
+<span class='line'> 19</span>  */</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">  </span><span class="NAME">$.widget</span><span class="PUNC">(</span><span class="STRN">"ui.simplicityBingMapBoundsCoordinator"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.ui.simplicityWidget</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 23</span>      * Widget options.
+<span class='line'> 24</span>      *
+<span class='line'> 25</span>      * &lt;dl>
+<span class='line'> 26</span>      *   &lt;dt>map&lt;/dt>
+<span class='line'> 27</span>      *   &lt;dd>
+<span class='line'> 28</span>      *     Optional map instance, if not provided one will be looked up. Defaults to &lt;code>''&lt;/code>.
+<span class='line'> 29</span>      *   &lt;/dd>
+<span class='line'> 30</span>      *   &lt;dt>searchElement&lt;/dt>
+<span class='line'> 31</span>      *   &lt;dd>
+<span class='line'> 32</span>      *     The simplicityDiscoverySearch widget that this widget binds it's events to. Defaults to &lt;code>'body'&lt;/code>.
+<span class='line'> 33</span>      *   &lt;/dd>
+<span class='line'> 34</span>      * &lt;/dl>
+<span class='line'> 35</span>      * @name $.ui.simplicityBingMapBoundsCoordinator.options
+<span class='line'> 36</span>      */</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">      </span><span class="NAME">searchElement</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">      </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">      </span><span class="NAME">this._addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-bing-map-bounds-coordinator'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">      </span><span class="NAME">this._map</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.map</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">this.options.map</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.element.simplicityBingMap</span><span class="PUNC">(</span><span class="STRN">'map'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">      </span><span class="NAME">this._bind</span><span class="PUNC">(</span><span class="NAME">this.options.searchElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicitySearchResponseHandled'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">        </span><span class="NAME">this.updateBounds</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 49</span>      * Return the actual map object.
+<span class='line'> 50</span>      *
+<span class='line'> 51</span>      * @name $.ui.simplicityBingMapBoundsCoordinator.map
+<span class='line'> 52</span>      * @function
+<span class='line'> 53</span>      */</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="NAME">map</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 58</span>      * Triggers a simplicitybingmapboundscoordinatorcalculatebounds event. Handlers for that event receive a ui
+<span class='line'> 59</span>      * object with a locations member. They can update, replace or delete that variable. ui.locations is defined and non-empty
+<span class='line'> 60</span>      * after the event is handled, then this component will update the bing map to fit the locations.
+<span class='line'> 61</span>      *
+<span class='line'> 62</span>      * @name $.ui.simplicityBingMapBoundsCoordinator.updateBounds
+<span class='line'> 63</span>      * @function
+<span class='line'> 64</span>      */</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="NAME">updateBounds</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ui</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">        </span><span class="NAME">locations</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">      </span><span class="NAME">this._trigger</span><span class="PUNC">(</span><span class="STRN">'calculateBounds'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ui</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">ui.locations</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">ui.locations.length</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">        </span><span class="NAME">this._map.setView</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">bounds</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Microsoft.Maps.LocationRect.fromLocations</span><span class="PUNC">(</span><span class="NAME">ui.locations</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span></pre></body></html>

@@ -1,0 +1,231 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.ui.simplicityYahooGeocoder
+<span class='line'>  3</span>  * @namespace A Yahoo geocoder.
+<span class='line'>  4</span>  * &lt;p>
+<span class='line'>  5</span>  * Yahoo! geocoder. Also provides a jQueri UI autocomplete source.
+<span class='line'>  6</span>  * &lt;p>
+<span class='line'>  7</span>  * Requires a server side proxy to work around the same-origin policy of the browser.
+<span class='line'>  8</span>  * &lt;p>
+<span class='line'>  9</span>  * Example PHP proxy:
+<span class='line'> 10</span>  * &lt;pre>
+<span class='line'> 11</span>  * &lt;?php
+<span class='line'> 12</span>  *   $url = 'http://where.yahooapis.com/geocode?' . $_SERVER['QUERY_STRING'];
+<span class='line'> 13</span>  *   $c = curl_init($url);
+<span class='line'> 14</span>  *   curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+<span class='line'> 15</span>  *   curl_setopt($c, CURLOPT_FAILONERROR,true);
+<span class='line'> 16</span>  *   $response = curl_exec($c);
+<span class='line'> 17</span>  *   echo $response;
+<span class='line'> 18</span>  * ?>
+<span class='line'> 19</span>  * &lt;/pre>
+<span class='line'> 20</span>  *
+<span class='line'> 21</span>  * &lt;p>
+<span class='line'> 22</span>  * See the Yahoo! PlaceFinder &lt;a href="http://developer.yahoo.com/geo/placefinder/">documentation&lt;/a>.
+<span class='line'> 23</span>  */</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">  </span><span class="NAME">$.widget</span><span class="PUNC">(</span><span class="STRN">"ui.simplicityYahooGeocoder"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.ui.simplicityWidget</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 27</span>      * Widget options.
+<span class='line'> 28</span>      *
+<span class='line'> 29</span>      * &lt;dl>
+<span class='line'> 30</span>      *   &lt;dt>url&lt;/dt>
+<span class='line'> 31</span>      *   &lt;dd>
+<span class='line'> 32</span>      *     Mandatory option, URL of the proxied geocoding service.
+<span class='line'> 33</span>      *   &lt;/dd>
+<span class='line'> 34</span>      *   &lt;dt>requestTemplate&lt;/dt>
+<span class='line'> 35</span>      *   &lt;dd>
+<span class='line'> 36</span>      *     Template that the &lt;code>geocodeRequest&lt;/code> is merged with. Used
+<span class='line'> 37</span>      *     to supply any credentials that are shared across all requests.
+<span class='line'> 38</span>      *     &lt;p>
+<span class='line'> 39</span>      *     Example:
+<span class='line'> 40</span>      *     &lt;pre>
+<span class='line'> 41</span>      *     {
+<span class='line'> 42</span>      *       apikey: 'YOUR_API_KEY_GOES_HERE'
+<span class='line'> 43</span>      *     }
+<span class='line'> 44</span>      *     &lt;/pre>
+<span class='line'> 45</span>      *     Defaults to &lt;code>{flags: 'JX'}&lt;/code>.
+<span class='line'> 46</span>      *   &lt;/dd>
+<span class='line'> 47</span>      *   &lt;dt>debug&lt;/dt>
+<span class='line'> 48</span>      *   &lt;dd>
+<span class='line'> 49</span>      *     Enable logging of key events to console.log. Defaults to &lt;code>false&lt;/code>.
+<span class='line'> 50</span>      *   &lt;/dd>
+<span class='line'> 51</span>      * &lt;/dl>
+<span class='line'> 52</span>      * @name $.ui.simplicityYahooGeocoder.options
+<span class='line'> 53</span>      */</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">      </span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">      </span><span class="NAME">requestTemplate</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">        </span><span class="NAME">flags</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'JX'</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">      </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">      </span><span class="NAME">this._addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-yahoo-geocoder'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 65</span>      * Perform geocoding of the &lt;code>geocodeRequest&lt;/code> calling the
+<span class='line'> 66</span>      * &lt;code>callback&lt;/code> on completion.
+<span class='line'> 67</span>      * &lt;p>
+<span class='line'> 68</span>      * Triggers two events.
+<span class='line'> 69</span>      * &lt;dl>
+<span class='line'> 70</span>      *   &lt;dt>&lt;code>request&lt;/code>&lt;/dt>
+<span class='line'> 71</span>      *   &lt;dd>
+<span class='line'> 72</span>      *     Final step before sending the geocode request, it is passed
+<span class='line'> 73</span>      *     as the custom object to this event to allow for manipulation.
+<span class='line'> 74</span>      *   &lt;/dd>
+<span class='line'> 75</span>      *   &lt;dt>&lt;code>response&lt;/code>&lt;/dt>
+<span class='line'> 76</span>      *   &lt;dd>
+<span class='line'> 77</span>      *     Final step before calling the &lt;code>callback&lt;/code> with the
+<span class='line'> 78</span>      *     geocode response to allow for manipulation.
+<span class='line'> 79</span>      *     Triggered after any normalization phase.
+<span class='line'> 80</span>      *     &lt;p>
+<span class='line'> 81</span>      *     The custom object passed to this event looks like so:
+<span class='line'> 82</span>      *     &lt;pre>
+<span class='line'> 83</span>      *     {
+<span class='line'> 84</span>      *       vendor: {
+<span class='line'> 85</span>      *         // Original vendor response
+<span class='line'> 86</span>      *       },
+<span class='line'> 87</span>      *       items: [
+<span class='line'> 88</span>      *         // Array of normalized items, see &lt;code>normalizeResults&lt;/code>.
+<span class='line'> 89</span>      *       ]
+<span class='line'> 90</span>      *     }
+<span class='line'> 91</span>      *     &lt;/pre>
+<span class='line'> 92</span>      *   &lt;/dd>
+<span class='line'> 93</span>      * &lt;/dl>
+<span class='line'> 94</span>      *
+<span class='line'> 95</span>      * @param geocodeRequest
+<span class='line'> 96</span>      *   The request as expected by the upstream geocode vendor.
+<span class='line'> 97</span>      * @param callback
+<span class='line'> 98</span>      *   The callback triggered at geocode completion. Is given one
+<span class='line'> 99</span>      *   argument which is the same as custom &lt;code>Object&lt;/code>
+<span class='line'>100</span>      *   passed to the &lt;code>response&lt;/code> event.
+<span class='line'>101</span>      *
+<span class='line'>102</span>      * @name $.ui.simplicityYahooGeocoder.geocode
+<span class='line'>103</span>      * @function
+<span class='line'>104</span>      */</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">    </span><span class="NAME">geocode</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">geocodeRequest</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">      </span><span class="NAME">geocodeRequest</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.extend</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.requestTemplate</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">geocodeRequest</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">      </span><span class="NAME">this._trigger</span><span class="PUNC">(</span><span class="STRN">'request'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">geocodeRequest</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityYahooGeocoder: request'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">geocodeRequest</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ajaxHandler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ajaxResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">        </span><span class="NAME">ajaxResponse.items</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.normalizeResults</span><span class="PUNC">(</span><span class="NAME">ajaxResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">        </span><span class="NAME">this._trigger</span><span class="PUNC">(</span><span class="STRN">'response'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ajaxResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">          </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityYahooGeocoder: response'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ajaxResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">        </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">ajaxResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">      </span><span class="NAME">$.ajax</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">        </span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.url</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">        </span><span class="NAME">data</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">geocodeRequest</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">        </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'json'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">        </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">errorThrown</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">          </span><span class="NAME">ajaxHandler</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">            </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">            </span><span class="NAME">statusText</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">xhr.statusText</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">            </span><span class="NAME">status</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">xhr.status</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">        </span><span class="NAME">success</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">status</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">          </span><span class="NAME">ajaxHandler</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">            </span><span class="NAME">vendor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">            </span><span class="NAME">status</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">status</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>139</span>      * Create an autocomplete source function that returns normalized
+<span class='line'>140</span>      * geocoded addresses.
+<span class='line'>141</span>      *
+<span class='line'>142</span>      * @name $.ui.simplicityYahooGeocoder.autocompleteSource
+<span class='line'>143</span>      * @function
+<span class='line'>144</span>      */</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">    </span><span class="NAME">autocompleteSource</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">request</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">responseCallback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">        </span><span class="NAME">this.geocode</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">q</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">request.term</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">          </span><span class="NAME">responseCallback</span><span class="PUNC">(</span><span class="NAME">response.items</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>153</span>      * Normalize the geocoder response. Returns an array of items.
+<span class='line'>154</span>      * &lt;pre>
+<span class='line'>155</span>      *   Example output
+<span class='line'>156</span>      *   [
+<span class='line'>157</span>      *     {
+<span class='line'>158</span>      *       value: 'Statue of Liberty, New York, NY 11231, USA',
+<span class='line'>159</span>      *       latitude: 40.6892437,
+<span class='line'>160</span>      *       longitude: -74.0445142,
+<span class='line'>161</span>      *       vendor: {
+<span class='line'>162</span>      *         // Upstream vendor response for this single location
+<span class='line'>163</span>      *       }
+<span class='line'>164</span>      *     }
+<span class='line'>165</span>      *   ]
+<span class='line'>166</span>      * &lt;/pre>
+<span class='line'>167</span>      *
+<span class='line'>168</span>      * @name $.ui.simplicityYahooGeocoder.normalizeResults
+<span class='line'>169</span>      * @function
+<span class='line'>170</span>      * @private
+<span class='line'>171</span>      */</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">    </span><span class="NAME">normalizeResults</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">items</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">response</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">          </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">response.vendor</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">          </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">response.vendor.ResultSet</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">          </span><span class="NAME">response.vendor.ResultSet.Error</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">          </span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">response.vendor.ResultSet.Results</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">        </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">response.vendor.ResultSet.Results</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">i</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.normalizeAddress</span><span class="PUNC">(</span><span class="NAME">result</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">Boolean</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">            </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">item</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">              </span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">              </span><span class="NAME">vendor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">result.latitude</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">result.longitude</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">              </span><span class="NAME">$.extend</span><span class="PUNC">(</span><span class="NAME">item</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">                </span><span class="NAME">latitude</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">result.latitude</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">                </span><span class="NAME">longitude</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">result.longitude</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">result.boundingbox</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">              </span><span class="NAME">item.bounds</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>194</span> </span><span class="WHIT">                </span><span class="NAME">vendor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">result.boundingbox</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>195</span> </span><span class="WHIT">                </span><span class="NAME">south</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">result.boundingbox.south</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">                </span><span class="NAME">west</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">result.boundingbox.west</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">                </span><span class="NAME">north</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">result.boundingbox.north</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">                </span><span class="NAME">east</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Number</span><span class="PUNC">(</span><span class="NAME">result.boundingbox.east</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">            </span><span class="NAME">items.push</span><span class="PUNC">(</span><span class="NAME">item</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">items</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>208</span>      * Normalize a single geocoded address. This gets injected
+<span class='line'>209</span>      * as the &lt;code>value&lt;/code> of the &lt;code>item&lt;/code> object.
+<span class='line'>210</span>      *
+<span class='line'>211</span>      * @name $.ui.simplicityYahooGeocoder.normalizeAddress
+<span class='line'>212</span>      * @function
+<span class='line'>213</span>      * @private
+<span class='line'>214</span>      */</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">    </span><span class="NAME">normalizeAddress</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">result</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">output</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">'undefined'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">        </span><span class="NAME">output</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">result.line1</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">' '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">result.line2</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">output</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>223</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>224</span> </span></pre></body></html>

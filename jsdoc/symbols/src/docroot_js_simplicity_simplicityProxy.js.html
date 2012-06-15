@@ -1,0 +1,35 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.fn.simplicityProxy
+<span class='line'>  3</span>  * @function
+<span class='line'>  4</span>  * @description
+<span class='line'>  5</span>  *
+<span class='line'>  6</span>  * Variation of $.proxy that doesn't share a guid and thus allows
+<span class='line'>  7</span>  * for unbinding a single proxied function from an event.
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  * @param fn
+<span class='line'> 10</span>  *   The function to proxy.
+<span class='line'> 11</span>  * @param thisObject
+<span class='line'> 12</span>  *   The object to apply the function to.
+<span class='line'> 13</span>  *
+<span class='line'> 14</span>  * @example
+<span class='line'> 15</span>  *   var clickHandler = $.simplicityProxy(function () {}, this);
+<span class='line'> 16</span>  *   $('#example').bind('click', clickHandler);
+<span class='line'> 17</span>  *   // Do something
+<span class='line'> 18</span>  *   $('#example).unbind('click', clickHandler);
+<span class='line'> 19</span>  */</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityProxy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">fn</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">thisObject</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">currentFn</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'string'</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">thisObject</span><span class="PUNC">[</span><span class="NAME">fn</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">fn</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">currentFn.apply</span><span class="PUNC">(</span><span class="NAME">thisObject</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> </span></pre></body></html>

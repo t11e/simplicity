@@ -1,0 +1,61 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @name $.ui.simplicitySearchResults
+<span class='line'>  3</span>  * @namespace Widget that displays the search results.
+<span class='line'>  4</span>  *
+<span class='line'>  5</span>  * This widget listens to the &lt;code>simplicitySearchResponse&lt;/code> event and takes
+<span class='line'>  6</span>  * the &lt;code>resultsHtml&lt;/code> field from the search response, injecting it directly
+<span class='line'>  7</span>  * into the page.
+<span class='line'>  8</span>  * &lt;p>
+<span class='line'>  9</span>  * If your search controller does not inject the search results as HTML into it's response
+<span class='line'> 10</span>  * then consider using &lt;code>simplicityRenderParamsSearchResults&lt;/code> instead.
+<span class='line'> 11</span>  */</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">  </span><span class="NAME">$.widget</span><span class="PUNC">(</span><span class="STRN">"ui.simplicitySearchResults"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">$.ui.simplicityWidget</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 15</span>      * Widget options.
+<span class='line'> 16</span>      *
+<span class='line'> 17</span>      * &lt;dl>
+<span class='line'> 18</span>      *   &lt;dt>searchElement&lt;/dt>
+<span class='line'> 19</span>      *   &lt;dd>
+<span class='line'> 20</span>      *     The simplicityDiscoverySearch widget that this widget binds it's events to. Defaults to &lt;code>'body'&lt;/code>.
+<span class='line'> 21</span>      *   &lt;/dd>
+<span class='line'> 22</span>      * &lt;/dl>
+<span class='line'> 23</span>      * @name $.ui.simplicitySearchResults.options
+<span class='line'> 24</span>      */</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">      </span><span class="NAME">searchElement</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">      </span><span class="KEYW">this</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-search-results'</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.searchElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicitySearchResponse'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._searchResponseHandler</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 34</span>      * Event handler for the &lt;code>simplicitySearchResponse&lt;/code> event. Expects the given
+<span class='line'> 35</span>      * search response object to contain a &lt;code>resultsHtml&lt;/code> field and splices it
+<span class='line'> 36</span>      * directly into the page.
+<span class='line'> 37</span>      *
+<span class='line'> 38</span>      * @name $.ui.simplicitySearchResults._searchResponseHandler
+<span class='line'> 39</span>      * @function
+<span class='line'> 40</span>      * @private
+<span class='line'> 41</span>      */</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">    </span><span class="NAME">_searchResponseHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">resultsHtml</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">searchResponse.resultsHtml</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchResponse.error</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="STRN">'&lt;div class="ui-state-error-text"/>'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">        </span><span class="NAME">error.text</span><span class="PUNC">(</span><span class="STRN">'['</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">searchResponse.status</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'] '</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">searchResponse.statusText</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">searchResponse.message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">", "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">searchResponse.message</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">        </span><span class="NAME">this.element.append</span><span class="PUNC">(</span><span class="NAME">error</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">        </span><span class="NAME">this.element.html</span><span class="PUNC">(</span><span class="NAME">resultsHtml</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span></pre></body></html>
