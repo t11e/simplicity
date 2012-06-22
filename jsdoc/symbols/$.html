@@ -193,6 +193,10 @@ ul.inheritsList
 	
 	<li><a href="../symbols/%24.fn.html">$.fn</a></li>
 	
+	<li><a href="../symbols/%24.simplicityGeoFn.html">$.simplicityGeoFn</a></li>
+	
+	<li><a href="../symbols/%24.simplicityGoogleMarker.html">$.simplicityGoogleMarker</a></li>
+	
 	<li><a href="../symbols/%24.ui.html">$.ui</a></li>
 	
 	<li><a href="../symbols/%24.ui.simplicityBingGeocoder.html">$.ui.simplicityBingGeocoder</a></li>
@@ -285,6 +289,12 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
+	<li><a href="../symbols/google.html">google</a></li>
+	
+	<li><a href="../symbols/google.maps.html">google.maps</a></li>
+	
+	<li><a href="../symbols/google.maps.OverlayView.html">google.maps.OverlayView</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -358,6 +368,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">$.<b><a href="../symbols/%24.html#.simplicityAjaxHelper">simplicityAjaxHelper</a></b>(exeContext)
+								</div>
+								<div class="description">Plugin to manage asynchronous ajax requests such that only the most
+recent request is currently inflight.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">$.<b><a href="../symbols/%24.html#.simplicityEquiv">simplicityEquiv</a></b>(lhs, rhs)
 								</div>
 								<div class="description">Deep equality checker.</div>
@@ -370,6 +390,16 @@ ul.inheritsList
 								<div class="fixedFont">$.<b><a href="../symbols/%24.html#.simplicityLoadJs">simplicityLoadJs</a></b>(url, callback)
 								</div>
 								<div class="description">Poor mans dynamic JavaScript injection.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.<b><a href="../symbols/%24.html#.simplicityProxy">simplicityProxy</a></b>(fn, thisObject)
+								</div>
+								<div class="description">Variation of $.proxy that doesn't share a guid and thus allows
+for unbinding a single proxied function from an event.</div>
 							</td>
 						</tr>
 					
@@ -420,6 +450,64 @@ ul.inheritsList
 				<div class="sectionTitle">
 					Method Detail
 				</div>
+				
+					<a name=".simplicityAjaxHelper"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.</span><b>simplicityAjaxHelper</b>(exeContext)
+					
+					</div>
+					<div class="description">
+						Plugin to manage asynchronous ajax requests such that only the most
+recent request is currently inflight. Any inflight request will be
+aborted, leaving only the most recent request to complete.
+
+The helper class also keeps track of total requests, success and error
+counts. These statistics are available using the .getStats() method.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityAjaxHelper.js.html">simplicityAjaxHelper.js</a>.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">  var ajaxHelper = new $.simplicityAjaxHelper(this);
+  var xhr = ajaxHelper.ajax({
+    url: 'searchController.php',
+    type: 'GET',
+    contentType: 'application/json',
+    error: function (data, textStatus, xhr) {...},
+    success: function (data, textStatus, xhr) {...},
+    debug: false
+  });
+  console.log(ajaxHelper.getStats());</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>exeContext</b>
+									
+								</dt>
+								<dd>The target <code>Object</code> to use for the context of the supplied
+  $.ajax() success and error callback options.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
 				
 					<a name=".simplicityEquiv"> </a>
 					<div class="fixedFont">&lt;static&gt; 
@@ -534,6 +622,59 @@ Possible bugs include:
 						
 						
 
+					<hr />
+				
+					<a name=".simplicityProxy"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.</span><b>simplicityProxy</b>(fn, thisObject)
+					
+					</div>
+					<div class="description">
+						Variation of $.proxy that doesn't share a guid and thus allows
+for unbinding a single proxied function from an event.
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityProxy.js.html">simplicityProxy.js</a>.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">  var clickHandler = $.simplicityProxy(function () {}, this);
+  $('#example').bind('click', clickHandler);
+  // Do something
+  $('#example).unbind('click', clickHandler);</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>fn</b>
+									
+								</dt>
+								<dd>The function to proxy.</dd>
+							
+								<dt>
+									<b>thisObject</b>
+									
+								</dt>
+								<dd>The object to apply the function to.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
 					
 				
 			
@@ -548,7 +689,7 @@ Possible bugs include:
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jun 15 2012 11:14:02 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:35 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

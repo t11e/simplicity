@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - $.ui.simplicityGoogleMapBoundsCoordinator</title>
+		<title>JsDoc Reference - $.simplicityGeoFn</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -304,7 +304,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace $.ui.simplicityGoogleMapBoundsCoordinator
+				Namespace $.simplicityGeoFn
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -312,21 +312,16 @@ ul.inheritsList
 				
 				
 			
-				A Google map.
-<p>
-An invisible jquery ui widget which coordinates the updating of a Google Map's bounds after a discovery search
-response is parsed and dispatched (the simplicitySearchResponseHandled event from the simplicityDiscoverySearch
-widget. Triggers a simplicitygooglemapboundscoordinatorcalculatebounds event which other components can use to
-modify the map bounds.
+				Contains various geographic related utility functions.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGoogleMapBoundsCoordinator.js.html">simplicityGoogleMapBoundsCoordinator.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGeoFn.js.html">simplicityGeoFn.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicityGoogleMapBoundsCoordinator.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.simplicityGeoFn.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -339,7 +334,7 @@ modify the map bounds.
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#constructor">$.ui.simplicityGoogleMapBoundsCoordinator</a></b>
+								<b><a href="../symbols/%24.simplicityGeoFn.html#constructor">$.simplicityGeoFn</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -350,40 +345,12 @@ modify the map bounds.
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicityGoogleMapBoundsCoordinator.">
-					<caption>Field Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								$.ui.simplicityGoogleMapBoundsCoordinator.<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#.options">options</a></b>
-								</div>
-								<div class="description">Widget options.</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.ui.simplicityGoogleMapBoundsCoordinator.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.simplicityGeoFn.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -396,18 +363,46 @@ modify the map bounds.
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityGoogleMapBoundsCoordinator.<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#.map">map</a></b>()
+								<div class="fixedFont">$.simplicityGeoFn.<b><a href="../symbols/%24.simplicityGeoFn.html#.computeHeading">computeHeading</a></b>({Number} lat, {Number} lng, {Number} lat, {Number} lng)
 								</div>
-								<div class="description">Return the actual map object.</div>
+								<div class="description">Returns the (initial) heading from this point to the supplied point, in degrees.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityGoogleMapBoundsCoordinator.<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#.updateBounds">updateBounds</a></b>()
+								<div class="fixedFont">$.simplicityGeoFn.<b><a href="../symbols/%24.simplicityGeoFn.html#.distanceKm">distanceKm</a></b>(lat1, lng1, lat2, lng2)
 								</div>
-								<div class="description">Triggers a simplicitygooglemapboundscoordinatorcalculatebounds event.</div>
+								<div class="description">Calculates the distance between two coordinates in kilometers.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.simplicityGeoFn.<b><a href="../symbols/%24.simplicityGeoFn.html#.distanceMiles">distanceMiles</a></b>(lat1, lng1, lat2, lng2)
+								</div>
+								<div class="description">Calculates the distance between two coordinates in miles.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.simplicityGeoFn.<b><a href="../symbols/%24.simplicityGeoFn.html#.intersection">intersection</a></b>({Number} lat, {Number} lng, heading1:, {Number} lat, {Number} lng, heading2:)
+								</div>
+								<div class="description">Returns the point of intersection of two paths defined by point and heading.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.simplicityGeoFn.<b><a href="../symbols/%24.simplicityGeoFn.html#.travel">travel</a></b>({Number} lat, {Number} lng, dist:, heading:)
+								</div>
+								<div class="description">Returns the destination point from a point having traveled the given distance (in km) on the
+given initial bearing (bearing may vary before destination is reached).</div>
 							</td>
 						</tr>
 					
@@ -428,7 +423,7 @@ modify the map bounds.
 				</div>
 				
 				<div class="fixedFont">
-						<b>$.ui.simplicityGoogleMapBoundsCoordinator</b>
+						<b>$.simplicityGeoFn</b>
 				</div>
 				
 				<div class="description">
@@ -438,13 +433,6 @@ modify the map bounds.
 				
 				
 				
-				<pre class="code">  &lt;div id="map" style="width: 300px; height: 300px;">&lt;/div>
-  &lt;script type="text/javascript">
-    $('#map').simplicityGoogleMapBoundsCoordinator();
-  &lt;/script></pre>
-				
-				
-				
 				
 					
 					
@@ -452,57 +440,12 @@ modify the map bounds.
 					
 					
 					
-					
-						<dl class="detailList">
-						<dt class="heading">See:</dt>
-						
-							<dd>Google Maps JavaScript API V3 <a href="http://code.google.com/apis/maps/documentation/javascript/">documentation</a>.</dd>
-						
-						</dl>
 					
 
 			</div>
 			
 
 <!-- ============================== field details ========================== -->		
-			
-				<div class="sectionTitle">
-					Field Detail
-				</div>
-				
-					<a name=".options"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.ui.simplicityGoogleMapBoundsCoordinator.</span><b>options</b>
-					
-					</div>
-					<div class="description">
-						Widget options.
-
-<dl>
-  <dt>map</dt>
-  <dd>
-    Optional map instance, if not provided one will be looked up. Defaults to <code>''</code>.
-  </dd>
-  <dt>searchElement</dt>
-  <dd>
-    The simplicityDiscoverySearch widget that this widget binds it's events to. Defaults to <code>'body'</code>.
-  </dd>
-</dl>
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					
-				
 			
 
 <!-- ============================== method details ========================= -->		
@@ -511,21 +454,106 @@ modify the map bounds.
 					Method Detail
 				</div>
 				
-					<a name=".map"> </a>
+					<a name=".computeHeading"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">$.ui.simplicityGoogleMapBoundsCoordinator.</span><b>map</b>()
+					<span class="light">{Number}</span>
+					<span class="light">$.simplicityGeoFn.</span><b>computeHeading</b>({Number} lat, {Number} lng, {Number} lat, {Number} lng)
 					
 					</div>
 					<div class="description">
-						Return the actual map object.
+						Returns the (initial) heading from this point to the supplied point, in degrees.
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>{Number} lat, {Number} lng</b>
+									<i>Optional</i>
+								</dt>
+								<dd>p1: First point</dd>
+							
+								<dt>
+									<b>{Number} lat, {Number} lng</b>
+									<i>Optional</i>
+								</dt>
+								<dd>p2: Second point</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> Initial heading in degrees from North</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="http://williams.best.vwh.net/avform.htm#Crs">http://williams.best.vwh.net/avform.htm#Crs</a></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".distanceKm"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGeoFn.</span><b>distanceKm</b>(lat1, lng1, lat2, lng2)
+					
+					</div>
+					<div class="description">
+						Calculates the distance between two coordinates in kilometers.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>lat1</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lng1</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lat2</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lng2</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -536,17 +564,15 @@ modify the map bounds.
 
 					<hr />
 				
-					<a name=".updateBounds"> </a>
+					<a name=".distanceMiles"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicityGoogleMapBoundsCoordinator.</span><b>updateBounds</b>()
+					<span class="light">$.simplicityGeoFn.</span><b>distanceMiles</b>(lat1, lng1, lat2, lng2)
 					
 					</div>
 					<div class="description">
-						Triggers a simplicitygooglemapboundscoordinatorcalculatebounds event. Handlers for that event receive a ui
-object with a bounds member. They can update, replace or delete that variable. ui.bounds is defined and non-empty
-after the event is handled, then this component will update the google maps to fit the bounds.
+						Calculates the distance between two coordinates in miles.
 						
 						
 					</div>
@@ -554,11 +580,165 @@ after the event is handled, then this component will update the google maps to f
 					
 					
 						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>lat1</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lng1</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lat2</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lng2</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
 						
 						
+						
+						
+
+					<hr />
+				
+					<a name=".intersection"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGeoFn.</span><b>intersection</b>({Number} lat, {Number} lng, heading1:, {Number} lat, {Number} lng, heading2:)
+					
+					</div>
+					<div class="description">
+						Returns the point of intersection of two paths defined by point and heading.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>{Number} lat, {Number} lng</b>
+									<i>Optional</i>
+								</dt>
+								<dd>p1: First point</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>heading1:</b>
+									
+								</dt>
+								<dd>Initial heading from first point</dd>
+							
+								<dt>
+									<b>{Number} lat, {Number} lng</b>
+									<i>Optional</i>
+								</dt>
+								<dd>p2: Second point</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>heading2:</b>
+									
+								</dt>
+								<dd>Initial heading from second point</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="http://www.movable-type.co.uk/scripts/latlong.html">http://www.movable-type.co.uk/scripts/latlong.html</a>
+     <a href="http://williams.best.vwh.net/avform.htm#Intersection">http://williams.best.vwh.net/avform.htm#Intersection</a></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".travel"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGeoFn.</span><b>travel</b>({Number} lat, {Number} lng, dist:, heading:)
+					
+					</div>
+					<div class="description">
+						Returns the destination point from a point having traveled the given distance (in km) on the
+given initial bearing (bearing may vary before destination is reached).
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>{Number} lat, {Number} lng</b>
+									<i>Optional</i>
+								</dt>
+								<dd>p: Point from which to start traveling</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>dist:</b>
+									
+								</dt>
+								<dd>Distance in meters</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>heading:</b>
+									
+								</dt>
+								<dd>Initial heading in degrees</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>[{Number} lat, {Number} lng] Destination point</dd>
+							
+							</dl>
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="http://williams.best.vwh.net/avform.htm#LL">http://williams.best.vwh.net/avform.htm#LL</a></dd>
+							
+							</dl>
 						
 
 					
@@ -575,7 +755,7 @@ after the event is handled, then this component will update the google maps to f
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:37 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:36 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

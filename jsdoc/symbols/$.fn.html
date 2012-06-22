@@ -193,6 +193,10 @@ ul.inheritsList
 	
 	<li><a href="../symbols/%24.fn.html">$.fn</a></li>
 	
+	<li><a href="../symbols/%24.simplicityGeoFn.html">$.simplicityGeoFn</a></li>
+	
+	<li><a href="../symbols/%24.simplicityGoogleMarker.html">$.simplicityGoogleMarker</a></li>
+	
 	<li><a href="../symbols/%24.ui.html">$.ui</a></li>
 	
 	<li><a href="../symbols/%24.ui.simplicityBingGeocoder.html">$.ui.simplicityBingGeocoder</a></li>
@@ -285,6 +289,12 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
+	<li><a href="../symbols/google.html">google</a></li>
+	
+	<li><a href="../symbols/google.maps.html">google.maps</a></li>
+	
+	<li><a href="../symbols/google.maps.OverlayView.html">google.maps.OverlayView</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -355,47 +365,9 @@ See <a href="http://docs.jquery.com">jQuery UI Plugins external documentation</a
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.fn.<b><a href="../symbols/%24.fn.html#.simplicityAjaxHelper">simplicityAjaxHelper</a></b>(exeContext)
-								</div>
-								<div class="description">Plugin to manage asynchronous ajax requests such that only the most
-recent request is currently inflight.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont">$.fn.<b><a href="../symbols/%24.fn.html#.simplicityFromState">simplicityFromState</a></b>(state, triggerChange, debug)
 								</div>
 								<div class="description">Plugin to apply state to input elements.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.fn.<b><a href="../symbols/%24.fn.html#.simplicityHaversineDistanceKm">simplicityHaversineDistanceKm</a></b>(lat1, lng1, lat2, lng2)
-								</div>
-								<div class="description">Calculates the distance between two coordinates in kilometers.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.fn.<b><a href="../symbols/%24.fn.html#.simplicityHaversineDistanceMiles">simplicityHaversineDistanceMiles</a></b>(lat1, lng1, lat2, lng2)
-								</div>
-								<div class="description">Calculates the distance between two coordinates in miles.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.fn.<b><a href="../symbols/%24.fn.html#.simplicityProxy">simplicityProxy</a></b>(fn, thisObject)
-								</div>
-								<div class="description">Variation of $.proxy that doesn't share a guid and thus allows
-for unbinding a single proxied function from an event.</div>
 							</td>
 						</tr>
 					
@@ -456,64 +428,6 @@ for unbinding a single proxied function from an event.</div>
 					Method Detail
 				</div>
 				
-					<a name=".simplicityAjaxHelper"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.fn.</span><b>simplicityAjaxHelper</b>(exeContext)
-					
-					</div>
-					<div class="description">
-						Plugin to manage asynchronous ajax requests such that only the most
-recent request is currently inflight. Any inflight request will be
-aborted, leaving only the most recent request to complete.
-
-The helper class also keeps track of total requests, success and error
-counts. These statistics are available using the .getStats() method.
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityAjaxHelper.js.html">simplicityAjaxHelper.js</a>.
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">  var ajaxHelper = new $.simplicityAjaxHelper(this);
-  var xhr = ajaxHelper.ajax({
-    url: 'searchController.php',
-    type: 'GET',
-    contentType: 'application/json',
-    error: function (data, textStatus, xhr) {...},
-    success: function (data, textStatus, xhr) {...},
-    debug: false
-  });
-  console.log(ajaxHelper.getStats());</pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>exeContext</b>
-									
-								</dt>
-								<dd>The target <code>Object</code> to use for the context of the supplied
-  $.ajax() success and error callback options.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name=".simplicityFromState"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -563,173 +477,6 @@ Apply this to input elements to change their state based on a state <code>Object
 									
 								</dt>
 								<dd>Optional argument, when <code>true</code> enables logging via <code>console.log</code>.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".simplicityHaversineDistanceKm"> </a>
-					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
-					
-					
-					<span class="light">$.fn.</span><b>simplicityHaversineDistanceKm</b>(lat1, lng1, lat2, lng2)
-					
-					</div>
-					<div class="description">
-						Calculates the distance between two coordinates in kilometers.
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityHaversineDistance.js.html">simplicityHaversineDistance.js</a>.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>lat1</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>lng1</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>lat2</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>lng2</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".simplicityHaversineDistanceMiles"> </a>
-					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
-					
-					
-					<span class="light">$.fn.</span><b>simplicityHaversineDistanceMiles</b>(lat1, lng1, lat2, lng2)
-					
-					</div>
-					<div class="description">
-						Calculates the distance between two coordinates in miles.
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityHaversineDistance.js.html">simplicityHaversineDistance.js</a>.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>lat1</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>lng1</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>lat2</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>lng2</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".simplicityProxy"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.fn.</span><b>simplicityProxy</b>(fn, thisObject)
-					
-					</div>
-					<div class="description">
-						Variation of $.proxy that doesn't share a guid and thus allows
-for unbinding a single proxied function from an event.
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityProxy.js.html">simplicityProxy.js</a>.
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">  var clickHandler = $.simplicityProxy(function () {}, this);
-  $('#example').bind('click', clickHandler);
-  // Do something
-  $('#example).unbind('click', clickHandler);</pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>fn</b>
-									
-								</dt>
-								<dd>The function to proxy.</dd>
-							
-								<dt>
-									<b>thisObject</b>
-									
-								</dt>
-								<dd>The object to apply the function to.</dd>
 							
 							</dl>
 						
@@ -813,7 +560,7 @@ Apply this to input elements to extract their state into a dictionary.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jun 15 2012 11:14:03 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:35 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - $.ui.simplicityGoogleMapBoundsCoordinator</title>
+		<title>JsDoc Reference - $.simplicityGoogleMarker</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -304,30 +304,27 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace $.ui.simplicityGoogleMapBoundsCoordinator
+				Class $.simplicityGoogleMarker
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/google.maps.OverlayView.html">google.maps.OverlayView</a>.<br />
 				
 			
-				A Google map.
-<p>
-An invisible jquery ui widget which coordinates the updating of a Google Map's bounds after a discovery search
-response is parsed and dispatched (the simplicitySearchResponseHandled event from the simplicityDiscoverySearch
-widget. Triggers a simplicitygooglemapboundscoordinatorcalculatebounds event which other components can use to
-modify the map bounds.
+				$.simplicityGoogleMarker
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGoogleMapBoundsCoordinator.js.html">simplicityGoogleMapBoundsCoordinator.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGoogleMarker.js.html">simplicityGoogleMarker.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicityGoogleMapBoundsCoordinator.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.simplicityGoogleMarker.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -339,9 +336,9 @@ modify the map bounds.
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#constructor">$.ui.simplicityGoogleMapBoundsCoordinator</a></b>
+								<b><a href="../symbols/%24.simplicityGoogleMarker.html#constructor">$.simplicityGoogleMarker</a></b>(element, row, options)
 							</div>
-							<div class="description"></div>
+							<div class="description">A custom Google Maps Overlay View for a jQuery-based standard marker</div>
 						</td>
 					</tr>
 				</tbody>
@@ -352,7 +349,7 @@ modify the map bounds.
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicityGoogleMapBoundsCoordinator.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.simplicityGoogleMarker.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -366,9 +363,63 @@ modify the map bounds.
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								$.ui.simplicityGoogleMapBoundsCoordinator.<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#.options">options</a></b>
+								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.draw">draw</a></b>
 								</div>
-								<div class="description">Widget options.</div>
+								<div class="description">Required implementation of <code>google.maps.OverlayView.draw</code></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/%24.simplicityGoogleMarker.html#element">element</a></b>
+								</div>
+								<div class="description">The jQuery element to use as the marker.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.onAdd">onAdd</a></b>
+								</div>
+								<div class="description">Required implementation of <code>google.maps.OverlayView.onAdd</code></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.onRemove">onRemove</a></b>
+								</div>
+								<div class="description">Required implementation of <code>google.maps.OverlayView.onRemove</code></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/%24.simplicityGoogleMarker.html#options">options</a></b>
+								</div>
+								<div class="description">Marker options
+<dl>
+  <dt>position</dt>
+  <dd>
+    The latLng for the marker.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/%24.simplicityGoogleMarker.html#row">row</a></b>
+								</div>
+								<div class="description">simplicityGoogleMapResults ui.row data for the marker.</div>
 							</td>
 						</tr>
 					
@@ -377,13 +428,17 @@ modify the map bounds.
 				
 				
 				
+				<dl class="inheritsList">
+				
+				</dl>
+				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.ui.simplicityGoogleMapBoundsCoordinator.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.simplicityGoogleMarker.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -396,18 +451,46 @@ modify the map bounds.
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityGoogleMapBoundsCoordinator.<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#.map">map</a></b>()
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.getElement">getElement</a></b>()
 								</div>
-								<div class="description">Return the actual map object.</div>
+								<div class="description">Returns the marker's element</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityGoogleMapBoundsCoordinator.<b><a href="../symbols/%24.ui.simplicityGoogleMapBoundsCoordinator.html#.updateBounds">updateBounds</a></b>()
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.getPosition">getPosition</a></b>()
 								</div>
-								<div class="description">Triggers a simplicitygooglemapboundscoordinatorcalculatebounds event.</div>
+								<div class="description">Returns the marker's current latLng position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.setLatLngFromOffset">setLatLngFromOffset</a></b>(dX, dY)
+								</div>
+								<div class="description">Calculates new latLng for a marker based on it's new position relative
+to it's previous position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.setPosition">setPosition</a></b>(latLng)
+								</div>
+								<div class="description">Returns the marker's current latLng position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.setTitle">setTitle</a></b>(s)
+								</div>
+								<div class="description">Returns the marker's title</div>
 							</td>
 						</tr>
 					
@@ -415,6 +498,10 @@ modify the map bounds.
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -424,41 +511,50 @@ modify the map bounds.
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>$.ui.simplicityGoogleMapBoundsCoordinator</b>
+						<b>$.simplicityGoogleMarker</b>(element, row, options)
 				</div>
 				
 				<div class="description">
-					
+					A custom Google Maps Overlay View for a jQuery-based standard marker
 					
 				</div>
 				
 				
 				
-				<pre class="code">  &lt;div id="map" style="width: 300px; height: 300px;">&lt;/div>
-  &lt;script type="text/javascript">
-    $('#map').simplicityGoogleMapBoundsCoordinator();
-  &lt;/script></pre>
 				
-				
-				
-				
-					
-					
-					
-					
-					
-					
 					
 						<dl class="detailList">
-						<dt class="heading">See:</dt>
+						<dt class="heading">Parameters:</dt>
 						
-							<dd>Google Maps JavaScript API V3 <a href="http://code.google.com/apis/maps/documentation/javascript/">documentation</a>.</dd>
+							<dt>
+								<span class="light fixedFont">{jQuery}</span>  <b>element</b>
+								
+							</dt>
+								<dd>jQuery element to use for the marker</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Dictionary}</span>  <b>row</b>
+								
+							</dt>
+								<dd>simplicityGoogleMapResults ui.row data for the marker</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Dictionary}</span>  <b>options</b>
+								
+							</dt>
+								<dd>Marker options</dd>
 						
 						</dl>
+					
+					
+					
+					
+					
+					
 					
 
 			</div>
@@ -470,26 +566,139 @@ modify the map bounds.
 					Field Detail
 				</div>
 				
-					<a name=".options"> </a>
+					<a name=".draw"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicityGoogleMapBoundsCoordinator.</span><b>options</b>
+					<span class="light">$.simplicityGoogleMarker.</span><b>draw</b>
 					
 					</div>
 					<div class="description">
-						Widget options.
+						Required implementation of <code>google.maps.OverlayView.draw</code>
+						
+						
+					</div>
+					
+					
 
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="element"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{jQuery}</span>
+					<b>element</b>
+					
+					</div>
+					<div class="description">
+						The jQuery element to use as the marker.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".onAdd"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGoogleMarker.</span><b>onAdd</b>
+					
+					</div>
+					<div class="description">
+						Required implementation of <code>google.maps.OverlayView.onAdd</code>
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".onRemove"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGoogleMarker.</span><b>onRemove</b>
+					
+					</div>
+					<div class="description">
+						Required implementation of <code>google.maps.OverlayView.onRemove</code>
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="options"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Dictionary}</span>
+					<b>options</b>
+					
+					</div>
+					<div class="description">
+						Marker options
 <dl>
-  <dt>map</dt>
+  <dt>position</dt>
   <dd>
-    Optional map instance, if not provided one will be looked up. Defaults to <code>''</code>.
+    The latLng for the marker.
   </dd>
-  <dt>searchElement</dt>
+  <dt>anchor</dt>
   <dd>
-    The simplicityDiscoverySearch widget that this widget binds it's events to. Defaults to <code>'body'</code>.
+    The anchor...to position the marker over the latLng point.
+  </dd>
+  <dt>draggable</dt>
+  <dd>
+    Indicates that the marker is draggble. Defaults to <code>false</code>.
   </dd>
 </dl>
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="row"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Dictionary}</span>
+					<b>row</b>
+					
+					</div>
+					<div class="description">
+						simplicityGoogleMapResults ui.row data for the marker.
 						
 						
 					</div>
@@ -511,21 +720,103 @@ modify the map bounds.
 					Method Detail
 				</div>
 				
-					<a name=".map"> </a>
+					<a name=".getElement"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					
-					<span class="light">$.ui.simplicityGoogleMapBoundsCoordinator.</span><b>map</b>()
+					<span class="light">{jQuery}</span>
+					<span class="light">$.simplicityGoogleMarker.</span><b>getElement</b>()
 					
 					</div>
 					<div class="description">
-						Return the actual map object.
+						Returns the marker's element
 						
 						
 					</div>
 					
 					
 					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{jQuery}</span> The jQuery element used for the marker</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getPosition"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{google.maps.LatLng}</span>
+					<span class="light">$.simplicityGoogleMarker.</span><b>getPosition</b>()
+					
+					</div>
+					<div class="description">
+						Returns the marker's current latLng position
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{google.maps.LatLng}</span> The latLng of the marker</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setLatLngFromOffset"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGoogleMarker.</span><b>setLatLngFromOffset</b>(dX, dY)
+					
+					</div>
+					<div class="description">
+						Calculates new latLng for a marker based on it's new position relative
+to it's previous position
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{double}</span> <b>dX</b>
+									
+								</dt>
+								<dd>Offset value for the X axis</dd>
+							
+								<dt>
+									<span class="light fixedFont">{double}</span> <b>dY</b>
+									
+								</dt>
+								<dd>Offset value for the Y axis</dd>
+							
+							</dl>
 						
 						
 						
@@ -536,23 +827,68 @@ modify the map bounds.
 
 					<hr />
 				
-					<a name=".updateBounds"> </a>
+					<a name=".setPosition"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicityGoogleMapBoundsCoordinator.</span><b>updateBounds</b>()
+					<span class="light">$.simplicityGoogleMarker.</span><b>setPosition</b>(latLng)
 					
 					</div>
 					<div class="description">
-						Triggers a simplicitygooglemapboundscoordinatorcalculatebounds event. Handlers for that event receive a ui
-object with a bounds member. They can update, replace or delete that variable. ui.bounds is defined and non-empty
-after the event is handled, then this component will update the google maps to fit the bounds.
+						Returns the marker's current latLng position
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{google.maps.LatLng}</span> <b>latLng</b>
+									
+								</dt>
+								<dd>The new latLng of the marker</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setTitle"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.simplicityGoogleMarker.</span><b>setTitle</b>(s)
+					
+					</div>
+					<div class="description">
+						Returns the marker's title
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>s</b>
+									
+								</dt>
+								<dd>The title to set</dd>
+							
+							</dl>
 						
 						
 						
@@ -575,7 +911,7 @@ after the event is handled, then this component will update the google maps to f
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:37 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:36 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>
