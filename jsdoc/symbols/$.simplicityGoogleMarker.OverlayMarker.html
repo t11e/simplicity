@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - $.ui.simplicityFacetCount</title>
+		<title>JsDoc Reference - $.simplicityGoogleMarker.OverlayMarker</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -306,31 +306,27 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace $.ui.simplicityFacetCount
+				Class $.simplicityGoogleMarker.OverlayMarker
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/google.maps.OverlayView.html">google.maps.OverlayView</a>.<br />
 				
 			
-				Displays a single facet count based on the search results.
-
-Listens for simplicitySearchResponse events and updates element HTML with a templatized
-facet count. Also supports injecting the facet count into a select input.
-<p>
-This widget is generally used as a building block, you probably want to use
-<code>simplicityFacetedInput</code> directly.
+				$.simplicityGoogleMarker.OverlayMarker
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityFacetCount.js.html">simplicityFacetCount.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGoogleMarker.js.html">simplicityGoogleMarker.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicityFacetCount.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.simplicityGoogleMarker.OverlayMarker.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -342,9 +338,9 @@ This widget is generally used as a building block, you probably want to use
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/%24.ui.simplicityFacetCount.html#constructor">$.ui.simplicityFacetCount</a></b>
+								<b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#constructor">$.simplicityGoogleMarker.OverlayMarker</a></b>(element, options)
 							</div>
-							<div class="description"></div>
+							<div class="description">A custom Google Maps Overlay View for a jQuery-based standard marker.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -353,40 +349,12 @@ This widget is generally used as a building block, you probably want to use
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicityFacetCount.">
-					<caption>Field Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								$.ui.simplicityFacetCount.<b><a href="../symbols/%24.ui.simplicityFacetCount.html#.options">options</a></b>
-								</div>
-								<div class="description">Widget options.</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.ui.simplicityFacetCount.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.simplicityGoogleMarker.OverlayMarker.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -397,20 +365,84 @@ This widget is generally used as a building block, you probably want to use
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityFacetCount.<b><a href="../symbols/%24.ui.simplicityFacetCount.html#._searchResponseHandler">_searchResponseHandler</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#draw">draw</a></b>()
 								</div>
-								<div class="description">Event handler for the <code>simplicitySearchResponse</code> event.</div>
+								<div class="description">Implementation of <code>google.maps.OverlayView.draw</code></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityFacetCount.<b><a href="../symbols/%24.ui.simplicityFacetCount.html#.numberFormatter">numberFormatter</a></b>(count)
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#getElement">getElement</a></b>()
 								</div>
-								<div class="description">Format a face count value.</div>
+								<div class="description">Returns the marker's element</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#getPosition">getPosition</a></b>()
+								</div>
+								<div class="description">Returns the marker's current position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#html">html</a></b>(html)
+								</div>
+								<div class="description">Gets or sets the marker's HTML</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#onAdd">onAdd</a></b>()
+								</div>
+								<div class="description">Implementation of <code>google.maps.OverlayView.onAdd</code></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#onRemove">onRemove</a></b>()
+								</div>
+								<div class="description">Implementation of <code>google.maps.OverlayView.onRemove</code></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#setLatLngFromOffset">setLatLngFromOffset</a></b>(dX, dY)
+								</div>
+								<div class="description">Calculates new latLng for a marker based on it's new position relative
+to it's previous position and places the marker at that position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#setPosition">setPosition</a></b>(latLng)
+								</div>
+								<div class="description">Sets the marker's current position</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html#title">title</a></b>(title)
+								</div>
+								<div class="description">Gets or sets the marker's title</div>
 							</td>
 						</tr>
 					
@@ -418,6 +450,10 @@ This widget is generally used as a building block, you probably want to use
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -427,48 +463,94 @@ This widget is generally used as a building block, you probably want to use
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>$.ui.simplicityFacetCount</b>
+						<b>$.simplicityGoogleMarker.OverlayMarker</b>(element, options)
 				</div>
 				
 				<div class="description">
-					
+					A custom Google Maps Overlay View for a jQuery-based standard marker. This class must be
+instantiated using the factory method $.simplicityGoogleMarker.create().
 					
 				</div>
 				
 				
 				
-				<pre class="code">  &lt;select id="size" name="size">
-    &lt;option value="small">Small&lt;/option>
-    &lt;option value="medium">Medium&lt;/option>
-    &lt;option value="large">Large&lt;/option>
-  &lt;/select>
-  &lt;script type="text/javascript">
-    $('#size option[value="small"]').simplicityFacetCount({
-      dimension: 'Size',
-      facetId: 'S'
-    });
-    // etc.
-  &lt;/script></pre>
 				
-				<pre class="code">  &lt;input type="checkbox" id="large" name="size" value="large" />
-  &lt;label for="large">Large (&lt;span id="largeCount">&lt;/span>)&lt;/label>
-  &lt;script type="text/javascript">
-    $('#largeCount').simplicityFacetCount({
-      dimension: 'Size',
-      facetId: 'L'
-    });
-  &lt;/script></pre>
-				
-				
-				
-				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{jQuery}</span>  <b>element</b>
+								
+							</dt>
+								<dd>jQuery element to use for the marker</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Dictionary}</span>  <b>options</b>
+								
+							</dt>
+								<dd><dl>
+  <dt>template</dt>
+  <dd>
+    The HTML for the marker. The template is converted to a jQuery object.
+    Defaults to <code><p>
+      &nbsp;&lt;div><br/>
+        &nbsp;&nbsp;&lt;div class="row"/><br/>
+        &nbsp;&nbsp;&lt;div class="ptr"/><br/>
+        &nbsp;&nbsp;&lt;div class="shadow"/><br/>
+      &nbsp;&lt;/div>
+      </p></code>
+  </dd>
+  <dt>html</dt>
+  <dd>
+    The html or text to add to the marker.
+  </dd>
+  <dt>title</dt>
+  <dd>
+    The value of the element's <code>title</code> attribute.
+  </dd>
+  <dt>className</dt>
+  <dd>
+    The class to add to the marker.
+  </dd>
+  <dt>position</dt>
+  <dd>
+    The position of the marker. Type of <code>google.maps.LatLng</code>. Use <code>anchor</code>
+    to determine the placement of the marker in relation to the position.
+  </dd>
+  <dt>anchor</dt>
+  <dd>
+    The anchor of the marker. Type of <code>google.maps.Point</code>. Defaults to the bottom center
+    of the marker.
+  </dd>
+  <dt>row</dt>
+  <dd>
+    The required row information used to configure the marker. Keys: index0, index1
+  </dd>
+  <dt>draggable</dt>
+  <dd>
+    Indicates that the marker is draggable. Defaults to <code>false</code>.
+  </dd>
+</dl></dd>
+						
+						</dl>
 					
 					
 					
+					
+						<dl class="detailList">
+						<dt class="heading">Throws:</dt>
+						
+							<dt>
+								 <b></b>
+							</dt>
+								<dd>Error when not instantiated using $.simplicityGoogleMarker.create()</dd>
+						
+						</dl>
 					
 					
 					
@@ -479,69 +561,6 @@ This widget is generally used as a building block, you probably want to use
 
 <!-- ============================== field details ========================== -->		
 			
-				<div class="sectionTitle">
-					Field Detail
-				</div>
-				
-					<a name=".options"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.ui.simplicityFacetCount.</span><b>options</b>
-					
-					</div>
-					<div class="description">
-						Widget options.
-
-<dl>
-  <dt>searchElement</dt>
-  <dd>
-    The location of the simplicityDiscoverySearch widget. Defaults to <code>'body'</code>.
-  </dd>
-  <dt>missingCount</dt>
-  <dd>
-    Text to use when there is no associated facet count. Defaults to <code>'?'</code>.
-  </dd>
-  <dt>dimension</dt>
-  <dd>
-    Mandatory dimension from which the facet counts should be used.
-  </dd>
-  <dt>facetsKey</dt>
-  <dd>
-    The key used in the facets request to identify the facets data. Defaults to <code>dimension</code>.
-  </dd>
-  <dt>facetId</dt>
-  <dd>
-    Mandatory id of the facet whose count should be bound to this widget.
-  </dd>
-  <dt>optionTemplate</dt>
-  <dd>
-    Template used when bound to an <code>option</code> element.
-    Defaults to <code>'{option} {count}'</code>. Bracketed text will be
-    replaced by the option value and any formatted count respectively.
-    Other text not included in the bracketed fields will be left as-is.
-    Applies only to facet counts for OPTION tags.
-  </dd>
-  <dt>numberFormatter</dt>
-  <dd>
-    Optional function that can be called with the facet count and is expected
-    to return a string.
-  </dd>
-</dl>
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					
-				
-			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -549,16 +568,15 @@ This widget is generally used as a building block, you probably want to use
 					Method Detail
 				</div>
 				
-					<a name="._searchResponseHandler"> </a>
-					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					<a name="draw"> </a>
+					<div class="fixedFont">&lt;private&gt; 
 					
 					
-					<span class="light">$.ui.simplicityFacetCount.</span><b>_searchResponseHandler</b>()
+					<b>draw</b>()
 					
 					</div>
 					<div class="description">
-						Event handler for the <code>simplicitySearchResponse</code> event.
-Extracts the configured facet count and displays it.
+						Implementation of <code>google.maps.OverlayView.draw</code>
 						
 						
 					</div>
@@ -575,37 +593,82 @@ Extracts the configured facet count and displays it.
 
 					<hr />
 				
-					<a name=".numberFormatter"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="getElement"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">$.ui.simplicityFacetCount.</span><b>numberFormatter</b>(count)
+					<span class="light">{jQuery}</span>
+					<b>getElement</b>()
 					
 					</div>
 					<div class="description">
-						Format a face count value. Returning the facet count as a formatted
-string.
+						Returns the marker's element
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">  &lt;select id="size" name="size">
-    &lt;option value="small">Small&lt;/option>
-    &lt;option value="medium">Medium&lt;/option>
-    &lt;option value="large">Large&lt;/option>
-  &lt;/select>
-  &lt;script type="text/javascript">
-    $('#size option[value="small"]').simplicityFacetCount({
-      dimension: 'Size',
-      facetId: 'S',
-      numberFormatter: function(count) {
-       return "(" + count + ")";
-      }
-    });
-    // etc.
-  &lt;/script></pre>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{jQuery}</span> The jQuery element used for the marker</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPosition"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{google.maps.LatLng}</span>
+					<b>getPosition</b>()
+					
+					</div>
+					<div class="description">
+						Returns the marker's current position
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{google.maps.LatLng}</span> The position of the marker</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="html"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>html</b>(html)
+					
+					</div>
+					<div class="description">
+						Gets or sets the marker's HTML
+						
+						
+					</div>
 					
 					
 					
@@ -614,10 +677,175 @@ string.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>count</b>
+									<span class="light fixedFont">{String}</span> <b>html</b>
 									
 								</dt>
-								<dd>The facet count to format</dd>
+								<dd>The html or text to set</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="onAdd"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>onAdd</b>()
+					
+					</div>
+					<div class="description">
+						Implementation of <code>google.maps.OverlayView.onAdd</code>
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="onRemove"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>onRemove</b>()
+					
+					</div>
+					<div class="description">
+						Implementation of <code>google.maps.OverlayView.onRemove</code>
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setLatLngFromOffset"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setLatLngFromOffset</b>(dX, dY)
+					
+					</div>
+					<div class="description">
+						Calculates new latLng for a marker based on it's new position relative
+to it's previous position and places the marker at that position
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{double}</span> <b>dX</b>
+									
+								</dt>
+								<dd>Offset value for the X axis</dd>
+							
+								<dt>
+									<span class="light fixedFont">{double}</span> <b>dY</b>
+									
+								</dt>
+								<dd>Offset value for the Y axis</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setPosition"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setPosition</b>(latLng)
+					
+					</div>
+					<div class="description">
+						Sets the marker's current position
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{google.maps.LatLng}</span> <b>latLng</b>
+									
+								</dt>
+								<dd>The new position of the marker</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="title"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>title</b>(title)
+					
+					</div>
+					<div class="description">
+						Gets or sets the marker's title
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>title</b>
+									
+								</dt>
+								<dd>The title to set</dd>
 							
 							</dl>
 						
@@ -642,7 +870,7 @@ string.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 28 2012 09:37:15 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 28 2012 09:37:14 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

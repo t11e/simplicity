@@ -5,149 +5,251 @@
 	.STRN {color: #393;}
 	.REGX {color: #339;}
 	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
-	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
-<span class='line'>  2</span>  * A custom Google Maps Overlay View for a jQuery-based standard marker
-<span class='line'>  3</span>  *
-<span class='line'>  4</span>  * @class $.simplicityGoogleMarker
-<span class='line'>  5</span>  * @extends google.maps.OverlayView
-<span class='line'>  6</span>  * @param {jQuery} element jQuery element to use for the marker
-<span class='line'>  7</span>  * @param {Dictionary} row simplicityGoogleMapResults ui.row data for the marker
-<span class='line'>  8</span>  * @param {Dictionary} options Marker options
-<span class='line'>  9</span>  * @property {jQuery} element The jQuery element to use as the marker.
-<span class='line'> 10</span>  * @property {Dictionary} row simplicityGoogleMapResults ui.row data for the marker.
-<span class='line'> 11</span>  * @property {Dictionary} options Marker options
-<span class='line'> 12</span>  * &lt;dl>
-<span class='line'> 13</span>  *   &lt;dt>position&lt;/dt>
-<span class='line'> 14</span>  *   &lt;dd>
-<span class='line'> 15</span>  *     The latLng for the marker.
-<span class='line'> 16</span>  *   &lt;/dd>
-<span class='line'> 17</span>  *   &lt;dt>anchor&lt;/dt>
-<span class='line'> 18</span>  *   &lt;dd>
-<span class='line'> 19</span>  *     The anchor...to position the marker over the latLng point.
-<span class='line'> 20</span>  *   &lt;/dd>
-<span class='line'> 21</span>  *   &lt;dt>draggable&lt;/dt>
-<span class='line'> 22</span>  *   &lt;dd>
-<span class='line'> 23</span>  *     Indicates that the marker is draggble. Defaults to &lt;code>false&lt;/code>.
-<span class='line'> 24</span>  *   &lt;/dd>
-<span class='line'> 25</span>  * &lt;/dl>
-<span class='line'> 26</span>  */</span><span class="WHIT">
-<span class='line'> 27</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 28</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">options</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 29</span> </span><span class="WHIT">    </span><span class="NAME">this.element</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 30</span> </span><span class="WHIT">    </span><span class="NAME">this.row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 31</span> </span><span class="WHIT">    </span><span class="NAME">this.options</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">options</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 32</span> </span><span class="WHIT">    </span><span class="NAME">this.latLng</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">options.position</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 33</span> </span><span class="WHIT">    </span><span class="NAME">this.element.addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-google-marker'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 34</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.draggable</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 35</span> </span><span class="WHIT">      </span><span class="NAME">this.element.draggable</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 36</span> </span><span class="WHIT">        </span><span class="NAME">stop</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ui</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 37</span> </span><span class="WHIT">          </span><span class="NAME">this.setLatLngFromOffset</span><span class="PUNC">(</span><span class="WHIT">
-<span class='line'> 38</span> </span><span class="WHIT">            </span><span class="NAME">ui.position.left</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">ui.originalPosition.left</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">// dX</span><span class="WHIT">
-<span class='line'> 39</span> </span><span class="WHIT">            </span><span class="NAME">ui.position.top</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">ui.originalPosition.top</span><span class="WHIT"> </span><span class="COMM">// dY</span><span class="WHIT">
-<span class='line'> 40</span> </span><span class="WHIT">          </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 41</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'> 42</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 43</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 44</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 45</span>      * Required implementation of &lt;code>google.maps.OverlayView.onAdd&lt;/code>
-<span class='line'> 46</span>      *
-<span class='line'> 47</span>      * @name $.simplicityGoogleMarker.onAdd
-<span class='line'> 48</span>      * @public
-<span class='line'> 49</span>      */</span><span class="WHIT">
-<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="NAME">this.onAdd</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 51</span> </span><span class="WHIT">      </span><span class="NAME">this.getPanes</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">overlayMouseTarget.appendChild</span><span class="PUNC">(</span><span class="NAME">this.element</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 54</span>      * Required implementation of &lt;code>google.maps.OverlayView.onRemove&lt;/code>
-<span class='line'> 55</span>      *
-<span class='line'> 56</span>      * @name $.simplicityGoogleMarker.onRemove
-<span class='line'> 57</span>      * @public
-<span class='line'> 58</span>      */</span><span class="WHIT">
-<span class='line'> 59</span> </span><span class="WHIT">    </span><span class="NAME">this.onRemove</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 60</span> </span><span class="WHIT">      </span><span class="NAME">this.element.remove</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 61</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 63</span>      * Required implementation of &lt;code>google.maps.OverlayView.draw&lt;/code>
-<span class='line'> 64</span>      *
-<span class='line'> 65</span>      * @name $.simplicityGoogleMarker.draw
-<span class='line'> 66</span>      * @public
-<span class='line'> 67</span>      */</span><span class="WHIT">
-<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="NAME">this.draw</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 69</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">this.latLng</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 70</span> </span><span class="WHIT">        </span><span class="NAME">this.latLngPt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.getProjection</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">fromLatLngToDivPixel</span><span class="PUNC">(</span><span class="NAME">this.latLng</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 71</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.element.height</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 72</span> </span><span class="WHIT">       </span><span class="COMM">// default bottom center</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">a</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.anchor</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Point</span><span class="PUNC">(</span><span class="NAME">this.element.width</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">h</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 74</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Point</span><span class="PUNC">(</span><span class="NAME">this.latLngPt.x</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">a.x</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.latLngPt.y</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">a.y</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.row.index0</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">h</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 75</span> </span><span class="WHIT">        </span><span class="NAME">this.element.css</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 76</span> </span><span class="WHIT">          </span><span class="NAME">top</span><span class="PUNC">:</span><span class="WHIT">  </span><span class="NAME">p.y</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'px'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 77</span> </span><span class="WHIT">          </span><span class="NAME">left</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">p.x</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'px'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 78</span> </span><span class="WHIT">          </span><span class="STRN">'z-Index'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NAME">this.row.index1</span><span class="WHIT">
-<span class='line'> 79</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 80</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 82</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 83</span>      * Calculates new latLng for a marker based on it's new position relative
-<span class='line'> 84</span>      * to it's previous position
-<span class='line'> 85</span>      *
-<span class='line'> 86</span>      * @name $.simplicityGoogleMarker.setLatLngFromOffset
-<span class='line'> 87</span>      * @function
-<span class='line'> 88</span>      * @param {double} dX Offset value for the X axis
-<span class='line'> 89</span>      * @param {double} dY Offset value for the Y axis
-<span class='line'> 90</span>      * @public
-<span class='line'> 91</span>      */</span><span class="WHIT">
-<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="NAME">this.setLatLngFromOffset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">dX</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dY</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 93</span> </span><span class="WHIT">      </span><span class="NAME">this.latLngPt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Point</span><span class="PUNC">(</span><span class="NAME">dX</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.latLngPt.x</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dY</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this.latLngPt.y</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 94</span> </span><span class="WHIT">      </span><span class="NAME">this.latLng</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.getProjection</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">fromDivPixelToLatLng</span><span class="PUNC">(</span><span class="NAME">this.latLngPt</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 96</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 97</span>      * Returns the marker's current latLng position
-<span class='line'> 98</span>      *
-<span class='line'> 99</span>      * @name $.simplicityGoogleMarker.getPosition
-<span class='line'>100</span>      * @function
-<span class='line'>101</span>      * @returns {google.maps.LatLng} The latLng of the marker
-<span class='line'>102</span>      * @public
-<span class='line'>103</span>      */</span><span class="WHIT">
-<span class='line'>104</span> </span><span class="WHIT">    </span><span class="NAME">this.getPosition</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>105</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.latLng</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>106</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>107</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>108</span>      * Returns the marker's current latLng position
-<span class='line'>109</span>      *
-<span class='line'>110</span>      * @name $.simplicityGoogleMarker.setPosition
-<span class='line'>111</span>      * @function
-<span class='line'>112</span>      * @param {google.maps.LatLng} latLng The new latLng of the marker
-<span class='line'>113</span>      * @public
-<span class='line'>114</span>      */</span><span class="WHIT">
-<span class='line'>115</span> </span><span class="WHIT">    </span><span class="NAME">this.setPosition</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">latLng</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>116</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">latLng</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>117</span> </span><span class="WHIT">        </span><span class="NAME">this.latLng</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">latLng</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>118</span> </span><span class="WHIT">        </span><span class="NAME">this.draw</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>119</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>120</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>121</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>122</span>      * Returns the marker's element
-<span class='line'>123</span>      *
-<span class='line'>124</span>      * @name $.simplicityGoogleMarker.getElement
-<span class='line'>125</span>      * @function
-<span class='line'>126</span>      * @returns {jQuery} The jQuery element used for the marker
-<span class='line'>127</span>      * @public
-<span class='line'>128</span>      */</span><span class="WHIT">
-<span class='line'>129</span> </span><span class="WHIT">    </span><span class="NAME">this.getElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>130</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>131</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>132</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>133</span>      * Returns the marker's title
-<span class='line'>134</span>      *
-<span class='line'>135</span>      * @name $.simplicityGoogleMarker.setTitle
-<span class='line'>136</span>      * @function
-<span class='line'>137</span>      * @param {String} s The title to set
-<span class='line'>138</span>      * @public
-<span class='line'>139</span>      */</span><span class="WHIT">
-<span class='line'>140</span> </span><span class="WHIT">    </span><span class="NAME">this.setTitle</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">s</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>141</span> </span><span class="WHIT">      </span><span class="NAME">this.element.attr</span><span class="PUNC">(</span><span class="STRN">'title'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">s</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>142</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>143</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>144</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.OverlayView</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>145</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>146</span> </span></pre></body></html>
+	</style></head><body><pre><span class='line'>  1</span> <span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>  2</span>    * @name $.simplicityGoogleMarker
+<span class='line'>  3</span>    * @namespace Contains factory methods and classes to create a custom Google OverlayView marker.
+<span class='line'>  4</span>    */</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_initialized</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>  9</span>    * @private
+<span class='line'> 10</span>    */</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker._markerTemplateCache</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'> 13</span>    * A custom Google Maps Overlay View for a jQuery-based standard marker. This class must be
+<span class='line'> 14</span>    * instantiated using the factory method $.simplicityGoogleMarker.create().
+<span class='line'> 15</span>    *
+<span class='line'> 16</span>    * @class $.simplicityGoogleMarker.OverlayMarker
+<span class='line'> 17</span>    * @throws Error when not instantiated using $.simplicityGoogleMarker.create()
+<span class='line'> 18</span>    * @extends google.maps.OverlayView
+<span class='line'> 19</span>    * @param {jQuery} element jQuery element to use for the marker
+<span class='line'> 20</span>    * @param {Dictionary} options
+<span class='line'> 21</span>    * &lt;dl>
+<span class='line'> 22</span>    *   &lt;dt>template&lt;/dt>
+<span class='line'> 23</span>    *   &lt;dd>
+<span class='line'> 24</span>    *     The HTML for the marker. The template is converted to a jQuery object.
+<span class='line'> 25</span>    *     Defaults to &lt;code>&lt;p>
+<span class='line'> 26</span>    *       &nbsp;&lt;div>&lt;br/>
+<span class='line'> 27</span>    *         &nbsp;&nbsp;&lt;div class="row"/>&lt;br/>
+<span class='line'> 28</span>    *         &nbsp;&nbsp;&lt;div class="ptr"/>&lt;br/>
+<span class='line'> 29</span>    *         &nbsp;&nbsp;&lt;div class="shadow"/>&lt;br/>
+<span class='line'> 30</span>    *       &nbsp;&lt;/div>
+<span class='line'> 31</span>    *       &lt;/p>&lt;/code>
+<span class='line'> 32</span>    *   &lt;/dd>
+<span class='line'> 33</span>    *   &lt;dt>html&lt;/dt>
+<span class='line'> 34</span>    *   &lt;dd>
+<span class='line'> 35</span>    *     The html or text to add to the marker.
+<span class='line'> 36</span>    *   &lt;/dd>
+<span class='line'> 37</span>    *   &lt;dt>title&lt;/dt>
+<span class='line'> 38</span>    *   &lt;dd>
+<span class='line'> 39</span>    *     The value of the element's &lt;code>title&lt;/code> attribute.
+<span class='line'> 40</span>    *   &lt;/dd>
+<span class='line'> 41</span>    *   &lt;dt>className&lt;/dt>
+<span class='line'> 42</span>    *   &lt;dd>
+<span class='line'> 43</span>    *     The class to add to the marker.
+<span class='line'> 44</span>    *   &lt;/dd>
+<span class='line'> 45</span>    *   &lt;dt>position&lt;/dt>
+<span class='line'> 46</span>    *   &lt;dd>
+<span class='line'> 47</span>    *     The position of the marker. Type of &lt;code>google.maps.LatLng&lt;/code>. Use &lt;code>anchor&lt;/code>
+<span class='line'> 48</span>    *     to determine the placement of the marker in relation to the position.
+<span class='line'> 49</span>    *   &lt;/dd>
+<span class='line'> 50</span>    *   &lt;dt>anchor&lt;/dt>
+<span class='line'> 51</span>    *   &lt;dd>
+<span class='line'> 52</span>    *     The anchor of the marker. Type of &lt;code>google.maps.Point&lt;/code>. Defaults to the bottom center
+<span class='line'> 53</span>    *     of the marker.
+<span class='line'> 54</span>    *   &lt;/dd>
+<span class='line'> 55</span>    *   &lt;dt>row&lt;/dt>
+<span class='line'> 56</span>    *   &lt;dd>
+<span class='line'> 57</span>    *     The required row information used to configure the marker. Keys: index0, index1
+<span class='line'> 58</span>    *   &lt;/dd>
+<span class='line'> 59</span>    *   &lt;dt>draggable&lt;/dt>
+<span class='line'> 60</span>    *   &lt;dd>
+<span class='line'> 61</span>    *     Indicates that the marker is draggable. Defaults to &lt;code>false&lt;/code>.
+<span class='line'> 62</span>    *   &lt;/dd>
+<span class='line'> 63</span>    * &lt;/dl>
+<span class='line'> 64</span>    */</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">options</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">_initialized</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="STRN">"Instances of simplicityGoogleMarker must be created using $.simplicityGoogleMarker.create."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">    </span><span class="NAME">google.maps.OverlayView.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">    </span><span class="NAME">this.options</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">options</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">template</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.template</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">      </span><span class="STRN">'&lt;div>&lt;div class="row"/>&lt;div class="ptr"/>&lt;div class="shadow"/>&lt;/div>'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">    </span><span class="NAME">this._element</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.simplicityGoogleMarker._markerTemplateCache</span><span class="PUNC">[</span><span class="NAME">template</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">this._element</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">      </span><span class="NAME">this._element</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker._markerTemplateCache</span><span class="PUNC">[</span><span class="NAME">template</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._element</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">    </span><span class="NAME">this._element</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._element.clone</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">    </span><span class="NAME">this._element.data</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">      </span><span class="NAME">marker</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">      </span><span class="NAME">row</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.row</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">    </span><span class="NAME">this._element.addClass</span><span class="PUNC">(</span><span class="STRN">'simplicity-google-marker'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.className</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">      </span><span class="NAME">this._element.addClass</span><span class="PUNC">(</span><span class="NAME">this.options.className</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.html</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">      </span><span class="NAME">this.html</span><span class="PUNC">(</span><span class="NAME">this.options.html</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.title</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">      </span><span class="NAME">this.title</span><span class="PUNC">(</span><span class="NAME">this.options.title</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="NAME">this._latLng</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">options.position</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">    </span><span class="NAME">this._latLngPt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.draggable</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">      </span><span class="NAME">this._element.draggable</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">        </span><span class="NAME">stop</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ui</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">          </span><span class="NAME">this.setLatLngFromOffset</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">            </span><span class="NAME">ui.position.left</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">ui.originalPosition.left</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">// dX</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">            </span><span class="NAME">ui.position.top</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">ui.originalPosition.top</span><span class="WHIT"> </span><span class="COMM">// dY</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">          </span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker.setup</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">_initialized</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.OverlayView</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>110</span>        * Implementation of &lt;code>google.maps.OverlayView.onAdd&lt;/code>
+<span class='line'>111</span>        *
+<span class='line'>112</span>        * @function
+<span class='line'>113</span>        * @private
+<span class='line'>114</span>        */</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.onAdd</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">        </span><span class="NAME">this.getPanes</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">overlayMouseTarget.appendChild</span><span class="PUNC">(</span><span class="NAME">this._element</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>119</span>        * Implementation of &lt;code>google.maps.OverlayView.onRemove&lt;/code>
+<span class='line'>120</span>        *
+<span class='line'>121</span>        * @function
+<span class='line'>122</span>        * @private
+<span class='line'>123</span>        */</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.onRemove</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">        </span><span class="NAME">this._element.remove</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>128</span>        * Implementation of &lt;code>google.maps.OverlayView.draw&lt;/code>
+<span class='line'>129</span>        *
+<span class='line'>130</span>        * @function
+<span class='line'>131</span>        * @private
+<span class='line'>132</span>        */</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.draw</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">this._latLng</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="COMM">// it is possible to create a marker without a position</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">          </span><span class="NAME">this._latLngPt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.getProjection</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">fromLatLngToDivPixel</span><span class="PUNC">(</span><span class="NAME">this._latLng</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._element.height</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">         </span><span class="COMM">// default bottom center</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">a</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.options.anchor</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Point</span><span class="PUNC">(</span><span class="NAME">this._element.width</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">h</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">          </span><span class="COMM">// $.draggable always uses relative positioning, so offset the y by the height of the element</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">          </span><span class="COMM">// and the elements created before it.</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">p</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Point</span><span class="PUNC">(</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">            </span><span class="NAME">this._latLngPt.x</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">a.x</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">            </span><span class="NAME">this._latLngPt.y</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">a.y</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.draggable</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">this.options.row.index0</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">h</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">          </span><span class="NAME">this._element.css</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">            </span><span class="NAME">top</span><span class="PUNC">:</span><span class="WHIT">  </span><span class="NAME">p.y</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'px'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">            </span><span class="NAME">left</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">p.x</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'px'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">            </span><span class="STRN">'z-Index'</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NAME">this.options.row.index1</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>152</span>        * Calculates new latLng for a marker based on it's new position relative
+<span class='line'>153</span>        * to it's previous position and places the marker at that position
+<span class='line'>154</span>        *
+<span class='line'>155</span>        * @function
+<span class='line'>156</span>        * @param {double} dX Offset value for the X axis
+<span class='line'>157</span>        * @param {double} dY Offset value for the Y axis
+<span class='line'>158</span>        */</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.setLatLngFromOffset</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">dX</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dY</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">        </span><span class="NAME">this._latLngPt</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Point</span><span class="PUNC">(</span><span class="NAME">dX</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this._latLngPt.x</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">dY</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this._latLngPt.y</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">        </span><span class="NAME">this._latLng</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.getProjection</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">fromDivPixelToLatLng</span><span class="PUNC">(</span><span class="NAME">this._latLngPt</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>164</span>        * Returns the marker's current position
+<span class='line'>165</span>        *
+<span class='line'>166</span>        * @function
+<span class='line'>167</span>        * @returns {google.maps.LatLng} The position of the marker
+<span class='line'>168</span>        */</span><span class="WHIT">
+<span class='line'>169</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.getPosition</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>170</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._latLng</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>171</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>173</span>        * Sets the marker's current position
+<span class='line'>174</span>        *
+<span class='line'>175</span>        * @function
+<span class='line'>176</span>        * @param {google.maps.LatLng} latLng The new position of the marker
+<span class='line'>177</span>        */</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.setPosition</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">latLng</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">latLng</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">          </span><span class="NAME">this._latLng</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">latLng</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">          </span><span class="NAME">this.draw</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>185</span>        * Returns the marker's element
+<span class='line'>186</span>        *
+<span class='line'>187</span>        * @function
+<span class='line'>188</span>        * @returns {jQuery} The jQuery element used for the marker
+<span class='line'>189</span>        */</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.getElement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._element</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>194</span>        * Gets or sets the marker's title
+<span class='line'>195</span>        *
+<span class='line'>196</span>        * @function
+<span class='line'>197</span>        * @param {String} title The title to set
+<span class='line'>198</span>        */</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.title</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">title</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._element.attr</span><span class="PUNC">(</span><span class="STRN">'title'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">        </span><span class="NAME">this._element.attr</span><span class="PUNC">(</span><span class="STRN">'title'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">title</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">      </span><span class="COMM">/**
+<span class='line'>206</span>        * Gets or sets the marker's HTML
+<span class='line'>207</span>        *
+<span class='line'>208</span>        * @function
+<span class='line'>209</span>        * @param {String} html The html or text to set
+<span class='line'>210</span>        */</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">      </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker.prototype.html</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">html</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>212</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>213</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._element.find</span><span class="PUNC">(</span><span class="STRN">".row"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">html</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">        </span><span class="NAME">this._element.find</span><span class="PUNC">(</span><span class="STRN">".row"</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">html</span><span class="PUNC">(</span><span class="NAME">html</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">      </span><span class="NAME">_initialized</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>221</span>    * Factory Method to create a new $.simplicityGoogleMarker.OverlayMarker. The
+<span class='line'>222</span>    * parameters to the method are the same as for the constructor of
+<span class='line'>223</span>    * $.simplicityGoogleMarker.OverlayMarker.
+<span class='line'>224</span>    *
+<span class='line'>225</span>    * @name $.simplicityGoogleMarker.createOverlayMarker
+<span class='line'>226</span>    * @function
+<span class='line'>227</span>    * @returns {$.simplicityGoogleMarker.OverlayMarker}
+<span class='line'>228</span>    * @public
+<span class='line'>229</span>    */</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker.createOverlayMarker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">    </span><span class="NAME">$.simplicityGoogleMarker.setup</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">$.simplicityGoogleMarker.OverlayMarker</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>233</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>235</span>    * Factory Method to create a new google.maps.Marker. The
+<span class='line'>236</span>    * parameters to the method are the same as for the constructor of
+<span class='line'>237</span>    * google.maps.Marker.
+<span class='line'>238</span>    *
+<span class='line'>239</span>    * @name $.simplicityGoogleMarker.createMarker
+<span class='line'>240</span>    * @function
+<span class='line'>241</span>    * @returns {google.maps.Marker}
+<span class='line'>242</span>    * @public
+<span class='line'>243</span>    */</span><span class="WHIT">
+<span class='line'>244</span> </span><span class="WHIT">  </span><span class="NAME">$.simplicityGoogleMarker.createMarker</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>245</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">google.maps.Marker</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>248</span> </span></pre></body></html>

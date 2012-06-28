@@ -197,6 +197,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/%24.simplicityGoogleMarker.html">$.simplicityGoogleMarker</a></li>
 	
+	<li><a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html">$.simplicityGoogleMarker.OverlayMarker</a></li>
+	
 	<li><a href="../symbols/%24.ui.html">$.ui</a></li>
 	
 	<li><a href="../symbols/%24.ui.simplicityBingGeocoder.html">$.ui.simplicityBingGeocoder</a></li>
@@ -304,17 +306,15 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class $.simplicityGoogleMarker
+				Namespace $.simplicityGoogleMarker
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/google.maps.OverlayView.html">google.maps.OverlayView</a>.<br />
 				
 			
-				$.simplicityGoogleMarker
+				Contains factory methods and classes to create a custom Google OverlayView marker.
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGoogleMarker.js.html">simplicityGoogleMarker.js</a>.
@@ -324,7 +324,7 @@ ul.inheritsList
 <!-- ============================== constructor summary ==================== -->			
 			
 			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.simplicityGoogleMarker.">
-				<caption>Class Summary</caption>
+				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -336,9 +336,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/%24.simplicityGoogleMarker.html#constructor">$.simplicityGoogleMarker</a></b>(element, row, options)
+								<b><a href="../symbols/%24.simplicityGoogleMarker.html#constructor">$.simplicityGoogleMarker</a></b>
 							</div>
-							<div class="description">A custom Google Maps Overlay View for a jQuery-based standard marker</div>
+							<div class="description"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -360,66 +360,12 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.draw">draw</a></b>
+								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#._markerTemplateCache">_markerTemplateCache</a></b>
 								</div>
-								<div class="description">Required implementation of <code>google.maps.OverlayView.draw</code></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/%24.simplicityGoogleMarker.html#element">element</a></b>
-								</div>
-								<div class="description">The jQuery element to use as the marker.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.onAdd">onAdd</a></b>
-								</div>
-								<div class="description">Required implementation of <code>google.maps.OverlayView.onAdd</code></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.onRemove">onRemove</a></b>
-								</div>
-								<div class="description">Required implementation of <code>google.maps.OverlayView.onRemove</code></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/%24.simplicityGoogleMarker.html#options">options</a></b>
-								</div>
-								<div class="description">Marker options
-<dl>
-  <dt>position</dt>
-  <dd>
-    The latLng for the marker.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/%24.simplicityGoogleMarker.html#row">row</a></b>
-								</div>
-								<div class="description">simplicityGoogleMapResults ui.row data for the marker.</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -427,10 +373,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				
-				</dl>
 				
 			
 
@@ -451,46 +393,18 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.getElement">getElement</a></b>()
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.createMarker">createMarker</a></b>()
 								</div>
-								<div class="description">Returns the marker's element</div>
+								<div class="description">Factory Method to create a new google.maps.Marker.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.getPosition">getPosition</a></b>()
+								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.createOverlayMarker">createOverlayMarker</a></b>()
 								</div>
-								<div class="description">Returns the marker's current latLng position</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.setLatLngFromOffset">setLatLngFromOffset</a></b>(dX, dY)
-								</div>
-								<div class="description">Calculates new latLng for a marker based on it's new position relative
-to it's previous position</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.setPosition">setPosition</a></b>(latLng)
-								</div>
-								<div class="description">Returns the marker's current latLng position</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.simplicityGoogleMarker.<b><a href="../symbols/%24.simplicityGoogleMarker.html#.setTitle">setTitle</a></b>(s)
-								</div>
-								<div class="description">Returns the marker's title</div>
+								<div class="description">Factory Method to create a new $.simplicityGoogleMarker.OverlayMarker.</div>
 							</td>
 						</tr>
 					
@@ -498,10 +412,6 @@ to it's previous position</div>
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				
-				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -511,44 +421,21 @@ to it's previous position</div>
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Class Detail
+					Namespace Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>$.simplicityGoogleMarker</b>(element, row, options)
+						<b>$.simplicityGoogleMarker</b>
 				</div>
 				
 				<div class="description">
-					A custom Google Maps Overlay View for a jQuery-based standard marker
+					
 					
 				</div>
 				
 				
 				
 				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								<span class="light fixedFont">{jQuery}</span>  <b>element</b>
-								
-							</dt>
-								<dd>jQuery element to use for the marker</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Dictionary}</span>  <b>row</b>
-								
-							</dt>
-								<dd>simplicityGoogleMapResults ui.row data for the marker</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Dictionary}</span>  <b>options</b>
-								
-							</dt>
-								<dd>Marker options</dd>
-						
-						</dl>
 					
 					
 					
@@ -566,139 +453,15 @@ to it's previous position</div>
 					Field Detail
 				</div>
 				
-					<a name=".draw"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="._markerTemplateCache"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.simplicityGoogleMarker.</span><b>draw</b>
-					
-					</div>
-					<div class="description">
-						Required implementation of <code>google.maps.OverlayView.draw</code>
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="element"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{jQuery}</span>
-					<b>element</b>
+					<span class="light">$.simplicityGoogleMarker.</span><b>_markerTemplateCache</b>
 					
 					</div>
 					<div class="description">
-						The jQuery element to use as the marker.
 						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onAdd"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.simplicityGoogleMarker.</span><b>onAdd</b>
-					
-					</div>
-					<div class="description">
-						Required implementation of <code>google.maps.OverlayView.onAdd</code>
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".onRemove"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.simplicityGoogleMarker.</span><b>onRemove</b>
-					
-					</div>
-					<div class="description">
-						Required implementation of <code>google.maps.OverlayView.onRemove</code>
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="options"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Dictionary}</span>
-					<b>options</b>
-					
-					</div>
-					<div class="description">
-						Marker options
-<dl>
-  <dt>position</dt>
-  <dd>
-    The latLng for the marker.
-  </dd>
-  <dt>anchor</dt>
-  <dd>
-    The anchor...to position the marker over the latLng point.
-  </dd>
-  <dt>draggable</dt>
-  <dd>
-    Indicates that the marker is draggble. Defaults to <code>false</code>.
-  </dd>
-</dl>
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="row"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Dictionary}</span>
-					<b>row</b>
-					
-					</div>
-					<div class="description">
-						simplicityGoogleMapResults ui.row data for the marker.
 						
 						
 					</div>
@@ -720,15 +483,17 @@ to it's previous position</div>
 					Method Detail
 				</div>
 				
-					<a name=".getElement"> </a>
+					<a name=".createMarker"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{jQuery}</span>
-					<span class="light">$.simplicityGoogleMarker.</span><b>getElement</b>()
+					<span class="light">{google.maps.Marker}</span>
+					<span class="light">$.simplicityGoogleMarker.</span><b>createMarker</b>()
 					
 					</div>
 					<div class="description">
-						Returns the marker's element
+						Factory Method to create a new google.maps.Marker. The
+parameters to the method are the same as for the constructor of
+google.maps.Marker.
 						
 						
 					</div>
@@ -743,7 +508,7 @@ to it's previous position</div>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{jQuery}</span> The jQuery element used for the marker</dd>
+								<dd><span class="light fixedFont">{google.maps.Marker}</span> </dd>
 							
 							</dl>
 						
@@ -752,15 +517,17 @@ to it's previous position</div>
 
 					<hr />
 				
-					<a name=".getPosition"> </a>
+					<a name=".createOverlayMarker"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{google.maps.LatLng}</span>
-					<span class="light">$.simplicityGoogleMarker.</span><b>getPosition</b>()
+					<span class="light">{<a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html">$.simplicityGoogleMarker.OverlayMarker</a>}</span>
+					<span class="light">$.simplicityGoogleMarker.</span><b>createOverlayMarker</b>()
 					
 					</div>
 					<div class="description">
-						Returns the marker's current latLng position
+						Factory Method to create a new $.simplicityGoogleMarker.OverlayMarker. The
+parameters to the method are the same as for the constructor of
+$.simplicityGoogleMarker.OverlayMarker.
 						
 						
 					</div>
@@ -775,124 +542,9 @@ to it's previous position</div>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{google.maps.LatLng}</span> The latLng of the marker</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/%24.simplicityGoogleMarker.OverlayMarker.html">$.simplicityGoogleMarker.OverlayMarker</a>}</span> </dd>
 							
 							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setLatLngFromOffset"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.simplicityGoogleMarker.</span><b>setLatLngFromOffset</b>(dX, dY)
-					
-					</div>
-					<div class="description">
-						Calculates new latLng for a marker based on it's new position relative
-to it's previous position
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{double}</span> <b>dX</b>
-									
-								</dt>
-								<dd>Offset value for the X axis</dd>
-							
-								<dt>
-									<span class="light fixedFont">{double}</span> <b>dY</b>
-									
-								</dt>
-								<dd>Offset value for the Y axis</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setPosition"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.simplicityGoogleMarker.</span><b>setPosition</b>(latLng)
-					
-					</div>
-					<div class="description">
-						Returns the marker's current latLng position
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{google.maps.LatLng}</span> <b>latLng</b>
-									
-								</dt>
-								<dd>The new latLng of the marker</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".setTitle"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.simplicityGoogleMarker.</span><b>setTitle</b>(s)
-					
-					</div>
-					<div class="description">
-						Returns the marker's title
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>s</b>
-									
-								</dt>
-								<dd>The title to set</dd>
-							
-							</dl>
-						
-						
-						
-						
 						
 						
 						
@@ -911,7 +563,7 @@ to it's previous position
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 21 2012 21:14:36 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jun 28 2012 09:37:14 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>
