@@ -91,426 +91,432 @@
 <span class='line'> 84</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'> 85</span>      * Runs a search. The search happens asynchronously and will trigger multiple events.
 <span class='line'> 86</span>      * &lt;ul>
-<span class='line'> 87</span>      *   &lt;li>simplicitySearchResponse (original response)&lt;/li>
-<span class='line'> 88</span>      *   &lt;li>ajaxSetup&lt;/li>
-<span class='line'> 89</span>      *   &lt;li>ajaxSuccess&lt;/li>
-<span class='line'> 90</span>      *   &lt;li>ajaxError&lt;/li>
-<span class='line'> 91</span>      *   &lt;li>simplicityFacetCounts&lt;/li>
-<span class='line'> 92</span>      *   &lt;li>simplicityResultSet&lt;/li>
-<span class='line'> 93</span>      * &lt;/ul>
-<span class='line'> 94</span>      *
-<span class='line'> 95</span>      * @param searchState
-<span class='line'> 96</span>      *   The search state as a JSON compatible &lt;code>Object&lt;/code>. This is an optional parameter,
-<span class='line'> 97</span>      *   if not specified the search state is obtained from the &lt;code>simplicityState&lt;/code> widget.
+<span class='line'> 87</span>      *   &lt;li>simplicitySearchSearching (before the ajax request is dispatched). This event may be
+<span class='line'> 88</span>      *   triggered multiple times in advance of the simplicitySearchResponse event. For example,
+<span class='line'> 89</span>      *   if any in-flight requests were aborted before the response has been handled, only the last
+<span class='line'> 90</span>      *   non-aborted response will trigger simplicitySearchResponse.&lt;/li>
+<span class='line'> 91</span>      *   &lt;li>simplicitySearchResponse (original response)&lt;/li>
+<span class='line'> 92</span>      *   &lt;li>ajaxSetup&lt;/li>
+<span class='line'> 93</span>      *   &lt;li>ajaxSuccess&lt;/li>
+<span class='line'> 94</span>      *   &lt;li>ajaxError&lt;/li>
+<span class='line'> 95</span>      *   &lt;li>simplicityFacetCounts&lt;/li>
+<span class='line'> 96</span>      *   &lt;li>simplicityResultSet&lt;/li>
+<span class='line'> 97</span>      * &lt;/ul>
 <span class='line'> 98</span>      *
-<span class='line'> 99</span>      * @name $.ui.simplicityDiscoverySearch.search
-<span class='line'>100</span>      * @function
-<span class='line'>101</span>      *
-<span class='line'>102</span>      * @example
-<span class='line'>103</span>      *   // Bind to a search button
-<span class='line'>104</span>      *   $('#searchButton').click(function (evt) {
-<span class='line'>105</span>      *     $('body').simplicityDiscoverySearch('search');
-<span class='line'>106</span>      *   });
-<span class='line'>107</span>      */</span><span class="WHIT">
-<span class='line'>108</span> </span><span class="WHIT">    </span><span class="NAME">search</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchState</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>109</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>110</span> </span><span class="WHIT">        </span><span class="NAME">searchState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>111</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>112</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>113</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Searching for '</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">searchState</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>114</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>115</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>116</span> </span><span class="WHIT">          </span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.url</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>117</span> </span><span class="WHIT">          </span><span class="NAME">type</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'GET'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>118</span> </span><span class="WHIT">          </span><span class="NAME">contentType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'application/json'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>119</span> </span><span class="WHIT">          </span><span class="NAME">data</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">searchState</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>120</span> </span><span class="WHIT">          </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.dataType</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>121</span> </span><span class="WHIT">          </span><span class="NAME">cache</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>122</span> </span><span class="WHIT">          </span><span class="NAME">beforeSend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="NAME">this._beforeSend</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>123</span> </span><span class="WHIT">          </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.debug</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>124</span> </span><span class="WHIT">          </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._errorHandler</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>125</span> </span><span class="WHIT">          </span><span class="NAME">success</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>126</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>127</span> </span><span class="WHIT">              </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Search success for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with response'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>128</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>129</span> </span><span class="WHIT">            </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSuccess'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>130</span> </span><span class="WHIT">            </span><span class="NAME">this._addHeadersToResponse</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>131</span> </span><span class="WHIT">            </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>132</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>133</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>134</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSetup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>135</span> </span><span class="WHIT">      </span><span class="NAME">this._ajaxHelperSearch.ajax</span><span class="PUNC">(</span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>136</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>137</span> </span><span class="WHIT">    </span><span class="NAME">query</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>138</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">jsonString</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>139</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.dataType</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'jsonp'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>140</span> </span><span class="WHIT">        </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>141</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.getPayloadParam</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>142</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>143</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="PUNC">[</span><span class="NAME">this.options.getPayloadParam</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>144</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>145</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>146</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>147</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>148</span> </span><span class="WHIT">        </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>149</span> </span><span class="WHIT">          </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"Invalid request JSON"</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>150</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>151</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>152</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>153</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>154</span> </span><span class="WHIT">          </span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.url</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>155</span> </span><span class="WHIT">          </span><span class="NAME">type</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'POST'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>156</span> </span><span class="WHIT">          </span><span class="NAME">contentType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'application/json'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>157</span> </span><span class="WHIT">          </span><span class="NAME">data</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>158</span> </span><span class="WHIT">          </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.dataType</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>159</span> </span><span class="WHIT">          </span><span class="NAME">cache</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>160</span> </span><span class="WHIT">          </span><span class="NAME">beforeSend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="NAME">this._beforeSend</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>161</span> </span><span class="WHIT">          </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.debug</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>162</span> </span><span class="WHIT">          </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._errorHandler</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>163</span> </span><span class="WHIT">          </span><span class="NAME">success</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>164</span> </span><span class="WHIT">              </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>165</span> </span><span class="WHIT">                </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Search success for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with response'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>166</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>167</span> </span><span class="WHIT">              </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSuccess'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>168</span> </span><span class="WHIT">              </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">response</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>169</span> </span><span class="WHIT">                  </span><span class="NAME">_discovery</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>170</span> </span><span class="WHIT">                    </span><span class="NAME">request</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>171</span> </span><span class="WHIT">                    </span><span class="NAME">response</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT">
-<span class='line'>172</span> </span><span class="WHIT">                  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>173</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>174</span> </span><span class="WHIT">              </span><span class="NAME">this._addHeadersToResponse</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>175</span> </span><span class="WHIT">              </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>176</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>177</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>178</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSetup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>179</span> </span><span class="WHIT">      </span><span class="NAME">this._ajaxHelperQuery.ajax</span><span class="PUNC">(</span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>180</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>181</span> </span><span class="WHIT">    </span><span class="NAME">_beforeSend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>182</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.profile</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>183</span> </span><span class="WHIT">        </span><span class="NAME">xhr.setRequestHeader</span><span class="PUNC">(</span><span class="STRN">'X-Profile'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>184</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>185</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>186</span> </span><span class="WHIT">    </span><span class="NAME">_addHeadersToResponse</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>187</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">profile</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xhr.getResponseHeader</span><span class="PUNC">(</span><span class="STRN">'X-Profiling-Trace'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>188</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">profile</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>189</span> </span><span class="WHIT">        </span><span class="NAME">response._discovery.profile</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">profile.substr</span><span class="PUNC">(</span><span class="NUMB">5</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="STRN">', >>>   '</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 99</span>      * @param searchState
+<span class='line'>100</span>      *   The search state as a JSON compatible &lt;code>Object&lt;/code>. This is an optional parameter,
+<span class='line'>101</span>      *   if not specified the search state is obtained from the &lt;code>simplicityState&lt;/code> widget.
+<span class='line'>102</span>      *
+<span class='line'>103</span>      * @name $.ui.simplicityDiscoverySearch.search
+<span class='line'>104</span>      * @function
+<span class='line'>105</span>      *
+<span class='line'>106</span>      * @example
+<span class='line'>107</span>      *   // Bind to a search button
+<span class='line'>108</span>      *   $('#searchButton').click(function (evt) {
+<span class='line'>109</span>      *     $('body').simplicityDiscoverySearch('search');
+<span class='line'>110</span>      *   });
+<span class='line'>111</span>      */</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">    </span><span class="NAME">search</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchState</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">        </span><span class="NAME">searchState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Searching for '</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">searchState</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">          </span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.url</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">          </span><span class="NAME">type</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'GET'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">          </span><span class="NAME">contentType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'application/json'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">          </span><span class="NAME">data</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">searchState</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">          </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.dataType</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">          </span><span class="NAME">cache</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">          </span><span class="NAME">beforeSend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="NAME">this._beforeSend</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">          </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.debug</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">          </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._errorHandler</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">          </span><span class="NAME">success</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">              </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Search success for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with response'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">            </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSuccess'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">            </span><span class="NAME">this._addHeadersToResponse</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">            </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicitySearchSearching'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSetup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">      </span><span class="NAME">this._ajaxHelperSearch.ajax</span><span class="PUNC">(</span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">    </span><span class="NAME">query</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">jsonString</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.dataType</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'jsonp'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">        </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.getPayloadParam</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="PUNC">[</span><span class="NAME">this.options.getPayloadParam</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">            </span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">        </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">          </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">"Invalid request JSON"</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">          </span><span class="NAME">url</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.url</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">          </span><span class="NAME">type</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'POST'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">          </span><span class="NAME">contentType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'application/json'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">          </span><span class="NAME">data</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">          </span><span class="NAME">dataType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.dataType</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">          </span><span class="NAME">cache</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">          </span><span class="NAME">beforeSend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="NAME">this._beforeSend</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">          </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.options.debug</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">          </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this._errorHandler</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">          </span><span class="NAME">success</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>169</span> </span><span class="WHIT">              </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>170</span> </span><span class="WHIT">                </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Search success for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with response'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>171</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">              </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSuccess'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">              </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">response</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="WHIT">                  </span><span class="NAME">_discovery</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">                    </span><span class="NAME">request</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">jsonString</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">                    </span><span class="NAME">response</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">data</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">                  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">                </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">              </span><span class="NAME">this._addHeadersToResponse</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">              </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicitySearchSearching'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxSetup'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">      </span><span class="NAME">this._ajaxHelperQuery.ajax</span><span class="PUNC">(</span><span class="NAME">ajaxOptions</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">    </span><span class="NAME">_beforeSend</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.profile</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">        </span><span class="NAME">xhr.setRequestHeader</span><span class="PUNC">(</span><span class="STRN">'X-Profile'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>190</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>191</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>192</span> </span><span class="WHIT">    </span><span class="NAME">_errorHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>193</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>194</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Search error for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'textStatus:'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'arguments'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>195</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>196</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxError'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>197</span> </span><span class="WHIT">      </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>198</span> </span><span class="WHIT">        </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>199</span> </span><span class="WHIT">        </span><span class="NAME">xhr</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>200</span> </span><span class="WHIT">        </span><span class="NAME">status</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">xhr.status</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>201</span> </span><span class="WHIT">        </span><span class="NAME">statusText</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>202</span> </span><span class="WHIT">        </span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">message</span><span class="WHIT">
-<span class='line'>203</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>204</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>205</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>206</span>      * Get or set (and process) the search response. Called with no arguments to retrieve the
-<span class='line'>207</span>      * last response. Called with arguments to process the current response (called by
-<span class='line'>208</span>      * &lt;code>search&lt;/code> on success or failure).
-<span class='line'>209</span>      *
-<span class='line'>210</span>      * In processing mode, this method triggers &lt;code>simplicitySearchResponse&lt;/code>
-<span class='line'>211</span>      * and &lt;code>simplicitySearchResponseHandled&lt;/code> events, then calls
-<span class='line'>212</span>      * &lt;code>facetCounts&lt;/code> and &lt;code>resultSet&lt;/code>.
-<span class='line'>213</span>      *
-<span class='line'>214</span>      *
-<span class='line'>215</span>      * @param searchResponse
-<span class='line'>216</span>      *   The search response to process.
-<span class='line'>217</span>      * @param triggerEvent
-<span class='line'>218</span>      *   Optional parameter, set it to &lt;code>false&lt;/code> to prevent triggering of events.
-<span class='line'>219</span>      *   Defaults to &lt;code>true&lt;/code> if not specified.
+<span class='line'>192</span> </span><span class="WHIT">    </span><span class="NAME">_addHeadersToResponse</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">profile</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xhr.getResponseHeader</span><span class="PUNC">(</span><span class="STRN">'X-Profiling-Trace'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>194</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">profile</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>195</span> </span><span class="WHIT">        </span><span class="NAME">response._discovery.profile</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">profile.substr</span><span class="PUNC">(</span><span class="NUMB">5</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">split</span><span class="PUNC">(</span><span class="STRN">', >>>   '</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">    </span><span class="NAME">_errorHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'Search error for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'textStatus:'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'arguments'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">      </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'ajaxError'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">      </span><span class="NAME">this.searchResponse</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">        </span><span class="NAME">error</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">        </span><span class="NAME">xhr</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">xhr</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">        </span><span class="NAME">status</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">xhr.status</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">        </span><span class="NAME">statusText</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">textStatus</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">        </span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">message</span><span class="WHIT">
+<span class='line'>209</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>212</span>      * Get or set (and process) the search response. Called with no arguments to retrieve the
+<span class='line'>213</span>      * last response. Called with arguments to process the current response (called by
+<span class='line'>214</span>      * &lt;code>search&lt;/code> on success or failure).
+<span class='line'>215</span>      *
+<span class='line'>216</span>      * In processing mode, this method triggers &lt;code>simplicitySearchSearching&lt;/code>,
+<span class='line'>217</span>      * &lt;code>simplicitySearchResponse&lt;/code> and &lt;code>simplicitySearchResponseHandled&lt;/code> events, then calls
+<span class='line'>218</span>      * &lt;code>facetCounts&lt;/code> and &lt;code>resultSet&lt;/code>.
+<span class='line'>219</span>      *
 <span class='line'>220</span>      *
-<span class='line'>221</span>      * @example
-<span class='line'>222</span>      *   // Get the last search response
-<span class='line'>223</span>      *   var response = $('body').simplicityDiscoverySearch('searchResponse');
-<span class='line'>224</span>      *
-<span class='line'>225</span>      * @example
-<span class='line'>226</span>      *   // Process a fake search response for testing purposes
-<span class='line'>227</span>      *   var response = {
-<span class='line'>228</span>      *     // Fake response
-<span class='line'>229</span>      *   };
-<span class='line'>230</span>      *   $('body').simplicityDiscoverySearch('searchResponse', response);
-<span class='line'>231</span>      *
-<span class='line'>232</span>      * @name $.ui.simplicityDiscoverySearch.searchResponse
-<span class='line'>233</span>      * @function
-<span class='line'>234</span>      */</span><span class="WHIT">
-<span class='line'>235</span> </span><span class="WHIT">    </span><span class="NAME">searchResponse</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>236</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>237</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._searchResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>238</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>239</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">discoveryResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">searchResponse._discovery</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>240</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">response</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.response</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>241</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.triggerFacetCountEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>242</span> </span><span class="WHIT">        </span><span class="NAME">searchResponse.drillDown</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.extractFacetCounts</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>243</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>244</span> </span><span class="WHIT">      </span><span class="NAME">searchResponse.resultSet</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.extractResultSet</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>245</span> </span><span class="WHIT">      </span><span class="NAME">this._searchResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>246</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>247</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicitySearchResponse'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>248</span> </span><span class="WHIT">          </span><span class="PUNC">[</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._searchResponse</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span>      * @param searchResponse
+<span class='line'>222</span>      *   The search response to process.
+<span class='line'>223</span>      * @param triggerEvent
+<span class='line'>224</span>      *   Optional parameter, set it to &lt;code>false&lt;/code> to prevent triggering of events.
+<span class='line'>225</span>      *   Defaults to &lt;code>true&lt;/code> if not specified.
+<span class='line'>226</span>      *
+<span class='line'>227</span>      * @example
+<span class='line'>228</span>      *   // Get the last search response
+<span class='line'>229</span>      *   var response = $('body').simplicityDiscoverySearch('searchResponse');
+<span class='line'>230</span>      *
+<span class='line'>231</span>      * @example
+<span class='line'>232</span>      *   // Process a fake search response for testing purposes
+<span class='line'>233</span>      *   var response = {
+<span class='line'>234</span>      *     // Fake response
+<span class='line'>235</span>      *   };
+<span class='line'>236</span>      *   $('body').simplicityDiscoverySearch('searchResponse', response);
+<span class='line'>237</span>      *
+<span class='line'>238</span>      * @name $.ui.simplicityDiscoverySearch.searchResponse
+<span class='line'>239</span>      * @function
+<span class='line'>240</span>      */</span><span class="WHIT">
+<span class='line'>241</span> </span><span class="WHIT">    </span><span class="NAME">searchResponse</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>242</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>243</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._searchResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>244</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>245</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">discoveryResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">searchResponse._discovery</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">response</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.response</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.triggerFacetCountEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>248</span> </span><span class="WHIT">        </span><span class="NAME">searchResponse.drillDown</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.extractFacetCounts</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>249</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>250</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.triggerFacetCountEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>251</span> </span><span class="WHIT">        </span><span class="NAME">this.facetCounts</span><span class="PUNC">(</span><span class="NAME">searchResponse.drillDown</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>252</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>253</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.triggerResultSetEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>254</span> </span><span class="WHIT">        </span><span class="NAME">this.resultSet</span><span class="PUNC">(</span><span class="NAME">searchResponse.resultSet</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="WHIT">      </span><span class="NAME">searchResponse.resultSet</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.extractResultSet</span><span class="PUNC">(</span><span class="NAME">response</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">      </span><span class="NAME">this._searchResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicitySearchResponse'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="WHIT">          </span><span class="PUNC">[</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._searchResponse</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>255</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>256</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>257</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicitySearchResponseHandled'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.triggerFacetCountEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>257</span> </span><span class="WHIT">        </span><span class="NAME">this.facetCounts</span><span class="PUNC">(</span><span class="NAME">searchResponse.drillDown</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>258</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>259</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>260</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>261</span>      * Get the or set the facet counts. Called with no arguments for get behavior.
-<span class='line'>262</span>      * Triggers a &lt;code>simplicityFacetCounts&lt;/code> event on set.
-<span class='line'>263</span>      *
-<span class='line'>264</span>      * @param facetCounts
-<span class='line'>265</span>      *   The facet counts to store.
-<span class='line'>266</span>      * @param triggerEvent
-<span class='line'>267</span>      *   Optional parameter, set it to &lt;code>false&lt;/code> to prevent triggering of events.
-<span class='line'>268</span>      *   Defaults to &lt;code>true&lt;/code> if not specified.
+<span class='line'>259</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.triggerResultSetEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>260</span> </span><span class="WHIT">        </span><span class="NAME">this.resultSet</span><span class="PUNC">(</span><span class="NAME">searchResponse.resultSet</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>261</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicitySearchResponseHandled'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>265</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>266</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>267</span>      * Get the or set the facet counts. Called with no arguments for get behavior.
+<span class='line'>268</span>      * Triggers a &lt;code>simplicityFacetCounts&lt;/code> event on set.
 <span class='line'>269</span>      *
-<span class='line'>270</span>      * @name $.ui.simplicityDiscoverySearch.facetCounts
-<span class='line'>271</span>      * @function
-<span class='line'>272</span>      */</span><span class="WHIT">
-<span class='line'>273</span> </span><span class="WHIT">    </span><span class="NAME">facetCounts</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">facetCounts</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>274</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>275</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._facetCounts</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>276</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>277</span> </span><span class="WHIT">      </span><span class="NAME">this._facetCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">facetCounts</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>278</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>279</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicityFacetCounts'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._facetCounts</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>280</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>281</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>282</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>283</span>      * Get the or set the resultset. Called with no arguments for get behavior.
-<span class='line'>284</span>      * Triggers a &lt;code>simplicityResultSet&lt;/code> event on set.
-<span class='line'>285</span>      *
-<span class='line'>286</span>      * @param resultSet
-<span class='line'>287</span>      *   The resultset to store.
-<span class='line'>288</span>      * @param triggerEvent
-<span class='line'>289</span>      *   Optional parameter, set it to &lt;code>false&lt;/code> to prevent triggering of events.
-<span class='line'>290</span>      *   Defaults to &lt;code>true&lt;/code> if not specified.
+<span class='line'>270</span>      * @param facetCounts
+<span class='line'>271</span>      *   The facet counts to store.
+<span class='line'>272</span>      * @param triggerEvent
+<span class='line'>273</span>      *   Optional parameter, set it to &lt;code>false&lt;/code> to prevent triggering of events.
+<span class='line'>274</span>      *   Defaults to &lt;code>true&lt;/code> if not specified.
+<span class='line'>275</span>      *
+<span class='line'>276</span>      * @name $.ui.simplicityDiscoverySearch.facetCounts
+<span class='line'>277</span>      * @function
+<span class='line'>278</span>      */</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">    </span><span class="NAME">facetCounts</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">facetCounts</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>281</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._facetCounts</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>282</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>283</span> </span><span class="WHIT">      </span><span class="NAME">this._facetCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">facetCounts</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>284</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>285</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicityFacetCounts'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._facetCounts</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>286</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>287</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>288</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>289</span>      * Get the or set the resultset. Called with no arguments for get behavior.
+<span class='line'>290</span>      * Triggers a &lt;code>simplicityResultSet&lt;/code> event on set.
 <span class='line'>291</span>      *
-<span class='line'>292</span>      * @name $.ui.simplicityDiscoverySearch.resultSet
-<span class='line'>293</span>      * @function
-<span class='line'>294</span>      */</span><span class="WHIT">
-<span class='line'>295</span> </span><span class="WHIT">    </span><span class="NAME">resultSet</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">resultSet</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>296</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>297</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._resultSet</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>298</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>299</span> </span><span class="WHIT">      </span><span class="NAME">this._resultSet</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">resultSet</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>300</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>301</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicityResultSet'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._resultSet</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>302</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>303</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>304</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>305</span>      * Converts the search response to a facet counts object using
-<span class='line'>306</span>      * the drillDown response.
-<span class='line'>307</span>      *
-<span class='line'>308</span>      * @example
-<span class='line'>309</span>      *   Input
-<span class='line'>310</span>      *   {
-<span class='line'>311</span>      *     drillDown: [
-<span class='line'>312</span>      *       {
-<span class='line'>313</span>      *         dimension: shape,
-<span class='line'>314</span>      *         ids: ['a', 'b', 'c'],
-<span class='line'>315</span>      *         exactCounts: [1, 3, 4],
-<span class='line'>316</span>      *         fuzzyCounts: [2, 6, 8]
-<span class='line'>317</span>      *       }
-<span class='line'>318</span>      *     ]
-<span class='line'>319</span>      *   }
-<span class='line'>320</span>      *
-<span class='line'>321</span>      * @example
-<span class='line'>322</span>      *   Output
-<span class='line'>323</span>      *   {
-<span class='line'>324</span>      *     shape: {
-<span class='line'>325</span>      *       exact: {'a': 1, 'b': 3, 'c': 4},
-<span class='line'>326</span>      *       fuzzy: {'a': 2, 'b': 6, 'c': 8}
-<span class='line'>327</span>      *     }
-<span class='line'>328</span>      *   }
-<span class='line'>329</span>      *
-<span class='line'>330</span>      * @param discoveryResponse
-<span class='line'>331</span>      * @name $.ui.simplicityDiscoverySearch.extractFacetCounts
-<span class='line'>332</span>      * @function
-<span class='line'>333</span>      */</span><span class="WHIT">
-<span class='line'>334</span> </span><span class="WHIT">    </span><span class="NAME">extractFacetCounts</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">discoveryResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>335</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">facetCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>336</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">discoveryResponse.drillDown</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>337</span> </span><span class="WHIT">        </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">discoveryResponse.drillDown</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">elem</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>338</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">facetCounts</span><span class="PUNC">[</span><span class="NAME">elem.dimension</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>339</span> </span><span class="WHIT">          </span><span class="NAME">facetCounts</span><span class="PUNC">[</span><span class="NAME">elem.dimension</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>340</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exactCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts.exact</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>341</span> </span><span class="WHIT">          </span><span class="NAME">dimFacetCounts.exact</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">exactCounts</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>342</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">fuzzyCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts.fuzzy</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>343</span> </span><span class="WHIT">          </span><span class="NAME">dimFacetCounts.fuzzy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fuzzyCounts</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>344</span> </span><span class="WHIT">          </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">elem.ids</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>345</span> </span><span class="WHIT">            </span><span class="NAME">exactCounts</span><span class="PUNC">[</span><span class="NAME">id</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">elem.exactCounts</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>346</span> </span><span class="WHIT">            </span><span class="NAME">fuzzyCounts</span><span class="PUNC">[</span><span class="NAME">id</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">elem.fuzzyCounts</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>347</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>348</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>349</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>350</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">facetCounts</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>351</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>352</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>353</span>      * Converts the search response to a resultset object.
-<span class='line'>354</span>      * @example
-<span class='line'>355</span>      *   Input
-<span class='line'>356</span>      *   {
-<span class='line'>357</span>      *     startIndex: 0
-<span class='line'>358</span>      *     pageSize: 10,
-<span class='line'>359</span>      *     currentPageSize: 10,
-<span class='line'>360</span>      *     exactSize: 2,
-<span class='line'>361</span>      *     totalSize: 120,
-<span class='line'>362</span>      *     datasetSize: 55000,
-<span class='line'>363</span>      *     itemIds: ['a', 'b', 'c'],
-<span class='line'>364</span>      *     relevanceValues: [1.0, 1.0, 0.9],
-<span class='line'>365</span>      *     exactMatches: [true, true, false],
-<span class='line'>366</span>      *     properties: [
-<span class='line'>367</span>      *       {title: 'aaa'},
-<span class='line'>368</span>      *       {title: 'bbb'},
-<span class='line'>369</span>      *       {title: 'ccc'}
-<span class='line'>370</span>      *     ],
-<span class='line'>371</span>      *     highlighting: [
-<span class='line'>372</span>      *       {},
-<span class='line'>373</span>      *       {'title': '[b]bbb[/b]'},
-<span class='line'>374</span>      *       {}
-<span class='line'>375</span>      *     ]
-<span class='line'>376</span>      *   }
-<span class='line'>377</span>      *
-<span class='line'>378</span>      * @example
-<span class='line'>379</span>      *   Output
-<span class='line'>380</span>      *   &lt;pre>
-<span class='line'>381</span>      *   {
-<span class='line'>382</span>      *     startIndex: 0,
-<span class='line'>383</span>      *     pageSize: 10,
-<span class='line'>384</span>      *     exactSize: 2,
-<span class='line'>385</span>      *     totalSize: 120,
-<span class='line'>386</span>      *     datasetSize: 55000,
-<span class='line'>387</span>      *     numRows: 10,
-<span class='line'>388</span>      *     rows: [
-<span class='line'>389</span>      *       {
-<span class='line'>390</span>      *         id: 'a',
-<span class='line'>391</span>      *         exact: true,
-<span class='line'>392</span>      *         score: 1.0
-<span class='line'>393</span>      *         properties: {
-<span class='line'>394</span>      *           title: 'aaa'
-<span class='line'>395</span>      *         },
-<span class='line'>396</span>      *         highlighting: {}
-<span class='line'>397</span>      *       },
-<span class='line'>398</span>      *       {
-<span class='line'>399</span>      *         id: 'b',
-<span class='line'>400</span>      *         exact: true,
-<span class='line'>401</span>      *         score: 1.0
-<span class='line'>402</span>      *         properties: {
-<span class='line'>403</span>      *           title: 'bbb'
-<span class='line'>404</span>      *         },
-<span class='line'>405</span>      *         highlighting: {
-<span class='line'>406</span>      *           title: '[b]bbb[/b]'
-<span class='line'>407</span>      *         }
-<span class='line'>408</span>      *       },
-<span class='line'>409</span>      *       {
-<span class='line'>410</span>      *         id: 'c',
-<span class='line'>411</span>      *         exact: false,
-<span class='line'>412</span>      *         score: 0.9
-<span class='line'>413</span>      *         properties: {
-<span class='line'>414</span>      *           title: 'ccc'
-<span class='line'>415</span>      *         },
-<span class='line'>416</span>      *         highlighting: {}
-<span class='line'>417</span>      *       }
-<span class='line'>418</span>      *     ]
-<span class='line'>419</span>      *   }
-<span class='line'>420</span>      *   &lt;/pre>
-<span class='line'>421</span>      *
-<span class='line'>422</span>      * @param discoveryResponse
-<span class='line'>423</span>      * @name $.ui.simplicityDiscoverySearch.extractResultSet
-<span class='line'>424</span>      * @function
-<span class='line'>425</span>      */</span><span class="WHIT">
-<span class='line'>426</span> </span><span class="WHIT">    </span><span class="NAME">extractResultSet</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">discoveryResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>427</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">resultSet</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>428</span> </span><span class="WHIT">        </span><span class="NAME">startIndex</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.startIndex</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>429</span> </span><span class="WHIT">        </span><span class="NAME">pageSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.pageSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>430</span> </span><span class="WHIT">        </span><span class="NAME">exactSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.exactSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>431</span> </span><span class="WHIT">        </span><span class="NAME">totalSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.totalSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>432</span> </span><span class="WHIT">        </span><span class="NAME">datasetSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.datasetSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT">
-<span class='line'>433</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>434</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">rows</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>435</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>436</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">itemIds</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>437</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.exactMatches</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>438</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.relevanceValues</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>439</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.properties</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>440</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.highlighting</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>441</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>442</span> </span><span class="WHIT">          </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>443</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>444</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>445</span> </span><span class="WHIT">          </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>446</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>447</span> </span><span class="WHIT">        </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">itemIds</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>448</span> </span><span class="WHIT">          </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>449</span> </span><span class="WHIT">            </span><span class="NAME">id</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>450</span> </span><span class="WHIT">            </span><span class="NAME">exact</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>451</span> </span><span class="WHIT">            </span><span class="NAME">score</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="WHIT">
-<span class='line'>452</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>453</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>454</span> </span><span class="WHIT">            </span><span class="NAME">row.properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>455</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>456</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>457</span> </span><span class="WHIT">            </span><span class="NAME">row.highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>458</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>459</span> </span><span class="WHIT">          </span><span class="NAME">rows.push</span><span class="PUNC">(</span><span class="NAME">row</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>460</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>461</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>462</span> </span><span class="WHIT">      </span><span class="NAME">resultSet.numRows</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rows.length</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>463</span> </span><span class="WHIT">      </span><span class="NAME">resultSet.rows</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rows</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>464</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">resultSet</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>465</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>466</span> </span><span class="WHIT">    </span><span class="NAME">searchStats</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>467</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._ajaxHelperSearch.getStats</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>468</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>469</span> </span><span class="WHIT">    </span><span class="NAME">queryStats</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>470</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._ajaxHelperQuery.getStats</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>471</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>472</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>473</span> </span><span class="WHIT">  </span><span class="NAME">$.fn.simplicityDiscoverySearchItemEnumerator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>474</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">discovery</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">searchResponse._discovery</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>475</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">discoveryResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discovery.response</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>476</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>477</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">startIndex</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.startIndex</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>478</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">itemIds</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>479</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.exactMatches</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>480</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.relevanceValues</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>481</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.properties</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>482</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.highlighting</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>483</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>484</span> </span><span class="WHIT">        </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>485</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>486</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>487</span> </span><span class="WHIT">        </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>488</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>489</span> </span><span class="WHIT">      </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">itemIds</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>490</span> </span><span class="WHIT">        </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>491</span> </span><span class="WHIT">          </span><span class="NAME">id</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>492</span> </span><span class="WHIT">          </span><span class="NAME">exact</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>493</span> </span><span class="WHIT">          </span><span class="NAME">score</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>494</span> </span><span class="WHIT">          </span><span class="NAME">resultsIndex0</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">startIndex</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>495</span> </span><span class="WHIT">          </span><span class="NAME">index0</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>496</span> </span><span class="WHIT">          </span><span class="NAME">index1</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT">
-<span class='line'>497</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>498</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>499</span> </span><span class="WHIT">          </span><span class="NAME">row.properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>500</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>501</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>502</span> </span><span class="WHIT">          </span><span class="NAME">row.highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>503</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>504</span> </span><span class="WHIT">        </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>505</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>506</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>507</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>508</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>509</span> </span></pre></body></html>
+<span class='line'>292</span>      * @param resultSet
+<span class='line'>293</span>      *   The resultset to store.
+<span class='line'>294</span>      * @param triggerEvent
+<span class='line'>295</span>      *   Optional parameter, set it to &lt;code>false&lt;/code> to prevent triggering of events.
+<span class='line'>296</span>      *   Defaults to &lt;code>true&lt;/code> if not specified.
+<span class='line'>297</span>      *
+<span class='line'>298</span>      * @name $.ui.simplicityDiscoverySearch.resultSet
+<span class='line'>299</span>      * @function
+<span class='line'>300</span>      */</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">    </span><span class="NAME">resultSet</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">resultSet</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">triggerEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>302</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>303</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._resultSet</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>304</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>305</span> </span><span class="WHIT">      </span><span class="NAME">this._resultSet</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSON.stringify</span><span class="PUNC">(</span><span class="NAME">resultSet</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>306</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">triggerEvent</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="WHIT">        </span><span class="NAME">this.element.triggerHandler</span><span class="PUNC">(</span><span class="STRN">'simplicityResultSet'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">this._resultSet</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>308</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>309</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>311</span>      * Converts the search response to a facet counts object using
+<span class='line'>312</span>      * the drillDown response.
+<span class='line'>313</span>      *
+<span class='line'>314</span>      * @example
+<span class='line'>315</span>      *   Input
+<span class='line'>316</span>      *   {
+<span class='line'>317</span>      *     drillDown: [
+<span class='line'>318</span>      *       {
+<span class='line'>319</span>      *         dimension: shape,
+<span class='line'>320</span>      *         ids: ['a', 'b', 'c'],
+<span class='line'>321</span>      *         exactCounts: [1, 3, 4],
+<span class='line'>322</span>      *         fuzzyCounts: [2, 6, 8]
+<span class='line'>323</span>      *       }
+<span class='line'>324</span>      *     ]
+<span class='line'>325</span>      *   }
+<span class='line'>326</span>      *
+<span class='line'>327</span>      * @example
+<span class='line'>328</span>      *   Output
+<span class='line'>329</span>      *   {
+<span class='line'>330</span>      *     shape: {
+<span class='line'>331</span>      *       exact: {'a': 1, 'b': 3, 'c': 4},
+<span class='line'>332</span>      *       fuzzy: {'a': 2, 'b': 6, 'c': 8}
+<span class='line'>333</span>      *     }
+<span class='line'>334</span>      *   }
+<span class='line'>335</span>      *
+<span class='line'>336</span>      * @param discoveryResponse
+<span class='line'>337</span>      * @name $.ui.simplicityDiscoverySearch.extractFacetCounts
+<span class='line'>338</span>      * @function
+<span class='line'>339</span>      */</span><span class="WHIT">
+<span class='line'>340</span> </span><span class="WHIT">    </span><span class="NAME">extractFacetCounts</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">discoveryResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>341</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">facetCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>342</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">discoveryResponse.drillDown</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>343</span> </span><span class="WHIT">        </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">discoveryResponse.drillDown</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">elem</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">facetCounts</span><span class="PUNC">[</span><span class="NAME">elem.dimension</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>345</span> </span><span class="WHIT">          </span><span class="NAME">facetCounts</span><span class="PUNC">[</span><span class="NAME">elem.dimension</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>346</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exactCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts.exact</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>347</span> </span><span class="WHIT">          </span><span class="NAME">dimFacetCounts.exact</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">exactCounts</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>348</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">fuzzyCounts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">dimFacetCounts.fuzzy</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>349</span> </span><span class="WHIT">          </span><span class="NAME">dimFacetCounts.fuzzy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fuzzyCounts</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>350</span> </span><span class="WHIT">          </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">elem.ids</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>351</span> </span><span class="WHIT">            </span><span class="NAME">exactCounts</span><span class="PUNC">[</span><span class="NAME">id</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">elem.exactCounts</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>352</span> </span><span class="WHIT">            </span><span class="NAME">fuzzyCounts</span><span class="PUNC">[</span><span class="NAME">id</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">elem.fuzzyCounts</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>354</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>355</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">facetCounts</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>357</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>358</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>359</span>      * Converts the search response to a resultset object.
+<span class='line'>360</span>      * @example
+<span class='line'>361</span>      *   Input
+<span class='line'>362</span>      *   {
+<span class='line'>363</span>      *     startIndex: 0
+<span class='line'>364</span>      *     pageSize: 10,
+<span class='line'>365</span>      *     currentPageSize: 10,
+<span class='line'>366</span>      *     exactSize: 2,
+<span class='line'>367</span>      *     totalSize: 120,
+<span class='line'>368</span>      *     datasetSize: 55000,
+<span class='line'>369</span>      *     itemIds: ['a', 'b', 'c'],
+<span class='line'>370</span>      *     relevanceValues: [1.0, 1.0, 0.9],
+<span class='line'>371</span>      *     exactMatches: [true, true, false],
+<span class='line'>372</span>      *     properties: [
+<span class='line'>373</span>      *       {title: 'aaa'},
+<span class='line'>374</span>      *       {title: 'bbb'},
+<span class='line'>375</span>      *       {title: 'ccc'}
+<span class='line'>376</span>      *     ],
+<span class='line'>377</span>      *     highlighting: [
+<span class='line'>378</span>      *       {},
+<span class='line'>379</span>      *       {'title': '[b]bbb[/b]'},
+<span class='line'>380</span>      *       {}
+<span class='line'>381</span>      *     ]
+<span class='line'>382</span>      *   }
+<span class='line'>383</span>      *
+<span class='line'>384</span>      * @example
+<span class='line'>385</span>      *   Output
+<span class='line'>386</span>      *   &lt;pre>
+<span class='line'>387</span>      *   {
+<span class='line'>388</span>      *     startIndex: 0,
+<span class='line'>389</span>      *     pageSize: 10,
+<span class='line'>390</span>      *     exactSize: 2,
+<span class='line'>391</span>      *     totalSize: 120,
+<span class='line'>392</span>      *     datasetSize: 55000,
+<span class='line'>393</span>      *     numRows: 10,
+<span class='line'>394</span>      *     rows: [
+<span class='line'>395</span>      *       {
+<span class='line'>396</span>      *         id: 'a',
+<span class='line'>397</span>      *         exact: true,
+<span class='line'>398</span>      *         score: 1.0
+<span class='line'>399</span>      *         properties: {
+<span class='line'>400</span>      *           title: 'aaa'
+<span class='line'>401</span>      *         },
+<span class='line'>402</span>      *         highlighting: {}
+<span class='line'>403</span>      *       },
+<span class='line'>404</span>      *       {
+<span class='line'>405</span>      *         id: 'b',
+<span class='line'>406</span>      *         exact: true,
+<span class='line'>407</span>      *         score: 1.0
+<span class='line'>408</span>      *         properties: {
+<span class='line'>409</span>      *           title: 'bbb'
+<span class='line'>410</span>      *         },
+<span class='line'>411</span>      *         highlighting: {
+<span class='line'>412</span>      *           title: '[b]bbb[/b]'
+<span class='line'>413</span>      *         }
+<span class='line'>414</span>      *       },
+<span class='line'>415</span>      *       {
+<span class='line'>416</span>      *         id: 'c',
+<span class='line'>417</span>      *         exact: false,
+<span class='line'>418</span>      *         score: 0.9
+<span class='line'>419</span>      *         properties: {
+<span class='line'>420</span>      *           title: 'ccc'
+<span class='line'>421</span>      *         },
+<span class='line'>422</span>      *         highlighting: {}
+<span class='line'>423</span>      *       }
+<span class='line'>424</span>      *     ]
+<span class='line'>425</span>      *   }
+<span class='line'>426</span>      *   &lt;/pre>
+<span class='line'>427</span>      *
+<span class='line'>428</span>      * @param discoveryResponse
+<span class='line'>429</span>      * @name $.ui.simplicityDiscoverySearch.extractResultSet
+<span class='line'>430</span>      * @function
+<span class='line'>431</span>      */</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="WHIT">    </span><span class="NAME">extractResultSet</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">discoveryResponse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>433</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">resultSet</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>434</span> </span><span class="WHIT">        </span><span class="NAME">startIndex</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.startIndex</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>435</span> </span><span class="WHIT">        </span><span class="NAME">pageSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.pageSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>436</span> </span><span class="WHIT">        </span><span class="NAME">exactSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.exactSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>437</span> </span><span class="WHIT">        </span><span class="NAME">totalSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.totalSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>438</span> </span><span class="WHIT">        </span><span class="NAME">datasetSize</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.datasetSize</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT">
+<span class='line'>439</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>440</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">rows</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>441</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>442</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">itemIds</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>443</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.exactMatches</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>444</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.relevanceValues</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>445</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.properties</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>446</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.highlighting</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>447</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>448</span> </span><span class="WHIT">          </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>449</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>450</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>451</span> </span><span class="WHIT">          </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>452</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>453</span> </span><span class="WHIT">        </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">itemIds</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>454</span> </span><span class="WHIT">          </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>455</span> </span><span class="WHIT">            </span><span class="NAME">id</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>456</span> </span><span class="WHIT">            </span><span class="NAME">exact</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>457</span> </span><span class="WHIT">            </span><span class="NAME">score</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="WHIT">
+<span class='line'>458</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>459</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>460</span> </span><span class="WHIT">            </span><span class="NAME">row.properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>461</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>462</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>463</span> </span><span class="WHIT">            </span><span class="NAME">row.highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>464</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>465</span> </span><span class="WHIT">          </span><span class="NAME">rows.push</span><span class="PUNC">(</span><span class="NAME">row</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>466</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>467</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>468</span> </span><span class="WHIT">      </span><span class="NAME">resultSet.numRows</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rows.length</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>469</span> </span><span class="WHIT">      </span><span class="NAME">resultSet.rows</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">rows</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>470</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">resultSet</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>471</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>472</span> </span><span class="WHIT">    </span><span class="NAME">searchStats</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>473</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._ajaxHelperSearch.getStats</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>474</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>475</span> </span><span class="WHIT">    </span><span class="NAME">queryStats</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>476</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._ajaxHelperQuery.getStats</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>477</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>478</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>479</span> </span><span class="WHIT">  </span><span class="NAME">$.fn.simplicityDiscoverySearchItemEnumerator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchResponse</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>480</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">discovery</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">searchResponse._discovery</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>481</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">discoveryResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discovery.response</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>482</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="STRN">'undefined'</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>483</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">startIndex</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.startIndex</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>484</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">itemIds</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.itemIds</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>485</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.exactMatches</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>486</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.relevanceValues</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>487</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.properties</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>488</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">discoveryResponse.highlighting</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>489</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">properties</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>490</span> </span><span class="WHIT">        </span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>491</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>492</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$.isArray</span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>493</span> </span><span class="WHIT">        </span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>494</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>495</span> </span><span class="WHIT">      </span><span class="NAME">$.each</span><span class="PUNC">(</span><span class="NAME">itemIds</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>496</span> </span><span class="WHIT">        </span><span class="NAME">row</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>497</span> </span><span class="WHIT">          </span><span class="NAME">id</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">itemId</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>498</span> </span><span class="WHIT">          </span><span class="NAME">exact</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">exactMatches</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>499</span> </span><span class="WHIT">          </span><span class="NAME">score</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">relevanceValues</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>500</span> </span><span class="WHIT">          </span><span class="NAME">resultsIndex0</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">startIndex</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>501</span> </span><span class="WHIT">          </span><span class="NAME">index0</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>502</span> </span><span class="WHIT">          </span><span class="NAME">index1</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT">
+<span class='line'>503</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>504</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">properties</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>505</span> </span><span class="WHIT">          </span><span class="NAME">row.properties</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">properties</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>506</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>507</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">highlighting</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>508</span> </span><span class="WHIT">          </span><span class="NAME">row.highlighting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">highlighting</span><span class="PUNC">[</span><span class="NAME">idx</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>509</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>510</span> </span><span class="WHIT">        </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">row</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>511</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>512</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>513</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>514</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>515</span> </span></pre></body></html>

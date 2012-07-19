@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - $.ui.simplicitySelectSlider</title>
+		<title>JsDoc Reference - $.ui.simplicityMapShapeCreatorUi</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -320,7 +320,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace $.ui.simplicitySelectSlider
+				Namespace $.ui.simplicityMapShapeCreatorUi
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -328,21 +328,17 @@ ul.inheritsList
 				
 				
 			
-				Single handled slider bound to a select input.
-<p>
-Creates a progressive enhanced jQuery UI slider that is backed by a <code>select</code> input.
-<p>
-The widget options are passed through to the created slider. For more information see the
-jQuery UI slider <a href="http://jqueryui.com/demos/slider/">documentation</a>.
+				A user interface for a simplicityMapShapeCreator. Saves its UI state
+in cookies.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicitySelectSlider.js.html">simplicitySelectSlider.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityMapShapeCreatorUi.js.html">simplicityMapShapeCreatorUi.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicitySelectSlider.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicityMapShapeCreatorUi.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -355,7 +351,7 @@ jQuery UI slider <a href="http://jqueryui.com/demos/slider/">documentation</a>.
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#constructor">$.ui.simplicitySelectSlider</a></b>
+								<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#constructor">$.ui.simplicityMapShapeCreatorUi</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -368,7 +364,7 @@ jQuery UI slider <a href="http://jqueryui.com/demos/slider/">documentation</a>.
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicitySelectSlider.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicityMapShapeCreatorUi.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -382,7 +378,7 @@ jQuery UI slider <a href="http://jqueryui.com/demos/slider/">documentation</a>.
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								$.ui.simplicitySelectSlider.<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#.options">options</a></b>
+								$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#.options">options</a></b>
 								</div>
 								<div class="description">Widget options.</div>
 							</td>
@@ -399,7 +395,7 @@ jQuery UI slider <a href="http://jqueryui.com/demos/slider/">documentation</a>.
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.ui.simplicitySelectSlider.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.ui.simplicityMapShapeCreatorUi.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -412,47 +408,90 @@ jQuery UI slider <a href="http://jqueryui.com/demos/slider/">documentation</a>.
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicitySelectSlider.<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#._refreshScale">_refreshScale</a></b>()
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._configureGeocoder">_configureGeocoder</a></b>()
 								</div>
-								<div class="description">Recreates the scale on the slider.</div>
+								<div class="description">Helper method that configures a simplicity geocoder control.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicitySelectSlider.<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#._refreshTooltip">_refreshTooltip</a></b>()
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._configureRadiusInput">_configureRadiusInput</a></b>()
 								</div>
-								<div class="description">Updates the content of the tooltip and hides or shows it as appropriate.</div>
+								<div class="description">Helper method that configures a simplicity radius control.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicitySelectSlider.<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#._selectChangeHandler">_selectChangeHandler</a></b>()
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._createUi">_createUi</a></b>()
 								</div>
-								<div class="description">Event handler for the <code>change</code> event on the <code>select</code> input.</div>
+								<div class="description">Builds the Ui.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicitySelectSlider.<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#._setOption">_setOption</a></b>()
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._disable">_disable</a></b>(forceChange)
 								</div>
-								<div class="description">Override of <code>_setOption</code> that is used to refresh the
-slider tick marks, labels and tooltip when the assocaited options
-are changed.</div>
+								<div class="description">Helper method that disables (stops) editing</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicitySelectSlider.<b><a href="../symbols/%24.ui.simplicitySelectSlider.html#._sliderChangeHandler">_sliderChangeHandler</a></b>()
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._enable">_enable</a></b>()
 								</div>
-								<div class="description">Event handler for the <code>slidechange</code> and <code>slide</code> events.</div>
+								<div class="description">Helper method that enables the Ui for editing shapes</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._getSettings">_getSettings</a></b>(cookiename)
+								</div>
+								<div class="description">Sets the UI state from a cookie</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._radiusChangedHandler">_radiusChangedHandler</a></b>()
+								</div>
+								<div class="description">Handler for dealing with changes to the radius.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._saveSettings">_saveSettings</a></b>(cookiename)
+								</div>
+								<div class="description">Saves UI state to a cookie</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._setConnected">_setConnected</a></b>(value)
+								</div>
+								<div class="description">Handler for dealing with changes to the connected/disconnected status of a series of points</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreatorUi.<b><a href="../symbols/%24.ui.simplicityMapShapeCreatorUi.html#._shapeChangedHandler">_shapeChangedHandler</a></b>()
+								</div>
+								<div class="description">Handler for dealing with changes to the underlying geoJson shape.</div>
 							</td>
 						</tr>
 					
@@ -473,7 +512,7 @@ are changed.</div>
 				</div>
 				
 				<div class="fixedFont">
-						<b>$.ui.simplicitySelectSlider</b>
+						<b>$.ui.simplicityMapShapeCreatorUi</b>
 				</div>
 				
 				<div class="description">
@@ -483,17 +522,20 @@ are changed.</div>
 				
 				
 				
-				<pre class="code">  &lt;select id="weight" name="w">
-    &lt;option value="l">Light&lt;/option>
-    &lt;option value="m">Medium&lt;/option>
-    &lt;option value="h">Heavy&lt;/option>
-  &lt;select>
-  &lt;div id="weightSlider">&lt;/div>
+				<pre class="code">
+  &lt;div id="map" style="width: 300px; height: 300px;">&lt;/div>
+  &lt;div id="ui">&lt;/div>
   &lt;script type="text/javascript">
-    $('#weightSlider').simplicitySelectSlider({
-      select: '#weight'
+    $('#map').simplicityGoogleMap();
+    $('#map').simplicityGoogleMapShapeCreator({
+      input: $('<input name="placemark"/>').simplicityInputs()
     });
-  &lt;/script></pre>
+    $('#ui').simplicityMapShapeCreatorUi({
+      shapeCreator: '#map'
+    });
+  &lt;/script>
+<p>Triggers a <code>simplicitymapshapecreatoruiedit</code> event which other components can use to
+react to changes in drawing state.</p></pre>
 				
 				
 				
@@ -519,58 +561,96 @@ are changed.</div>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicitySelectSlider.</span><b>options</b>
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>options</b>
 					
 					</div>
 					<div class="description">
 						Widget options.
 
 <dl>
-  <dt>select</dt>
+  <dt><code>shapeCreator</code></dt>
   <dd>
-    A single <code>select</code> input to associate the slider handle with.
+    Required shape creator instance.
   </dd>
-  <dt>changeOnSlide</dt>
+  <dt><code>allowMultiPoint</code></dt>
   <dd>
-     Set this to <code>true</code> to cause <code>slide</code> events to change the
-     bound <code>select</code> input. Defaults to <code>false</code>.
-  </dd>
-  <dt>showTicks</dt>
-  <dd>
-     Set this to <code>true</code> to cause the display of tick marks on the slider.
-     Defaults to <code>true</code>.
-  </dd>
-  <dt>showLabels</dt>
-  <dd>
-    Set this to <code>true</code> to cause the display of labels under the tick marks
-    of the slider. All labels are displayed, if you have too many labels then you
-    will want to disable this option. Defaults to <code>true</code>.
-  </dd>
-  <dt>centerLabels</dt>
-  <dd>
-    When labels are displayed this option causes their css to be adjusted to cause them
-    to be centered around their tick mark. You would disable this if you had fixed width
-    labels and wanted to fully control their position from css.
-    Defaults to <code>true</code>.
-  </dd>
-  <dt>justifyEndLabels</dt>
-  <dd>
-    When labels are displayed this option causes the first label to be left justified and
-    the right label to be right justified with the ends of the slider. You would disable
-    this if you had fixed width labels and wanted to fully control their position from css.
-    Defaults to <code>true</code>.
-  </dd>
-  <dt>showTooltip</dt>
-  <dd>
-    Set this to <code>true</code> to cause a tooltip to appear above the slider handle.
+    Determines if the shape creator can be used to generate a MultiPoint shape.
     Defaults to <code>false</code>.
   </dd>
-  <dt>centerTooltip</dt>
+  <dt><code>helpPosition</code></dt>
   <dd>
-    When tooltip display is enabled this option causes the tooltip to be centered on
-    the slider handle. You would disable this if you had a fixed width tooltip and wanted
-    to fully control it's position from css.
-    Defaults to <code>true</code>.
+    The relative css position of the help popup
+    Defaults to <code>
+    {
+      left: 300,
+      top: -148
+    }</code>.
+  </dd>
+  <dt><code>radiusElement</code></dt>
+  <dd>
+    The selector to use for identify simplicity radius selection control. The selector's element
+    moved to the DOM location via <code>$(this.options.template).find('.radius .control')</code>.
+    <p>Defaults to</p>
+    <code>
+      &lt;select class="radius"><br/>
+         &nbsp;&nbsp;&lt;option value="0.5">½ mile&lt;/option><br/>
+         &nbsp;&nbsp&lt;option value="1">1 mile&lt;/option><br/>
+         &nbsp;&nbsp&lt;option value="5">5 miles&lt;/option><br/>
+         &nbsp;&nbsp&lt;option value="10">10 miles&lt;</option><br/>
+         &nbsp;&nbsp&lt;option value="20">20 miles&lt;/option><br/>
+         &nbsp;&nbsp&lt;option value="50">50 miles&lt;/option><br/>
+         &nbsp;&nbsp&lt;option value="0">None&lt;/option><br/>
+      &lt;/select></code>
+  </dd>
+  <dt><code>geocoderInput</code></dt>
+  <dd>
+    The selector to use for identify the input for the geocoder. The selector's element
+    will be configured using jQuery UI <code>.autocomplete()</code> and
+    moved to the DOM location via <code>$(this.options.template).find('.geocoder')</code>.
+    <p>Defaults to</p>
+    <code>&lt;input class="geocoder" type="text" placeholder="Enter city, state, zip or location" /></code>
+  </dd>
+  <dt><code>geocoder</code></dt>
+  <dd>
+    The selector to use for identify the simplicity map vendor geocoder. If not specified, the appropriate
+    map vendor geocoder widget will be applied to option <code>geocoderInput</code>.
+    <p>Defaults to ''</code>
+  </dd>
+  <dt><code>template</code></dt>
+  <dd>
+    The html template to use for the UI.
+    <p>Defaults to</p>
+    <code>
+      &lt;div class="ui"><br/>
+         &nbsp;&nbsp;&lt;span class="geocoder"/><br/>
+         &nbsp;&nbsp;&lt;span class="radius">Radius&lt;span class="control"/>&lt;/span><br/>
+         &nbsp;&nbsp;&lt;span class="tbBox"><br/>
+           &nbsp;&nbsp;&nbsp;&lt;button class="drawBtn btn" title="Start drawing a shape to search on the map.">&lt;i class="icon-edit">&lt;/i>&lt;span>Draw&lt;/span>&lt;/button><br/>
+           &nbsp;&nbsp;&nbsp;&lt;button class="linkerBtn btn" title="Click to draw points only">&lt;span>●­­–●–●&lt;/span>&lt;/button><br/>
+           &nbsp;&nbsp;&nbsp;&lt;button class="clear btn" title="Clear any drawn shape">&lt;i class="icon-remove">&lt;/i> Clear&lt;/button><br/>
+           &nbsp;&nbsp;&nbsp;&lt;button class="showhelp btn" title="Show help">&lt;i class="icon-info-sign">&lt;/i> Help&lt;/button><br/>
+         &nbsp;&nbsp;&lt;/span><br/>
+      &lt;/div></code>
+  </dd>
+  <dt><code>helpTemplate</code></dt>
+  <dd>
+    The html template to use for the help popup.
+  </dd>
+  <dt><code>updateBounds</code></dt>
+  <dd>
+    Determines if the shape creator visible shape areas should be used
+    when calculating the maps bounds. When this option is enabled, all visible
+    shapes will be displayed without having to pan or zoom the map.
+    Defaults to <code>false</code>.
+  </dd>
+  <dt><code>searchElement</code></dt>
+  <dd>
+    The <code>simplicityDiscoverySearch</code> widget selector.
+    Defaults to <code>'body'</code>.
+  </dd>
+  <dt><code>debug</code></dt>
+  <dd>
+    Enables debug mode. Defaults to <code>false</code>.
   </dd>
 </dl>
 						
@@ -594,18 +674,18 @@ are changed.</div>
 					Method Detail
 				</div>
 				
-					<a name="._refreshScale"> </a>
+					<a name="._configureGeocoder"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicitySelectSlider.</span><b>_refreshScale</b>()
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_configureGeocoder</b>()
 					
 					</div>
 					<div class="description">
-						Recreates the scale on the slider. This contains the tick marks and labels.
-Tick marks and labels are created only if shown. Toggling the <code>showTicks</code>
-or <code>showLabels</code> options will cause this method to be called and the
-ticks or labels to be created.
+						Helper method that configures a simplicity geocoder control.
+
+<p>Triggers a simplicitymapshapecreatoruigeocodedpoint event. Handlers for that event receive a ui
+object with geoJson and geocoderCallbackData members.</p>
 						
 						
 					</div>
@@ -622,15 +702,15 @@ ticks or labels to be created.
 
 					<hr />
 				
-					<a name="._refreshTooltip"> </a>
+					<a name="._configureRadiusInput"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicitySelectSlider.</span><b>_refreshTooltip</b>()
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_configureRadiusInput</b>()
 					
 					</div>
 					<div class="description">
-						Updates the content of the tooltip and hides or shows it as appropriate.
+						Helper method that configures a simplicity radius control.
 						
 						
 					</div>
@@ -647,17 +727,15 @@ ticks or labels to be created.
 
 					<hr />
 				
-					<a name="._selectChangeHandler"> </a>
+					<a name="._createUi"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicitySelectSlider.</span><b>_selectChangeHandler</b>()
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_createUi</b>()
 					
 					</div>
 					<div class="description">
-						Event handler for the <code>change</code> event on the <code>select</code> input.
-
-Updates the slider with the new value.
+						Builds the Ui.
 						
 						
 					</div>
@@ -674,17 +752,51 @@ Updates the slider with the new value.
 
 					<hr />
 				
-					<a name="._setOption"> </a>
+					<a name="._disable"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicitySelectSlider.</span><b>_setOption</b>()
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_disable</b>(forceChange)
 					
 					</div>
 					<div class="description">
-						Override of <code>_setOption</code> that is used to refresh the
-slider tick marks, labels and tooltip when the assocaited options
-are changed.
+						Helper method that disables (stops) editing
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>forceChange</b>
+									<i>Optional</i>
+								</dt>
+								<dd>Determines if editing should be force stopped on the shape. Defaults to <code>true</code></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._enable"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_enable</b>()
+					
+					</div>
+					<div class="description">
+						Helper method that enables the Ui for editing shapes
 						
 						
 					</div>
@@ -701,19 +813,149 @@ are changed.
 
 					<hr />
 				
-					<a name="._sliderChangeHandler"> </a>
+					<a name="._getSettings"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicitySelectSlider.</span><b>_sliderChangeHandler</b>()
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_getSettings</b>(cookiename)
 					
 					</div>
 					<div class="description">
-						Event handler for the <code>slidechange</code> and <code>slide</code> events.
-Updates the associated <code>select</code> input with the new slider value.
-<p>
-This handler calls <code>change()</code> on the <code>select</code> input
-immediately after changing it's value.
+						Sets the UI state from a cookie
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>cookiename</b>
+									
+								</dt>
+								<dd>The name of the cookie from which to retrieve the state.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._radiusChangedHandler"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_radiusChangedHandler</b>()
+					
+					</div>
+					<div class="description">
+						Handler for dealing with changes to the radius.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._saveSettings"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_saveSettings</b>(cookiename)
+					
+					</div>
+					<div class="description">
+						Saves UI state to a cookie
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>cookiename</b>
+									
+								</dt>
+								<dd>The name of the cookie in which to store the state.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._setConnected"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_setConnected</b>(value)
+					
+					</div>
+					<div class="description">
+						Handler for dealing with changes to the connected/disconnected status of a series of points
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>value</b>
+									
+								</dt>
+								<dd>Determines if the points should be displayed as a LineString (<code>true</code>) or
+as individual points (<code>false</code>).</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._shapeChangedHandler"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreatorUi.</span><b>_shapeChangedHandler</b>()
+					
+					</div>
+					<div class="description">
+						Handler for dealing with changes to the underlying geoJson shape.
 						
 						
 					</div>

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - $.ui.simplicityFacetCount</title>
+		<title>JsDoc Reference - $.ui.simplicityGoogleMapShapeCreator</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -320,7 +320,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace $.ui.simplicityFacetCount
+				Namespace $.ui.simplicityGoogleMapShapeCreator
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -328,22 +328,21 @@ ul.inheritsList
 				
 				
 			
-				Displays a single facet count based on the search results.
-
-Listens for simplicitySearchResponse events and updates element HTML with a templatized
-facet count. Also supports injecting the facet count into a select input.
+				A Google map.
 <p>
-This widget is generally used as a building block, you probably want to use
-<code>simplicityFacetedInput</code> directly.
+Adds the ability to show an point and radius or polygon/line to the map which
+is persisted in a target input as geoJSON. This is the building block that
+<code>simplicityMapShapeCreatorUi</code> exposes.
+</p>
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityFacetCount.js.html">simplicityFacetCount.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/docroot_js_simplicity_simplicityGoogleMapShapeCreator.js.html">simplicityGoogleMapShapeCreator.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicityFacetCount.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class $.ui.simplicityGoogleMapShapeCreator.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -356,7 +355,7 @@ This widget is generally used as a building block, you probably want to use
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/%24.ui.simplicityFacetCount.html#constructor">$.ui.simplicityFacetCount</a></b>
+								<b><a href="../symbols/%24.ui.simplicityGoogleMapShapeCreator.html#constructor">$.ui.simplicityGoogleMapShapeCreator</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -369,7 +368,7 @@ This widget is generally used as a building block, you probably want to use
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicityFacetCount.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class $.ui.simplicityGoogleMapShapeCreator.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -383,7 +382,7 @@ This widget is generally used as a building block, you probably want to use
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								$.ui.simplicityFacetCount.<b><a href="../symbols/%24.ui.simplicityFacetCount.html#.options">options</a></b>
+								$.ui.simplicityGoogleMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityGoogleMapShapeCreator.html#.options">options</a></b>
 								</div>
 								<div class="description">Widget options.</div>
 							</td>
@@ -398,42 +397,6 @@ This widget is generally used as a building block, you probably want to use
 
 <!-- ============================== methods summary ======================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class $.ui.simplicityFacetCount.">
-					<caption>Method Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityFacetCount.<b><a href="../symbols/%24.ui.simplicityFacetCount.html#._searchResponseHandler">_searchResponseHandler</a></b>()
-								</div>
-								<div class="description">Event handler for the <code>simplicitySearchResponse</code> event.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityFacetCount.<b><a href="../symbols/%24.ui.simplicityFacetCount.html#.numberFormatter">numberFormatter</a></b>(count)
-								</div>
-								<div class="description">Format a face count value.</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -445,7 +408,7 @@ This widget is generally used as a building block, you probably want to use
 				</div>
 				
 				<div class="fixedFont">
-						<b>$.ui.simplicityFacetCount</b>
+						<b>$.ui.simplicityGoogleMapShapeCreator</b>
 				</div>
 				
 				<div class="description">
@@ -455,25 +418,11 @@ This widget is generally used as a building block, you probably want to use
 				
 				
 				
-				<pre class="code">  &lt;select id="size" name="size">
-    &lt;option value="small">Small&lt;/option>
-    &lt;option value="medium">Medium&lt;/option>
-    &lt;option value="large">Large&lt;/option>
-  &lt;/select>
+				<pre class="code">  &lt;div id="map" style="width: 300px; height: 300px;">&lt;/div>
   &lt;script type="text/javascript">
-    $('#size option[value="small"]').simplicityFacetCount({
-      dimension: 'Size',
-      facetId: 'S'
-    });
-    // etc.
-  &lt;/script></pre>
-				
-				<pre class="code">  &lt;input type="checkbox" id="large" name="size" value="large" />
-  &lt;label for="large">Large (&lt;span id="largeCount">&lt;/span>)&lt;/label>
-  &lt;script type="text/javascript">
-    $('#largeCount').simplicityFacetCount({
-      dimension: 'Size',
-      facetId: 'L'
+    $('#map').simplicityGoogleMap();
+    $('#map').simplicityGoogleMapShapeCreator({
+      input: $('<input name="placemark"/>').simplicityInputs()
     });
   &lt;/script></pre>
 				
@@ -486,6 +435,13 @@ This widget is generally used as a building block, you probably want to use
 					
 					
 					
+					
+						<dl class="detailList">
+						<dt class="heading">See:</dt>
+						
+							<dd>Google Maps JavaScript API V3 <a href="https://developers.google.com/maps/documentation/javascript/reference/">documentation</a>.</dd>
+						
+						</dl>
 					
 
 			</div>
@@ -501,45 +457,21 @@ This widget is generally used as a building block, you probably want to use
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicityFacetCount.</span><b>options</b>
+					<span class="light">$.ui.simplicityGoogleMapShapeCreator.</span><b>options</b>
 					
 					</div>
 					<div class="description">
 						Widget options.
-
 <dl>
-  <dt>searchElement</dt>
+  <dt><code>polygonOptions</code></dt>
   <dd>
-    The location of the simplicityDiscoverySearch widget. Defaults to <code>'body'</code>.
+    A dictionary of options that are used to define the look of polygons. Defaults to
+    a map implementation specific value. Defaults to <code>{strokeWeight: 0, fillOpacity: 0.20}</code>.
   </dd>
-  <dt>missingCount</dt>
+  <dt><code>lineStringOptions</code></dt>
   <dd>
-    Text to use when there is no associated facet count. Defaults to <code>'?'</code>.
-  </dd>
-  <dt>dimension</dt>
-  <dd>
-    Mandatory dimension from which the facet counts should be used.
-  </dd>
-  <dt>facetsKey</dt>
-  <dd>
-    The key used in the facets request to identify the facets data. Defaults to <code>dimension</code>.
-  </dd>
-  <dt>facetId</dt>
-  <dd>
-    Mandatory id of the facet whose count should be bound to this widget.
-  </dd>
-  <dt>optionTemplate</dt>
-  <dd>
-    Template used when bound to an <code>option</code> element.
-    Defaults to <code>'{option} {count}'</code>. Bracketed text will be
-    replaced by the option value and any formatted count respectively.
-    Other text not included in the bracketed fields will be left as-is.
-    Applies only to facet counts for OPTION tags.
-  </dd>
-  <dt>numberFormatter</dt>
-  <dd>
-    Optional function that can be called with the facet count and is expected
-    to return a string.
+    A dictionary of options that are used to define the look of line strings. Defaults to
+    <code>{strokeWeight: 1, strokeColor: '#888888'}</code>.
   </dd>
 </dl>
 						
@@ -558,92 +490,6 @@ This widget is generally used as a building block, you probably want to use
 			
 
 <!-- ============================== method details ========================= -->		
-			
-				<div class="sectionTitle">
-					Method Detail
-				</div>
-				
-					<a name="._searchResponseHandler"> </a>
-					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
-					
-					
-					<span class="light">$.ui.simplicityFacetCount.</span><b>_searchResponseHandler</b>()
-					
-					</div>
-					<div class="description">
-						Event handler for the <code>simplicitySearchResponse</code> event.
-Extracts the configured facet count and displays it.
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".numberFormatter"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">$.ui.simplicityFacetCount.</span><b>numberFormatter</b>(count)
-					
-					</div>
-					<div class="description">
-						Format a face count value. Returning the facet count as a formatted
-string.
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">  &lt;select id="size" name="size">
-    &lt;option value="small">Small&lt;/option>
-    &lt;option value="medium">Medium&lt;/option>
-    &lt;option value="large">Large&lt;/option>
-  &lt;/select>
-  &lt;script type="text/javascript">
-    $('#size option[value="small"]').simplicityFacetCount({
-      dimension: 'Size',
-      facetId: 'S',
-      numberFormatter: function(count) {
-       return "(" + count + ")";
-      }
-    });
-    // etc.
-  &lt;/script></pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>count</b>
-									
-								</dt>
-								<dd>The facet count to format</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					
-				
 			
 			
 <!-- ============================== event details ========================= -->		
