@@ -468,6 +468,15 @@ like this:</p>
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._applyShapeBuffer">_applyShapeBuffer</a></b>()
+								</div>
+								<div class="description">Manages setting the radius for a shape.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._asGeoJsonLatLng">_asGeoJsonLatLng</a></b>(alatLng)
 								</div>
 								<div class="description">Converts [lat, lng] into [lng, lat] with precision reduction.</div>
@@ -477,27 +486,9 @@ like this:</p>
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._bufferLineString">_bufferLineString</a></b>(coords)
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._bufferShape">_bufferShape</a></b>()
 								</div>
-								<div class="description">Displays a buffered line string (polygon)</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._bufferPoints">_bufferPoints</a></b>()
-								</div>
-								<div class="description">Displays a buffered point (circle) for each point in the shape</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._bufferShape">_bufferShape</a></b>(radius, shapeType)
-								</div>
-								<div class="description">Manages setting the radius for a shape.</div>
+								<div class="description">Buffers a shape</div>
 							</td>
 						</tr>
 					
@@ -559,6 +550,15 @@ from the created Markers.</div>
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._firstVertexEndCap">_firstVertexEndCap</a></b>(out, back)
+								</div>
+								<div class="description">Helper method to _getLineStringBufferPoints and _updateBufferedShape.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._geoJsonToMap">_geoJsonToMap</a></b>(The)
 								</div>
 								<div class="description">Visualizes a geoJson shape object onto a map</div>
@@ -579,10 +579,19 @@ respective tangent.</div>
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._getBluntVertexData">_getBluntVertexData</a></b>(idx, vertex, radius)
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._getBluntVertexData">_getBluntVertexData</a></b>(idx, radius)
 								</div>
 								<div class="description">Calculates the buffered vertices of a point in a shape given the
 heading frpm the previous and to the next point in the shape.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._getBufferedShapeArray">_getBufferedShapeArray</a></b>(out, back)
+								</div>
+								<div class="description">Helper method to _getLineStringBufferPoints and _updateBufferedShape.</div>
 							</td>
 						</tr>
 					
@@ -610,6 +619,15 @@ heading frpm the previous and to the next point in the shape.</div>
 								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._inputChangeHandler">_inputChangeHandler</a></b>()
 								</div>
 								<div class="description">Handler for dealing with changes to the underlying input for the shape.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._lastVertexEndCap">_lastVertexEndCap</a></b>(idx, out, back)
+								</div>
+								<div class="description">Helper method to _getLineStringBufferPoints and _updateBufferedShape.</div>
 							</td>
 						</tr>
 					
@@ -655,6 +673,15 @@ heading frpm the previous and to the next point in the shape.</div>
 								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._markerMoveHandler">_markerMoveHandler</a></b>()
 								</div>
 								<div class="description">Handler for dealing with position changes of a dragged marker.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._midVertexCurves">_midVertexCurves</a></b>(idx, out, back)
+								</div>
+								<div class="description">Helper method to _getLineStringBufferPoints and _updateBufferedShape.</div>
 							</td>
 						</tr>
 					
@@ -709,6 +736,24 @@ heading frpm the previous and to the next point in the shape.</div>
 								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._triggerShapeChange">_triggerShapeChange</a></b>(geoJson)
 								</div>
 								<div class="description">Handler for triggering a simplicitymapshapecreatorshapechange event.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._unbufferShape">_unbufferShape</a></b>()
+								</div>
+								<div class="description">Removes any buffers from shapes</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityMapShapeCreator.<b><a href="../symbols/%24.ui.simplicityMapShapeCreator.html#._updateBufferedShape">_updateBufferedShape</a></b>(idx)
+								</div>
+								<div class="description">Partner method to _getLineStringBufferPoints.</div>
 							</td>
 						</tr>
 					
@@ -870,8 +915,8 @@ Use this method when forcing the map to update to include the shape bounds.</div
 <dl>
   <dt><code>input</code></dt>
   <dd>
-    The required input or selector for the element the contains the geoJson state.
-    Defaults to <code>''</code>.
+    The input or selector for the element that contains the geoJson state.
+    Defaults to <code>'$('<input name="placemark"/>').simplicityInputs()'</code>.
   </dd>
   <dt><code>editMode</code></dt>
   <dd>
@@ -954,7 +999,7 @@ Use this method when forcing the map to update to include the shape bounds.</div
   <dt><code>lineStringOptions</code></dt>
   <dd>
     A dictionary of options that are used to define the look of line strings. Defaults to
-    <code>{}</code>.
+    <code>''</code>.
   </dd>
   <dt><code>dragOptimization</code></dt>
   <dd>
@@ -1023,6 +1068,31 @@ Use this method when forcing the map to update to include the shape bounds.</div
 
 					<hr />
 				
+					<a name="._applyShapeBuffer"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_applyShapeBuffer</b>()
+					
+					</div>
+					<div class="description">
+						Manages setting the radius for a shape.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="._asGeoJsonLatLng"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
@@ -1059,100 +1129,21 @@ Use this method when forcing the map to update to include the shape bounds.</div
 
 					<hr />
 				
-					<a name="._bufferLineString"> </a>
-					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
-					
-					
-					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_bufferLineString</b>(coords)
-					
-					</div>
-					<div class="description">
-						Displays a buffered line string (polygon)
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Array}</span> <b>coords</b>
-									
-								</dt>
-								<dd>The coordinates for the polygon representing the buffered
-line string.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="._bufferPoints"> </a>
-					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
-					
-					
-					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_bufferPoints</b>()
-					
-					</div>
-					<div class="description">
-						Displays a buffered point (circle) for each point in the shape
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="._bufferShape"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					
-					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_bufferShape</b>(radius, shapeType)
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_bufferShape</b>()
 					
 					</div>
 					<div class="description">
-						Manages setting the radius for a shape.
+						Buffers a shape
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{double}</span> <b>radius</b>
-									
-								</dt>
-								<dd>A radius value in units specified by <code>distanceUnit</code> options.</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>shapeType</b>
-									
-								</dt>
-								<dd>The geometry name in use, <code>Point</code>, <code>MultiPoint</code>, <code>LineString</code>, <code>Polygon</code> .</dd>
-							
-							</dl>
 						
 						
 						
@@ -1346,6 +1337,49 @@ the LineString into a Polygon.
 
 					<hr />
 				
+					<a name="._firstVertexEndCap"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_firstVertexEndCap</b>(out, back)
+					
+					</div>
+					<div class="description">
+						Helper method to _getLineStringBufferPoints and _updateBufferedShape. Manages
+the creation of the endcap arc for the first vertex of the shape.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>out</b>
+									
+								</dt>
+								<dd>The reference to the array of outbound points</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>back</b>
+									
+								</dt>
+								<dd>The reference to the array of inbound points</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="._geoJsonToMap"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
@@ -1449,7 +1483,7 @@ respective tangent.
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
 					<span class="light">{object}</span>
-					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_getBluntVertexData</b>(idx, vertex, radius)
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_getBluntVertexData</b>(idx, radius)
 					
 					</div>
 					<div class="description">
@@ -1457,8 +1491,10 @@ respective tangent.
 heading frpm the previous and to the next point in the shape. These points form the
 buffered two-dimensional shape of a one-dimension LineString.
 
-plus90 refers to the point 90 degrees from the heading to the "next" point.
-min90 refers to the point 270 degrees from the same heading, the opposite point.
+"out" refers to the point 90 degrees from the heading to the "next" point.
+Also referred to as Outbound.
+"back" refers to the point 270 degrees from the same heading, the opposite point.
+Also referred to as Inbound.
 						
 						
 					</div>
@@ -1474,12 +1510,6 @@ min90 refers to the point 270 degrees from the same heading, the opposite point.
 									
 								</dt>
 								<dd>The index of the point to buffer</dd>
-							
-								<dt>
-									<span class="light fixedFont">{array}</span> <b>vertex</b>
-									
-								</dt>
-								<dd>The lat and lng of the vertex expressed as [lat, lng].</dd>
 							
 								<dt>
 									<span class="light fixedFont">{double}</span> <b>radius</b>
@@ -1502,19 +1532,64 @@ and buffering when the enclosing shape changes.
 <code>
   {
     fromPrev: {
-      plus90: [lat, lng],
-      min90: [lat, lng],
+      out: [lat, lng],
+      back: [lat, lng],
       heading: degrees
     },
     toNext: {
-      plus90: [lat, lng],
-      min90: [lat, lng],
+      out: [lat, lng],
+      back: [lat, lng],
       heading: degrees
     }
   }
 </code></dd>
 							
 							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="._getBufferedShapeArray"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_getBufferedShapeArray</b>(out, back)
+					
+					</div>
+					<div class="description">
+						Helper method to _getLineStringBufferPoints and _updateBufferedShape. Manages
+the creation of the final array of points making up the buffered shape. This
+array of points is in a state that can be used to create a polygon. It
+represents a LinearRing.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>out</b>
+									
+								</dt>
+								<dd>The reference to the array of outbound points</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>back</b>
+									
+								</dt>
+								<dd>The reference to the array of inbound points</dd>
+							
+							</dl>
+						
+						
+						
+						
 						
 						
 						
@@ -1557,6 +1632,24 @@ and buffering when the enclosing shape changes.
 						Buffers a line string the radius in play. The LineString will be buffered into a Polygon
 in which the end points and connecting vertices will be capped and shaped to represent the true
 shape of the buffered LineString.
+
+The shape coordinates are built in two arrays, the "outbound" (out) and the "inbound" (back).
+
+Each "outbound" buffered points are calculated from the heading of the
+vertex to the next vertex traveling <code>radius</code> distance at 90 degrees from
+that heading. The "outbound" shape includes the encap arc at the last vertex.
+
+Each "inbound" buffered points are calculated from the heading of the
+vertex to the previous vertex traveling <code>radius</code> distance at -90 degrees from
+that heading. The "inbound" shape includes the encap arc at the first vertex.
+
+For points between the first and the last (connector), the curve shape is either a point or an arc.
+The curve shape is an arc for obtuse angles. For acute angles, it is the
+intersection of two lines, one traveling with heading from the previous vertex to the connector, the
+the other traveling from the next vertex back to the connector. Both of these lines originate
+from their respective buffered points.
+
+The information used to create the buffer is stored in this._vertexData;
 						
 						
 					</div>
@@ -1595,6 +1688,55 @@ shape of the buffered LineString.
 					
 					
 					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._lastVertexEndCap"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_lastVertexEndCap</b>(idx, out, back)
+					
+					</div>
+					<div class="description">
+						Helper method to _getLineStringBufferPoints and _updateBufferedShape. Manages
+the creation of the endcap arc for the last vertex of the shape.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>idx</b>
+									
+								</dt>
+								<dd>The index of the last vertex</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>out</b>
+									
+								</dt>
+								<dd>The reference to the array of outbound points</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>back</b>
+									
+								</dt>
+								<dd>The reference to the array of inbound points</dd>
+							
+							</dl>
 						
 						
 						
@@ -1737,6 +1879,55 @@ shape of the buffered LineString.
 					
 					
 					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._midVertexCurves"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_midVertexCurves</b>(idx, out, back)
+					
+					</div>
+					<div class="description">
+						Helper method to _getLineStringBufferPoints and _updateBufferedShape. Manages
+the creation of the endcap arc for the last vertex of the shape.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>idx</b>
+									
+								</dt>
+								<dd>The index of the connector vertex</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>out</b>
+									
+								</dt>
+								<dd>The reference to the array of outbound points</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>back</b>
+									
+								</dt>
+								<dd>The reference to the array of inbound points</dd>
+							
+							</dl>
 						
 						
 						
@@ -1968,6 +2159,78 @@ can be converted into a Polygon.
 						
 						
 						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._unbufferShape"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_unbufferShape</b>()
+					
+					</div>
+					<div class="description">
+						Removes any buffers from shapes
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._updateBufferedShape"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					<span class="light">{array}</span>
+					<span class="light">$.ui.simplicityMapShapeCreator.</span><b>_updateBufferedShape</b>(idx)
+					
+					</div>
+					<div class="description">
+						Partner method to _getLineStringBufferPoints. This method updates the existing
+buffered shape by only addresses vertices that are impacted when a single
+vertex moves. When the firt and last vertices are moved, only their adjacent vertices
+will also need to be updated. For any connecting vertex, the preceding and
+subsequent vertices will need to be updated.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{int}</span> <b>idx</b>
+									
+								</dt>
+								<dd>The index of the vertex that has moved</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{array}</span> An array of coordinates for the Polygon representing the buffered LineString.</dd>
+							
+							</dl>
 						
 						
 						
@@ -2392,7 +2655,7 @@ coordinator "calculatebounds" event.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Thu Jul 19 2012 11:30:33 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Aug 14 2012 14:51:11 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>
