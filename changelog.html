@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Simplicity Widgets - changelog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
+    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="/css/syntax.css" rel="stylesheet">
+    <link href="/css/documentation.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Simplicity Widgets</a>
+          <ul class="nav">
+            
+              
+                <li><a href="/">home</a></li>
+              
+            
+              
+                <li><a href="/download.html">download</a></li>
+              
+            
+              
+                <li><a href="/jsdoc/">jsdoc</a></li>
+              
+            
+              
+                <li class="active"><a href="/changelog.html" class="active">changelog</a></li>
+              
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    
+      <header class="subhead">
+        <div class="container">
+          <h1>Changelog</h1>
+          
+            <p class="lead">What's new, doc?</p>
+          
+        </div>
+      </header>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <div class="container-fluid">
+<h1>3.1</h1><div class='release-date'>2012-08-14</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li><code>simplicityGoogleMapBoundsTracker</code> no longer considers a bounds change during drag unless you set the <code>idleWhileDragging</code> option to <code>true</code>.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Enhances simplicityDiscoverySearch to support CORS direct engine requests.</li>
+
+<li>Enhances simplicityDiscoverySearch to make extracting a result set optional.</li>
+
+<li>Changes default behavior of <code>simplicityGoogleMapBoundsTracker</code> so that bounds event is not triggered when dragging. It now only triggers the bounds event if the map bounds actually changed.</li>
+
+<li>Optimizes buffered shape creation and updating in the shape creator widgets.</li>
+
+<li>Fixes to <code>simplicityMapShapeCreator</code> and <code>simplicityMapeShapeCreatorUi</code> to make them easier to use.</li>
+</ul>
+<h1>3.0</h1><div class='release-date'>2012-07-19</div>
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Adds geocoding and polygon drawing support to the map widgets. The new widgets are <code>simplicityGoogleMapShapeCreator</code>, <code>simplicityMapQuestMapShapeCreator</code>, <code>simplicityBingMapShapeCreator</code>, <code>simplicityNokiaMapShapeCreator</code> and <code>simplicityMapShapeCreatorUi</code>.</li>
+
+<li>Conditionally applies autoFocus patch to ui.autocomplete, for versions before 1.9 of jQuery UI.</li>
+
+<li>Adds <code>simplicitySearchSearching</code> event to <code>simplicityDiscoverySearch</code>.</li>
+
+<li>Passes <code>window</code> into the anonymous functions that define <code>simplicityHistory</code>, <code>simplicityPagination</code> and <code>simplicityGoogleMapLoader</code>, making sure we use the value of <code>window</code> at declare time instead of runtime which makes the widget <code>noConflict</code> safe.</li>
+
+<li>Enhances <code>simplicityPagination</code> to allow for jQuery selector <code>.scrollTop()</code> support when page changes.</li>
+
+<li>Fixes invalid guard in <code>simplicityPagination</code> where the option <code>search</code> was used instead of <code>searchElement</code>.</li>
+</ul>
+<h1>2.9.1</h1><div class='release-date'>2012-06-22</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>Fixes bug in previous 2.9 release that would caues a JavaScript error if google maps wasn&#8217;t available before simplicity.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Adds <code>markerType</code> option to <code>simplicityGoogleMapResults</code>. Possible values are <code>overlay</code> (default) or <code>google</code>. This allows clients to choose between the standard google marker (google) or our new <code>simplicityGoogleMarker</code> (overlay). Adds supporting factory methods to <code>$.simplicityGoogleMarker</code>.</li>
+
+<li>Improves $.simplicityGoogleMarker and removes the need for the Google Maps API to exist before it is declared.</li>
+</ul>
+<h1>2.9</h1><div class='release-date'>2012-06-22</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>The <code>simplicityHaversine*</code> functions have moved to <code>$.simplicityGeoFn</code>, a shim is in place to call the new variants but any references in your code should be updated to use the new location of these functions.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Consolidates the simplicityHaversine* functions into a new namespace <code>$.simplicityGeoFn</code> and adds some extra geographic utility functions to be used by the polygon widget.</li>
+
+<li>Adds simplicityGoogleMarker, a DOM backed Google Map marker that can be easily styled via CSS.</li>
+
+<li>Enhances <code>simplicityDiscoverySearch</code> to optionally request and deliver query profile responses from the engine. Adds three new widget events that enable customers to manipulate the <code>$.ajax</code> parameter options, its success and error methods.</li>
+
+<li>Adds support for radio buttons to <code>simplicityFancySelect</code>.</li>
+</ul>
+<h1>2.8</h1><div class='release-date'>2012-04-12</div>
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Enhances simplicityFancyFacets to pass through formatting templates for simplicityFancySelects.</li>
+
+<li>Enhances <code>simplicityHistory</code> to use <code>#!</code>, making navigation and resets more user-friendly.</li>
+
+<li>Applies StandardMarker (Nokia) and adds with default marker numbering and/or zIndex when supported.</li>
+</ul>
+<h1>2.7</h1><div class='release-date'>2012-02-07</div>
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Adds support for Nokia map (will replace Yahoo maps).</li>
+
+<li>Adds <code>removemarker</code> event to <code>simplicity${vendor}MapResults</code>.</li>
+</ul>
+<h1>2.6</h1><div class='release-date'>2011-12-16</div>
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Introduces <code>simplicityAjaxHelpher</code> that adds support for cancelling inflight Ajax requests for <code>simplicityDiscoverySearch</code>.</li>
+</ul>
+<h1>2.5</h1><div class='release-date'>2011-10-24</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>Replaces the <code>positionSelector</code> option of <code>simplicityFlyout</code> with <code>position</code> that uses standard jQuery UI position options.</li>
+
+<li>Renames the <code>missingText</code> option to <code>missingCount</code> for <code>simplicityFacetCount</code>.</li>
+
+<li>The <code>simplicityFacetCounts</code> and <code>simplicityResultSet</code> events from <code>simplicityDiscoverySearch</code> are no longer enabled by default. They have been deprecated and will be removed in a future release. If you wish to use them in the meantime, set the <code>triggerFacetCountEvent</code> or <code>triggerResultSetEvent</code> option of <code>simplicityDiscoverySearch</code> to <code>true</code>.</li>
+
+<li>The <code>resultSet</code> field has been removed from the from the <code>simplicitySearchResponse</code> event (triggered by <code>simplicityDiscoverySearch</code>). If you wish to use this data then use the <code>simplicityDiscoverySearchItemEnumerator</code> over the response object.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Introduces <code>simplicityFancyFacets</code> a more complex combination of <code>simplicifyFancyFacet</code> widgets with support for displaying only some of the available options and making the rest available in a flyout.</li>
+
+<li>Introduces <code>simplicityFancySelect</code> which progressively enhances a select input.</li>
+
+<li>Introduces <code>simplicityFacetedSelect</code> a widget to dynamically populate the option elements of a select input based on the search response.</li>
+
+<li>Introduces <code>simplicitySelectSlider</code>, a single handled slider that maps to a select input. Includes options to display tick marks, labels and a tooltip.</li>
+
+<li>Improves <code>simplicityFlyout</code> to better use <code>ui-helper-accessible-hidden</code> and make use of jQuery UI position.</li>
+
+<li>Adds search counters to <code>simplicityDiscoverySearch</code> which are exposed by the <code>searchStats</code> and <code>queryStats</code> methods.</li>
+
+<li>Special cases single selection from a select input to not be an array when converted to a state value in <code>simplicityToState</code>.</li>
+
+<li>Adds dynamic option injection logic to <code>simplicityFromState</code> to add placeholder options to select inputs if they are missing.</li>
+
+<li>Fixes bug in <code>simplicityToState</code> for multi-select enabled select inputs that contain a default value. Now that empty value is not injected into the state value.</li>
+
+<li>Improves error handling of ajax queries.</li>
+
+<li>Adds index counts to the row created by <code>simplicityDiscoverySearchItemEnumerator</code> making it easier for customers to include result set positional information using their callbacks: <code>index0</code>, <code>index1</code>, <code>resultsIndex0</code> (position in result set).</li>
+
+<li>Adds <code>applyClass</code> option to <code>simplicityPagination</code> which allows you to specify which classes are applied to the pagination elements, e.g. <code>ui-corner-all</code>. Also applies <code>ui-priority-primary</code> to the &#8220;current&#8221; elements, uses <code>ui-state-disabled</code> for disabled Next/Prev links and <code>ui-state-active</code> to the currently displayed page span.</li>
+
+<li>Removes theme-based formatting for <code>simplicityPagination</code>, allowing the jQuery UI theme to dictate presentation.</li>
+
+<li>Adds css for simplicity slider such that slider handle doesn&#8217;t glow when selected (Safari).</li>
+
+<li>Introduces <code>simplicityProxy</code> and <code>simplicityWidget</code>. The <code>simplicityWidget</code> widget is the new base class of all other widgets, allowing us to apply more simple event handling support across the board.</li>
+
+<li>Fixes logic error in mapOptions handling of simplicityMapQuestMap._initWhenAvailable. Now the defaultMapOptions are respected.</li>
+
+<li>Removes <code>resultSet</code> data usage from the widget set. Adds global helper function <code>simplicityDiscoverySearchItemEnumerator</code> to enumerate the searchResponse and use a callback method to process the data.</li>
+
+<li>Adds support for <code>facets</code> API with backwards support for <code>drillDown</code>. Moves <code>drillDown</code> and <code>resultSet</code> response objects to top-level objects and deprecates <code>simplicityFacetCounts</code> and <code>simplicityResultSet</code> events.</li>
+
+<li>Converts number to String in <code>simplicityPagination</code> to avoid false state change events when reading the page number from the simplicity state which generally uses strings for the values.</li>
+</ul>
+<h1>2.4</h1><div class='release-date'>2011-07-25</div>
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Adds JSONP support to simplicityDiscoverySearch and an example of how to use it.</li>
+
+<li>Adds BSD 2-clause license to the project.</li>
+</ul>
+<h1>2.3</h1><div class='release-date'>2011-04-22</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>Breaks up the map widgets into smaller components. <code>simplicity${vendor}Map</code> becomes <code>simplicity${vendor}Map</code>, <code>simplicity${vendor}MapBoundsCoordinator</code>, <code>simplicity${vendor}MapBoundsTracker</code> and <code>simplicity${vendor}MapResults</code>.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Fixes bug in geocode widgets, they need to skip bbox normalization if it is missing in from the upstream vendor response.</li>
+
+<li>Removes vestigial this.element.unbind(&#8216;change&#8217;, this._changeHandler) from destroy methods of simplicityDiscoverySearch and simplicityState.</li>
+</ul>
+<h1>2.2</h1><div class='release-date'>2011-02-23</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>Renames the vendor response specific data in the geocode widgets from <code>response</code> to <code>vendor</code>.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Stops change event propagation from child elements in simplicityInputs.</li>
+
+<li>Adds a <code>mapMoveEvents</code> option to override which map events are used to detect map moves for all four map widgets.</li>
+
+<li>Productizes <code>simplicityGoogleMap</code>, <code>simplicityBingMap</code>, <code>simplicityYahooMap</code> and <code>simplicityMapQuestMap</code> widgets adding support for create, marker and bounds events.</li>
+
+<li>Introduces <code>simplicityHaversineDistance</code>.</li>
+
+<li>Adds bounding box to the normalized geocode response for the vendors that support it (all but mapquest).</li>
+
+<li>Adds simplicityDebug which replaces a bunch of copy/pasted code. This widget adds four text areas to the page that show and allow edits to the state, search response, result set and facet counts.</li>
+</ul>
+<h1>2.1</h1><div class='release-date'>2011-02-10</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>Renames <code>simplicityInput</code> to <code>simplicityInputs</code></li>
+
+<li>Renames <code>simplicityBucketCount</code> to <code>simplicityFacetCount</code> and replaces any references to <code>bucket</code> with <code>facet</code>.</li>
+</ul>
+
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Updates simplicityMapQuestMap to use the mapinit module to calculate the bestFit rect instead of some custom code.</li>
+
+<li>Adds jsdoc for all widgets.</li>
+
+<li>Added trim option to simplicityInputs and simplicityToState which can be used to disable trimming of whitespace from values.</li>
+
+<li>Introduces the geocoding widgets; <code>simplicityGoogleGeocoder</code>, <code>simplicityBingGeocoder</code>, <code>simplicityYahooGeocoder</code>, <code>simplicityMapQuestGeocoder</code>.</li>
+
+<li>Adds <code>quietStateChange</code> option to <code>simplicityInputs</code> which allows us to define groups of quiet and hot inputs.</li>
+
+<li>Adds support for multiple grouped inputs to <code>simplicityInputs.</code> This can be used to atomically update multiple input fields at once.</li>
+
+<li>Improves state event triggering logic in simplicityState to only trigger a changed state if it differs from the last triggered change state and was asked to trigger on change.</li>
+</ul>
+<h1>2.0</h1><div class='release-date'>2011-01-06</div>
+<p>Initial release.</p>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right">
+            <a href="#" onclick="window.scrollTo(0,0);return false;">Back to top</a>
+        </p>
+        <p>
+          Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.
+        </p>
+      </div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap-2.1.1.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+  </body>
+</html>
