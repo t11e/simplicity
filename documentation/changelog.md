@@ -11,6 +11,13 @@ lead: What's new, doc?
   <h1>Development <small>in progress</small></h1>
 </div>
 
+Compatibility
+-------------
+
+* You no longer need to include the external library `jquery.pagination-2.1.js`
+  as the `simplicityPagination` widget now implements equivalent functionality
+  directly.
+
 Improvements
 ------------
 
@@ -24,6 +31,8 @@ Improvements
 * Stops `simplicityFancySelect` from swallowing `click` events that target
   a checkbox or radio button. This allows them to be used from the `template`
   option.
+* Refactors `simplicityPagination` widget to no longer require the external
+  [jQuery Pagination plugin](https://github.com/gbirke/jquery_pagination).
 
 <div class="page-header">
   <h1>3.1 <small>2012-08-14</small></h1>
