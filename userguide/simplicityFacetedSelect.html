@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Simplicity Widgets - simplicityFacetedSelect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="/css/syntax.css" rel="stylesheet">
+    <link href="/css/documentation.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Simplicity Widgets</a>
+          <ul class="nav">
+            
+              
+                <li><a href="/">home</a></li>
+              
+            
+              
+                <li class="active"><a href="/userguide/" class="active">userguide</a></li>
+              
+            
+              
+                <li><a href="/download.html">download</a></li>
+              
+            
+              
+                <li><a href="/jsdoc/">jsdoc</a></li>
+              
+            
+              
+                <li><a href="/changelog.html">changelog</a></li>
+              
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    
+      <header class="subhead">
+        <div class="container">
+          <h1>simplicityFacetedSelect</h1>
+          
+            <p class="lead">Dynamic options and counts.</p>
+          
+        </div>
+      </header>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <div class="container">
+<div class='userguide-nav row'>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Core</li>
+            <li class=''><a href='/userguide/'>Getting started</a></li>
+            <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Request widgets</li>
+            <li class=''><a href='/userguide/simplicityInputs.html'>simplicityInputs</a></li>
+            <li class=''><a href='/userguide/simplicityFancySelect.html'>simplicityFancySelect</a></li>
+            <li class=''><a href='/userguide/simplicitySelectSlider.html'>simplicitySelectSlider</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Response Widgets</li>
+            <li class='active'><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Examples</li>
+            <li class=''><a href='/userguide/example/basic.html'>Basic</a></li>
+        </ul>
+    </div>
+</div>
+<h1 id='simplicityfacetedselect'>simplicityFacetedSelect</h1>
+
+<p>To enhance a <code>&lt;select&gt;</code> to automatically populate it from the search results, first create the select.</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;example&quot;</span><span class='nt'>&gt;</span>
+    <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;&quot;</span><span class='nt'>&gt;</span>Any...<span class='nt'>&lt;/option&gt;</span>
+<span class='nt'>&lt;/select&gt;</span>
+</code></pre>
+</div>
+<p>Then apply the <code>simplicityFacetedSelect</code> widget to it.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;select&#39;</span><span class='p'>).</span><span class='nx'>simplicityFacetedSelect</span><span class='p'>();</span>
+</code></pre>
+</div>
+<p>Example:</p>
+<div class='well' id='exampleFacetedSelect'>
+    <label><span class='badge'>1</span> faceted select</label>
+    <select name='example'>
+        <option value=''>Any...</option>
+    </select>
+    <label><span class='badge'>2</span> option template</label>
+    <select name='optionTemplate'>
+        <option>{option}</option>
+        <option>{option} {count}</option>
+    </select>
+    <label><span class='badge'>3</span> search response</label>
+    <select name='response'>
+        <option value=''>Empty</option>
+        <option selected='selected'>ABC</option>
+        <option>BCA</option>
+        <option>States</option>
+    </select>
+    <pre style='max-width: 32em; height: 8em; overflow: scroll;' />
+</div><script type='text/javascript'>
+    $(function () {
+        $('#exampleFacetedSelect select[name="example"]').simplicityFacetedSelect({
+            searchElement: '#exampleFacetedSelect'
+        });
+        // Copy any search response to the pre
+        $('#exampleFacetedSelect').bind('simplicitySearchResponse', function (evt, ui) {
+            $('#exampleFacetedSelect pre').text(JSON.stringify(ui, null, '  '));
+        });
+        // Fire off a search response when one is selected from the second dropdown
+        $('#exampleFacetedSelect select[name="response"]').change(function (evt) {
+            var value = $(evt.target).val();
+            var response = {};
+            switch (value) {
+            case 'ABC':
+                response = {_discovery:{response:{facets:{example:{
+                    childIds: ["A","B","C"],
+                    data: {
+                        A: {count:7, label:'Alpha'},
+                        B: {count:1, label:'Bravo'},
+                        C: {count:2, label:'Charlie'}
+                    }}}}}};
+                break;
+            case 'BCA':
+                response = {_discovery:{response:{facets:{example:{
+                    childIds: ["B","C","A"],
+                    data: {
+                        A: {count:7, label:'Alpha'},
+                        B: {count:1, label:'Bravo'},
+                        C: {count:2, label:'Charlie'}
+                    }}}}}};
+                break;
+            case 'States':
+                response = {_discovery:{response:{facets:{example:{
+                    childIds: ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"],
+                    data: {
+                        AL: {label:"Alabama",count:1},
+                        AK: {label:"Alaska",count:2},
+                        AZ: {label:"Arizona",count:3},
+                        AR: {label:"Arkansas",count:4},
+                        CA: {label:"California",count:5},
+                        CO: {label:"Colorado",count:6},
+                        CT: {label:"Connecticut",count:7},
+                        DE: {label:"Delaware",count:8},
+                        DC: {label:"District of Columbia",count:9},
+                        FL: {label:"Florida",count:8},
+                        GA: {label:"Georgia",count:7},
+                        HI: {label:"Hawaii",count:6},
+                        ID: {label:"Idaho",count:5},
+                        IL: {label:"Illinois",count:4},
+                        IN: {label:"Indiana",count:3},
+                        IA: {label:"Iowa",count:2},
+                        KS: {label:"Kansas",count:1},
+                        KY: {label:"Kentucky",count:2},
+                        LA: {label:"Louisiana",count:3},
+                        ME: {label:"Maine",count:4},
+                        MD: {label:"Maryland",count:5},
+                        MA: {label:"Massachusetts",count:6},
+                        MI: {label:"Michigan",count:7},
+                        MN: {label:"Minnesota",count:8},
+                        MS: {label:"Mississippi",count:9},
+                        MO: {label:"Missouri",count:8},
+                        MT: {label:"Montana",count:7},
+                        NE: {label:"Nebraska",count:6},
+                        NV: {label:"Nevada",count:5},
+                        NH: {label:"New Hampshire",count:4},
+                        NJ: {label:"New Jersey",count:3},
+                        NM: {label:"New Mexico",count:2},
+                        NY: {label:"New York",count:1},
+                        NC: {label:"North Carolina",count:2},
+                        ND: {label:"North Dakota",count:3},
+                        OH: {label:"Ohio",count:4},
+                        OK: {label:"Oklahoma",count:5},
+                        OR: {label:"Oregon",count:6},
+                        PA: {label:"Pennsylvania",count:7},
+                        RI: {label:"Rhode Island",count:8},
+                        SC: {label:"South Carolina",count:9},
+                        SD: {label:"South Dakota",count:8},
+                        TN: {label:"Tennessee",count:7},
+                        TX: {label:"Texas",count:6},
+                        UT: {label:"Utah",count:5},
+                        VT: {label:"Vermont",count:4},
+                        VA: {label:"Virginia",count:3},
+                        WA: {label:"Washington",count:2},
+                        WV: {label:"West Virginia",count:1},
+                        WI: {label:"Wisconsin",count:2},
+                        WY: {label:"Wyoming",count:3}
+                }}}}}};
+                break;
+            }
+            $('#exampleFacetedSelect').trigger('simplicitySearchResponse', response);
+        });
+        $('#exampleFacetedSelect select[name="optionTemplate"]').change(function (evt) {
+            var value = $(evt.target).val();
+            $('#exampleFacetedSelect  select[name="example"]').simplicityFacetedSelect('option', 'optionTemplate', value);
+            $('#exampleFacetedSelect  select[name="response"]').change();
+        }).change();
+    });
+</script>
+<p>Change the optionTemplate in <span class='badge'>2</span> or the search response in <span class='badge'>3</span> and see how the available options in <span class='badge'>1</span> are updated. Note how selections in <span class='badge'>1</span> are preserved across updates.</p>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right">
+            <a href="#" onclick="window.scrollTo(0,0);return false;">Back to top</a>
+        </p>
+        <p>
+          Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.
+        </p>
+      </div>
+    </footer>
+    <!--[if IE]>
+      <script src="/js/xdr.js"></script>
+      <script src="/js/json2.min.js"></script>
+      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
+    <script src="/js/jquery.pagination-2.1.min.js"></script>
+    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
+    <script src="/js/bootstrap-2.1.1.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="/js/documentation.js"></script>
+  </body>
+</html>

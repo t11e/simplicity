@@ -7,11 +7,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
-    <style>
-      body {
-        padding-top: 60px;
-      }
-    </style>
     <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
     <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
@@ -22,7 +17,7 @@
     <![endif]-->
   </head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-static-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="/">Simplicity Widgets</a>
@@ -30,6 +25,10 @@
             
               
                 <li class="active"><a href="/" class="active">home</a></li>
+              
+            
+              
+                <li><a href="/userguide/">userguide</a></li>
               
             
               
@@ -61,12 +60,12 @@
     
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-    <div class="container-fluid">
-<p>A suite of Ajax search widgets to interface with the Discovery Engine.</p>
+    <div class="container">
+<p>The Simplicity Widgets are an open-source suite of jQuery UI JavaScript components that enable an intuitive and highly-responsive Ajax search experience using the Discovery Engine.</p>
 
-<p>The simplicity widgets provide a set of jQuery UI JavaScript widgets that enable a highly-responsive Ajax based search interface. They are comprised of UI widgets and a server-side search controller.</p>
+<p>The widgets interact with a server-side search controller via a RESTful API. Requests use standard query parameters, and the response is expected to be JSON.</p>
 
-<p>The search controller uses a RESTful API with regular URL parameters for the request and expect a JSON response.</p>
+<p>We provide an example PHP server-side search controller.</p>
 
 <p>Project page at <a href='http://github.com/t11e/simplicity'>github</a>.</p>
     </div>
@@ -81,8 +80,17 @@
         </p>
       </div>
     </footer>
+    <!--[if IE]>
+      <script src="/js/xdr.js"></script>
+      <script src="/js/json2.min.js"></script>
+      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+    <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
+    <script src="/js/jquery.pagination-2.1.min.js"></script>
+    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
     <script src="/js/bootstrap-2.1.1.min.js"></script>
     <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="/js/documentation.js"></script>
   </body>
 </html>
