@@ -49,7 +49,7 @@ This live example shows how the state propagation works.
           stateElement: '#exampleInput textarea:last'
         });
         $('#exampleInput textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {example: '4'});
     });
 </script>
@@ -91,7 +91,7 @@ This live example shows how the state propagation works.
           stateElement: '#exampleTextarea textarea:last'
         });
         $('#exampleTextarea textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {example: 'example text\ngoes here'});
     });
 </script>
@@ -144,7 +144,7 @@ This live example shows how the state propagation works.
           stateElement: '#exampleCheckboxes textarea:last'
         });
         $('#exampleCheckboxes textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {example: '2'});
     });
 </script>
@@ -197,7 +197,7 @@ This live example shows how the state propagation works.
           stateElement: '#exampleRadios textarea:last'
         });
         $('#exampleRadios textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {example: 'c'});
     });
 </script>
@@ -248,7 +248,7 @@ This live example shows how the state propagation works.
           stateElement: '#exampleSelect textarea:last'
         });
         $('#exampleSelect textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {});
     });
 </script>
@@ -299,7 +299,7 @@ This live example shows how the state propagation works.
           stateElement: '#exampleMultiSelect textarea:last'
         });
         $('#exampleMultiSelect textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {});
     });
 </script>
@@ -362,7 +362,7 @@ This live example shows how the state propagation works.
           stateElement: '#multiInputSingleSelect textarea:last'
         });
         $('#multiInputSingleSelect textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {});
     });
 </script>
@@ -419,7 +419,7 @@ This live example shows how the state propagation works.
           stateElement: '#multiInputMultiSelect textarea:last'
         });
         $('#multiInputMultiSelect textarea:last')
-            .simplicityStateExampleEditor()
+            .simplicityDocsStateEditor()
             .simplicityState('state', {});
     });
 </script>
