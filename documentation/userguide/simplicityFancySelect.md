@@ -127,7 +127,7 @@ HTML
 </div>
 {% endhighlight %}
 
-JavaScript
+JavaScript. Note that we override the `template` option to be `''` so that the widget falls back to the DOM element's contents.
 {% highlight javascript %}
 $('#example div').simplicityFancySelect({
     select: '#example select',

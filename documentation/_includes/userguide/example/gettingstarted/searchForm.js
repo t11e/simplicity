@@ -13,4 +13,4 @@ $('#agencyFancy').simplicityFancySelect({
 
 $('#resetButton').click(function () {
   $('body').simplicityState('reset');
-})
+});

@@ -50,13 +50,13 @@ This live example shows how the state propagation works.
         });
         $('#exampleInput textarea:last')
             .simplicityStateExampleEditor()
-            .simplicityState('state', {example: 4});
+            .simplicityState('state', {example: '4'});
     });
 </script>
 
-Change the value in <span class="badge">1</span>, tab out and the state JSON in <span class="badge">2</span> is updated
+Change the value in <span class="badge">1</span>, deselect and the state JSON in <span class="badge">2</span> is updated
 
-Alter the JSON in <span class="badge">2</span>, tab out and the value in <span class="badge">1</span> is updated.
+Alter the JSON in <span class="badge">2</span>, deselect and the value in <span class="badge">1</span> is updated.
 
 Textarea
 ========
@@ -96,9 +96,9 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span>, tab out and the state JSON in <span class="badge">2</span> is updated
+Change the value in <span class="badge">1</span>, deselect and the state JSON in <span class="badge">2</span> is updated
 
-Alter the JSON in <span class="badge">2</span>, tab out and the value in <span class="badge">1</span> is updated.
+Alter the JSON in <span class="badge">2</span>, deselect and the value in <span class="badge">1</span> is updated.
 
 Checkboxes
 ==========
@@ -149,9 +149,9 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span>, tab out and the state JSON in <span class="badge">2</span> is updated
+Change the value in <span class="badge">1</span>, deselect and the state JSON in <span class="badge">2</span> is updated
 
-Alter the JSON in <span class="badge">2</span>, tab out and the value in <span class="badge">1</span> is updated.
+Alter the JSON in <span class="badge">2</span>, deselect and the value in <span class="badge">1</span> is updated.
 
 Radio buttons
 =============
@@ -202,9 +202,9 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span>, tab out and the state JSON in <span class="badge">2</span> is updated
+Change the value in <span class="badge">1</span>, deselect and the state JSON in <span class="badge">2</span> is updated
 
-Alter the JSON in <span class="badge">2</span>, tab out and the value in <span class="badge">1</span> is updated.
+Alter the JSON in <span class="badge">2</span>, deselect and the value in <span class="badge">1</span> is updated.
 
 Select
 ======
@@ -253,9 +253,9 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span>, tab out and the state JSON in <span class="badge">2</span> is updated
+Change the value in <span class="badge">1</span>, deselect and the state JSON in <span class="badge">2</span> is updated
 
-Alter the JSON in <span class="badge">2</span>, tab out and the value in <span class="badge">1</span> is updated.
+Alter the JSON in <span class="badge">2</span>, deselect and the value in <span class="badge">1</span> is updated.
 
 Multiple Select
 ===============
@@ -304,9 +304,9 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span>, tab out and the state JSON in <span class="badge">2</span> is updated
+Change the value in <span class="badge">1</span>, deselect and the state JSON in <span class="badge">2</span> is updated
 
-Alter the JSON in <span class="badge">2</span>, tab out and the value in <span class="badge">1</span> is updated.
+Alter the JSON in <span class="badge">2</span>, deselect and the value in <span class="badge">1</span> is updated.
 
 Multiple inputs single-select
 =================================
@@ -367,9 +367,9 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span>, <span class="badge">2</span> or <span class="badge">3</span>, tab out and the state JSON in <span class="badge">4</span> is updated
+Change the value in <span class="badge">1</span>, <span class="badge">2</span> or <span class="badge">3</span>, deselect and the state JSON in <span class="badge">4</span> is updated
 
-Alter the JSON in <span class="badge">4</span>, tab out and the values in <span class="badge">1</span>, <span class="badge">2</span> and <span class="badge">3</span> are updated.
+Alter the JSON in <span class="badge">4</span>, deselect and the values in <span class="badge">1</span>, <span class="badge">2</span> and <span class="badge">3</span> are updated.
 
 Multiple inputs multi-select
 =================================
@@ -424,6 +424,6 @@ This live example shows how the state propagation works.
     });
 </script>
 
-Change the value in <span class="badge">1</span> or <span class="badge">2</span>, tab out and the state JSON in <span class="badge">3</span> is updated
+Change the value in <span class="badge">1</span> or <span class="badge">2</span>, deselect and the state JSON in <span class="badge">3</span> is updated
 
-Alter the JSON in <span class="badge">3</span>, tab out and the values in <span class="badge">1</span> and <span class="badge">2</span> are updated.
+Alter the JSON in <span class="badge">3</span>, deselect and the values in <span class="badge">1</span> and <span class="badge">2</span> are updated.

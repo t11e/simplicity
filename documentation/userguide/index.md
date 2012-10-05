@@ -19,9 +19,10 @@ They follow simple architectural patterns for communicating with a search server
 [jQuery](http://jquery.com/) and [jQuery UI](http://jqueryui.com/) are required to use the widgets.
 
 There are three high-level steps to use the widgets on a page:
-1. install the widgets on the page
-1. configure the page level widget sets, and
-1. configure each set of widgets as needed (sometimes you can just use the defaults)
+
+1. install the widgets on the page with `link` and `script` tags
+2. add HTML elements for the search and result areas
+3. add a few lines of JavaScript to configure the widgets
 
 Install
 -------
@@ -59,8 +60,6 @@ in a bit.
 
 HTML
 ----
-
-We create placeholder `div`s to display search results and some `input`s to hold the search parameters.
 
 Add the search navigation `form` to the left side of the page.
 
