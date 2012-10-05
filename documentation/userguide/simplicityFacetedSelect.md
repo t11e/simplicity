@@ -40,7 +40,16 @@ Example:
     </select>
     <label><span class="badge">3</span> search response</label>
     <select name="response">
-        <option value="{}">Empty</option>
+        <option value="{% capture value %}{
+  _discovery:{
+    response:{
+      facets:{
+        example:{
+        }
+      }
+    }
+  }
+}{% endcapture %}{{ value | escape }}">None</option>
         <option selected="selected" value="{% capture value %}{
   _discovery:{
     response:{
