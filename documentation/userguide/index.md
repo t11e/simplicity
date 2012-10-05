@@ -65,13 +65,13 @@ We create placeholder `div`s to display search results and some `input`s to hold
 Add the search navigation `form` to the left side of the page.
 
 {% highlight html %}
-{% include userguide/example/basic/searchForm.html %}
+{% include userguide/example/gettingstarted/searchForm.html %}
 {% endhighlight %}
 
 Add the results and pagination `div`s to the content area of the page.
 
 {% highlight html %}
-{% include userguide/example/basic/resultsArea.html %}
+{% include userguide/example/gettingstarted/resultsArea.html %}
 {% endhighlight %}
 
 JavaScript
@@ -81,22 +81,22 @@ We configure the widgets in a `script` tag below the script tags that loaded sim
 
 Only one [widget group](/userguide/widgetgroups.html) is needed, so we create a `simplicityState` widget on the `body` element.
 {% highlight javascript %}
-{% include userguide/example/basic/state.js %}
+{% include userguide/example/gettingstarted/state.js %}
 {% endhighlight %}
 
 Then we configure request widgets on the `input`s in the search navigation `form`.
 {% highlight javascript %}
-{% include userguide/example/basic/searchForm.js %}
+{% include userguide/example/gettingstarted/searchForm.js %}
 {% endhighlight %}
 
 The response widgets are created for the `div`s in the content area to display the search results and pagination links.
 {% highlight javascript %}
-{% include userguide/example/basic/resultsArea.js %}
+{% include userguide/example/gettingstarted/resultsArea.js %}
 {% endhighlight %}
 
 Finally, we perform the [page level setup](/userguide/simplicityDiscoverySearch.html) of the `simplicityDiscoverySearch` widget.
 {% highlight javascript %}
-{% include userguide/example/basic/search.js %}
+{% include userguide/example/gettingstarted/search.js %}
 {% endhighlight %}
 
 For the best user experience, we recommend placing any slow-loading scripts such map vendor scripts below all the Simplicity Widget
@@ -107,4 +107,4 @@ Summary
 
 We've demonstrated how to build a basic search page that use an external PHP backed search controller accessed via AJAX CORS requests.
 
-<a href="/userguide/example/basic.html" class="btn btn-primary button-large">View Example</a>
+<a href="/userguide/example/gettingstarted.html" class="btn btn-primary button-large">View Example</a>
