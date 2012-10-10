@@ -9,8 +9,9 @@ lead: Recording the question.
 
 {% include userguide/nav.html %}
 
-simplicityState
-===============
+<div class="page-header">
+  <h1>simplicityState</h1>
+</div>
 
 The `simplicityState` widget wraps a [JSON](http://www.json.org) representation of state which is typially used for driving search.
 

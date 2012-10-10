@@ -9,20 +9,22 @@ lead: Standing on the shoulders of $.giants.
 
 {% include userguide/nav.html %}
 
-Primer
-======
+<div class="page-header">
+  <h1>Primer</h1>
+</div>
 
 Here we'll show you the common idiums of the upstream projects that the widgets
 depend upon.
 
-jQuery
-------
+<div class="page-header">
+  <h1>jQuery</h1>
+</div>
 
 External documentation:
 * [jQuery Website](http://jquery.com/)
 * [jQuery Documentation](http://docs.jquery.com/)
 
-### Selectors
+<h2>Selectors</h2>
 
 Several Simplicity Widgets take a selector as an option. They always wrap the
 passed in object with [$(selector)](http://api.jquery.com/jQuery/#jQuery1) meaning that
@@ -37,7 +39,7 @@ $('#example').selectorExample({
 });
 {% endhighlight %}
 
-### Deferred execution
+<h2>Deferred execution</h2>
 
 We recommend setting up any JavaScript on the page to execute when the DOM
 is ready using [$(callback)](http://api.jquery.com/jQuery/#jQuery3). This
@@ -53,8 +55,9 @@ $(function () {
 {% endhighlight %}
 
 
-jQuery UI
----------
+<div class="page-header">
+  <h1>jQuery UI</h1>
+</div>
 
 External documentation:
 * [jQuery UI Website](http://jqueryui.com/)
@@ -64,7 +67,7 @@ External documentation:
 
 The Simplicity Widgets all follow the standard jQuery UI Widget model.
 
-### Creating widgets
+<h2>Creating widgets</h2>
 You can construct them with their default options:
 {% highlight javascript %}
 $('#example').exampleWidget();
@@ -83,7 +86,7 @@ And you can create more than one at a time:
 $('.example').exampleWidget()
 {% endhighlight %}
 
-### Widget options and methods
+<h2>Widget options and methods</h2>
 
 Once created, you get get the value of any option:
 {% highlight javascript %}
@@ -100,7 +103,7 @@ You can even call methods on a widget:
 $('#example').exampleWidget('bounce');
 {% endhighlight %}
 
-### Widget events
+<h2>Widget events</h2>
 
 Let's presume that our widget is documented to fire a `bouncing` event.
 
@@ -136,7 +139,7 @@ default `slider` causing the events to be named `slidestart`, `slideslide`,
 `slidechange` and `slidestop` instead of `sliderstart`, `sliderslide`,
 `sliderchange` and `sliderstop`.
 
-### Simplicity Widget events
+<h2>Simplicity Widget events</h2>
 
 With the exception of `simplicityState` and `simplicityDiscoverySearch`,
 all the Simplicity Widgets fire regular jQuery widget events that follow the
@@ -186,8 +189,7 @@ The use of `$.triggerHandler` means that the `simplicitySearchResponse` event
 triggered from `#secondarySearch` will not be picked up by the event handler
 that is bound to `body`.
 
-CSS
----
+<h2>CSS</h2>
 
 jQuery UI widgets all set
 [standard CSS classes](http://jqueryui.com/docs/Theming/API) on their attached
@@ -222,8 +224,7 @@ For example:
     </tbody>
 </table>
 
-Themes
-------
+<h2>Themes</h2>
 
 jQuery UI has great support for [theming](http://jqueryui.com/docs/Theming) and
 the Simplicity Widgets make use of the standard jQuery UI CSS classes to take

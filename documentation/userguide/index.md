@@ -9,8 +9,9 @@ lead: Learning how to use the widgets.
 
 {% include userguide/nav.html %}
 
-Getting started
-===============
+<div class="page-header">
+  <h1>Getting started</h1>
+</div>
 
 The Simplicity Widgets are designed to be extensible, and to get out of the way when you need them to.
 
@@ -24,8 +25,9 @@ There are three high-level steps to use the widgets on a page:
 2. add HTML elements for the search and result areas
 3. add a few lines of JavaScript to configure the widgets
 
-Install
--------
+<div class="page-header">
+  <h1>Install</h1>
+</div>
 
 You need to add `link` and `script` tags for the JavaScript and CSS resources for the widgets.
 
@@ -58,8 +60,9 @@ Note that some widgets have extra dependencies. You need to add `script` and `li
 You will add javascript code after the above tags to instantiate and configure the widgets that you want to use. We'll get to that
 in a bit.
 
-HTML
-----
+<div class="page-header">
+  <h1>HTML</h1>
+</div>
 
 Add the search navigation `form` to the left side of the page.
 
@@ -73,8 +76,9 @@ Add the results and pagination `div`s to the content area of the page.
 {% include userguide/example/gettingstarted/resultsArea.html %}
 {% endhighlight %}
 
-JavaScript
-----------
+<div class="page-header">
+  <h1>JavaScript</h1>
+</div>
 
 We configure the widgets in a `script` tag below the script tags that loaded simplicity.js and its dependencies.
 
@@ -101,8 +105,9 @@ Finally, we perform the [page level setup](/userguide/simplicityDiscoverySearch.
 For the best user experience, we recommend placing any slow-loading scripts such map vendor scripts below all the Simplicity Widget
 JavaScript so that the widgets can be fully functional and displayed before the slow loading scripts are executed.
 
-Summary
--------
+<div class="page-header">
+  <h1>Summary</h1>
+</div>
 
 We've demonstrated how to build a basic search page that use an external PHP backed search controller accessed via AJAX CORS requests.
 

@@ -9,38 +9,42 @@ lead: Dynamic options and counts.
 
 {% include userguide/nav.html %}
 
-simplicityFacetedSelect
-=======================
-
-To enhance a `<select>` to automatically populate it from the search results, first create the select.
-
+<div class="page-header">
+  <h1>simplicityFacetedSelect</h1>
+</div>
+<div class="row">
+    <div class="span8">
+        <p>
+            To enhance a <code>&lt;select></code> to automatically populate it
+            from the search results, first create the select.
+        </p>
 {% highlight html %}
 <select name="example">
     <option value="">Any...</option>
 </select>
 {% endhighlight %}
-
-Then apply the `simplicityFacetedSelect` widget to it.
-
+        <p>
+            Then apply the <code>simplicityFacetedSelect</code> widget to it.
+        </p>
 {% highlight javascript %}
 $('select').simplicityFacetedSelect();
 {% endhighlight %}
-
-Example:
-
-<div id="exampleFacetedSelect" class="well">
-    <label><span class="badge">1</span> faceted select</label>
-    <select name="example">
-        <option value="">Any...</option>
-    </select>
-    <label><span class="badge">2</span> option template</label>
-    <select name="optionTemplate">
-        <option>{option}</option>
-        <option>{option} {count}</option>
-    </select>
-    <label><span class="badge">3</span> search response</label>
-    <select name="response">
-        <option value="{% capture value %}{
+    </div>
+    <div class="span4">
+        <h3>Example</h3>
+        <div id="exampleFacetedSelect">
+            <label><span class="badge">1</span> faceted select</label>
+            <select name="example">
+                <option value="">Any...</option>
+            </select>
+            <label><span class="badge">2</span> option template</label>
+            <select name="optionTemplate">
+                <option>{option}</option>
+                <option>{option} {count}</option>
+            </select>
+            <label><span class="badge">3</span> search response</label>
+            <select name="response">
+                <option value="{% capture value %}{
   _discovery:{
     response:{
       facets:{
@@ -50,7 +54,7 @@ Example:
     }
   }
 }{% endcapture %}{{ value | escape }}">None</option>
-        <option selected="selected" value="{% capture value %}{
+                <option selected="selected" value="{% capture value %}{
   _discovery:{
     response:{
       facets:{
@@ -66,7 +70,7 @@ Example:
     }
   }
 }{% endcapture %}{{ value | escape }}">ABC</option>
-        <option value="{% capture value %}{
+                <option value="{% capture value %}{
   _discovery:{
     response:{
       facets:{
@@ -82,7 +86,7 @@ Example:
     }
   }
 }{% endcapture %}{{ value | escape }}">BCA</option>
-        <option value="{% capture value %}{
+                <option value="{% capture value %}{
   _discovery:{
     response:{
       facets:{
@@ -146,29 +150,36 @@ Example:
     }
   }
 }{% endcapture %}{{ value | escape }}">States</option>
-    </select>
-    <pre style="max-width: 32em; height: 8em; overflow: scroll;"></pre>
+            </select>
+            <pre style="height: 8em; overflow: scroll;"></pre>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('#exampleFacetedSelect select[name="example"]').simplicityFacetedSelect({
+                    searchElement: '#exampleFacetedSelect'
+                });
+
+                $('#exampleFacetedSelect pre').simplicityDocsJsonSelector({
+                    selectElement: '#exampleFacetedSelect select[name="response"]',
+                    change: function (evt, json) {
+                        $('#exampleFacetedSelect').triggerHandler('simplicitySearchResponse', json);
+                    }
+                });
+                $('#exampleFacetedSelect select[name="optionTemplate"]')
+                    .change(function (evt) {
+                        $('#exampleFacetedSelect  select[name="example"]')
+                            .simplicityFacetedSelect('option', 'optionTemplate', $(evt.target).val());
+                        $('#exampleFacetedSelect  select[name="response"]').change();
+                    })
+                    .change();
+            });
+        </script>
+        <p>
+            Change the optionTemplate in <span class="badge">2</span> or
+            the search response in <span class="badge">3</span> and see how the
+            available options in <span class="badge">1</span> are updated. Note
+            how selections in <span class="badge">1</span> are preserved across
+            updates.
+        </p>
+    </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('#exampleFacetedSelect select[name="example"]').simplicityFacetedSelect({
-            searchElement: '#exampleFacetedSelect'
-        });
-
-        $('#exampleFacetedSelect pre').simplicityDocsJsonSelector({
-            selectElement: '#exampleFacetedSelect select[name="response"]',
-            change: function (evt, json) {
-                $('#exampleFacetedSelect').triggerHandler('simplicitySearchResponse', json);
-            }
-        });
-        $('#exampleFacetedSelect select[name="optionTemplate"]')
-            .change(function (evt) {
-                $('#exampleFacetedSelect  select[name="example"]')
-                    .simplicityFacetedSelect('option', 'optionTemplate', $(evt.target).val());
-                $('#exampleFacetedSelect  select[name="response"]').change();
-            })
-            .change();
-    });
-</script>
-
-Change the optionTemplate in <span class="badge">2</span> or the search response in <span class="badge">3</span> and see how the available options in <span class="badge">1</span> are updated. Note how selections in <span class="badge">1</span> are preserved across updates.

@@ -9,8 +9,9 @@ lead: 640K ought to be enough for anybody.
 
 {% include userguide/nav.html %}
 
-Widget Groups
-=============
+<div class="page-header">
+  <h1>Widget Groups</h1>
+</div>
 
 The widgets support being placed in multiple independent groups on the same page. Typically only one group is used so the default options cater for that scenario.
 

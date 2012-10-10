@@ -9,15 +9,17 @@ lead: Setting up the search flow.
 
 {% include userguide/nav.html %}
 
-simplicityDiscoverySearch
-=========================
+<div class="page-header">
+  <h1>simplicityDiscoverySearch</h1>
+</div>
 
 The `simplicityDiscoverySearch` widget coordinates with the `simplicityState`
 widget to perform the Ajax search. By default, whenever the state changes
 a search is performed.
 
-Setup
------
+<div class="page-header">
+  <h1>Setup</h1>
+</div>
 
 Pages have a snippet of JavaScript at the end of their `body` that configures
 the search.
@@ -71,8 +73,9 @@ This enables several optional features, let's run through each line.
    for when you are not doing any server side search as part of generating
    the page.
 
-Search Service
---------------
+<div class="page-header">
+  <h1>Search Service</h1>
+</div>
 
 The `simplicityDiscoverySearch` widget can perform Ajax search requests in a two different ways:
 1. directly to the Discovery Search Engine (via CORS), or
@@ -80,7 +83,9 @@ The `simplicityDiscoverySearch` widget can perform Ajax search requests in a two
 
 You'll typically use direct engine searches for development purposes, and a server side search controller for a production site.
 
-### Server side search controller
+<div class="page-header">
+  <h1>Server side search controller</h1>
+</div>
 
 {% highlight javascript %}
 $('body').simplicityDiscoverySearch({
@@ -120,7 +125,9 @@ The server side search controller would build a Discovery Request from the query
 
 The widgets would then process the response to insert the results directly into the page and update any facets, maps or other dynamic details as appropriate.
 
-### JavaScript search controller with direct engine query
+<div class="page-header">
+  <h1>JavaScript search controller with direct engine query</h1>
+</div>
 
 {% highlight javascript %}
 var my_search_controller = function (state) {
@@ -146,8 +153,9 @@ $('body').simplicityDiscoverySearch({
 This makes a direct POST request to the engine and uses the JavaScript function `my_search_controller` to create the Discovery Request from the state.
 You'll need a [CORS](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing) compatible browser to avoid any cross-origin sand-boxing issues.
 
-Live search
------------
+<div class="page-header">
+  <h1>Live search</h1>
+</div>
 
 By default a search is triggered whenever the state changes. We call this "live
 search". If you prefer to have the end user click on a button to trigger the
@@ -165,8 +173,9 @@ $('#searchButton').click(function () {
 });
 {% endhighlight %}
 
-Initial server side search
---------------------------
+<div class="page-header">
+  <h1>Initial server side search</h1>
+</div>
 
 If you'd like to SEO optimize your page, you can perform the first search
 when generating the HTML and splice that into the widget configuration.
@@ -201,8 +210,9 @@ $('body').simplicityDiscoverySearch({
 });
 {% endhighlight %}
 
-Programmatic search
--------------------
+<div class="page-header">
+  <h1>Programmatic search</h1>
+</div>
 
 At any point you can call the `search` method of `simplicityDiscoverySearch` to
 trigger a search.
@@ -219,8 +229,9 @@ $('body').simplicityDiscoverySearch('search', {
 });
 {% endhighlight %}
 
-Search Response
----------------
+<div class="page-header">
+  <h1>Search Response</h1>
+</div>
 
 The current search response is buffered allowing you access it at any time.
 
