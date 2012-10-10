@@ -82,12 +82,9 @@
       }
     },
     _errorHandler: function (resultsElement, searchResponse) {
-      if (searchResponse.error) {
-        var error = $('<div class="ui-state-error-text"/>');
-        error.text('[' + searchResponse.status + '] ' + searchResponse.statusText + ((searchResponse.message) ? ", " + searchResponse.message : ""));
-        resultsElement.html(error);
-        return true;
-      }
+      var error = $('<div class="ui-state-error-text"/>');
+      error.text('[' + searchResponse.status + '] ' + searchResponse.statusText + ((searchResponse.message) ? ", " + searchResponse.message : ""));
+      resultsElement.html(error);
     }
   });
 }(jQuery));

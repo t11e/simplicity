@@ -28,10 +28,12 @@
  */
 (function ($) {
   $.simplicityAjaxHelper = function (exeContext) {
-    var numRequest = 0;
-    var numSuccess = 0;
-    var numError = 0;
-    var inFlightXhr = null;
+    var numRequest = 0,
+        numSuccess = 0,
+        numError = 0,
+        numSuperceed = 0,
+        numAbort = 0,
+        inFlightXhr = null;
     var ajax = function (options) {
       function requestSuccess(requestId) {
         return function (data, textStatus, xhr) {
@@ -44,7 +46,7 @@
             if (data === null || ('undefined' === typeof data)) {
               numError += 1;
               if (options.error !== null && ('undefined' !== typeof options.error)) {
-                options.error.call(this, xhr, textStatus, 'Ajax response was null or undefined.');
+                options.error.apply(this, arguments);
               }
             } else {
               numSuccess += 1;
@@ -58,20 +60,28 @@
       function requestError(requestId) {
         return function (data, textStatus, xhr) {
           inFlightXhr = null;
-          numError += 1;
-          if (requestId !== numRequest) {
+          if (xhr.status === 0 && textStatus === 'abort') {
+            numAbort += 1;
             if (options.debug) {
-              console.log('Ajax error response superceded with requestId ', requestId, ', current request', numRequest);
+              console.log('Ajax call aborted with requestId ', requestId, ', current request', numRequest);
             }
-          } else if (options.error !== null && ('undefined' !== typeof options.error)) {
-            options.error.apply(this, arguments);
+          } else if (requestId !== numRequest) {
+            numSuperceed += 1;
+            if (options.debug) {
+              console.log('Ajax error response superceeded with requestId ', requestId, ', current request', numRequest);
+            }
+          } else {
+            numError += 1;
+            if (options.error !== null && ('undefined' !== typeof options.error)) {
+              options.error.apply(this, arguments);
+            }
           }
         };
       }
+      numRequest += 1;
       if (inFlightXhr) {
         inFlightXhr.abort();
       }
-      numRequest += 1;
       var callbacks = {
         success: $.proxy(requestSuccess(numRequest), exeContext),
         error: $.proxy(requestError(numRequest), exeContext)
@@ -86,7 +96,9 @@
         return {
           count: numRequest,
           success: numSuccess,
-          error: numError
+          error: numError,
+          superceed: numSuperceed,
+          abort: numAbort
         };
       }
     };

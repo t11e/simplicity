@@ -15,6 +15,9 @@ Improvements
 ------------
 
 * Adds `$.simplicity.version` to be used for diagnostic purposes not feature detection.
+* Fixes `$.simplicityAjaxHelper` to prevent `simplicitySearchResults` from
+  displaying `[0] abort, abort` when an Ajax request was aborted due to the
+  user interacting too quickly.
 
 <div class="page-header">
   <h1>3.1 <small>2012-08-14</small></h1>
