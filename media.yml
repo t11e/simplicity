@@ -9,6 +9,7 @@ groups:
     outputFileNameMinified: js/build/simplicity.min.js
     sourceFileNames:
       # Core
+      - js/simplicity/simplicity.js
       - js/simplicity/simplicityEquiv.js
       - js/simplicity/simplicityProxy.js
       - js/simplicity/simplicityWidget.js

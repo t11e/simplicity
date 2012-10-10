@@ -37,7 +37,7 @@
     </java>
   </target>
 
-  <property name="version" value="0.0.0"/>
+  <property name="version" value="0.0"/>
   <target name="dist" depends="compress-media"
     description="Build a binary distribution of this project">
     <delete dir="build.ant/dist"/>
@@ -58,6 +58,15 @@
         from="(simplicity|simplicity-[^.]+)(\.min\.css|\.min\.js|\.js|\.css)"
         to="\1-${version}\2"/>
     </copy>
+    <!-- Splice the release version into the JavaScript files. -->
+    <replaceregexp>
+      <regexp pattern="(simplicity\.version *= *['&quot;])dev(['&quot;])"/>
+      <substitution expression="\1${version}\2"/>
+      <fileset dir="build.ant/dist">
+        <include name="simplicity-${version}.js"/>
+        <include name="simplicity-${version}.min.js"/>
+      </fileset>
+    </replaceregexp>
     <!-- The target zipfile -->
     <delete file="simplicity-${version}.zip"/>
     <zip destfile="simplicity-${version}.zip">

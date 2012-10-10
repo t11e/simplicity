@@ -8,6 +8,15 @@ lead: What's new, doc?
 
 
 <div class="page-header">
+  <h1>Development <small>in progress</small></h1>
+</div>
+
+Improvements
+------------
+
+* Adds `$.simplicity.version` to be used for diagnostic purposes not feature detection.
+
+<div class="page-header">
   <h1>3.1 <small>2012-08-14</small></h1>
 </div>
 
