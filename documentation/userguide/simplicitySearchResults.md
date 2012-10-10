@@ -218,8 +218,9 @@ function (target, searchResponse) {
         </div>
         <script type="text/javascript">
             $(function () {
-                $('#browserBasedExample').simplicityDiscoverySearch();
-                $('#browserBasedExample').simplicityDiscoverySearch('searchResponse', {{searchResponse}});
+                $('#browserBasedExample').simplicityDiscoverySearch({
+                    initialSearchResponse: {{searchResponse}}
+                });
                 $('#browserBasedResults').simplicitySearchResults({
                     searchElement: '#browserBasedExample'
                 });

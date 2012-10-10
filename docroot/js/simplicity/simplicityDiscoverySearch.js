@@ -75,7 +75,7 @@
      * </dl>
      * @name $.ui.simplicityDiscoverySearch.options
      */
-    options : {
+    options: {
       url: '',
       backend: 'controller',
       stateElement: 'body',
@@ -89,9 +89,9 @@
       profile: false,
       getPayloadParam: ''
     },
-    _create : function () {
+    _create: function () {
       this._addClass('ui-simplicity-discovery-search');
-      this.searchResponse(JSON.stringify(this.options.initialSearchResponse), false);
+      this.searchResponse(this.options.initialSearchResponse, false);
       this._bind(this.options.stateElement, 'simplicityStateChange', this._stateChangeHandler);
       this._ajaxHelper = $.simplicityAjaxHelper(this);
     },

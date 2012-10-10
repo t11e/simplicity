@@ -18,6 +18,9 @@ Improvements
 * Fixes `$.simplicityAjaxHelper` to prevent `simplicitySearchResults` from
   displaying `[0] abort, abort` when an Ajax request was aborted due to the
   user interacting too quickly.
+* Makes `simplicityDiscoverySearch` handle the `initialSearchResponse` option as
+  a straight JavaScript object instead of incorrectly serializing it into a JSON
+  formatted string.
 
 <div class="page-header">
   <h1>3.1 <small>2012-08-14</small></h1>
