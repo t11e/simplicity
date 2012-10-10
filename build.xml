@@ -38,7 +38,7 @@
   </target>
 
   <property name="version" value="0.0.0"/>
-  <target name="dist" depends="compress-media,jsdoc"
+  <target name="dist" depends="compress-media"
     description="Build a binary distribution of this project">
     <delete dir="build.ant/dist"/>
     <mkdir dir="build.ant/dist"/>
@@ -85,8 +85,6 @@
         <exclude name="yui-grids-*.css"/>
         <exclude name="jquery.pagination-*.css"/>
       </zipfileset>
-      <!-- JsDoc -->
-      <zipfileset prefix="simplicity-${version}/jsdoc/" dir="docroot/jsdoc"/>
     </zip>
     <delete dir="build.ant/dist"/>
   </target>
