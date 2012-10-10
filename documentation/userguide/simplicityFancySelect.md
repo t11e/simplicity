@@ -268,8 +268,6 @@ $('#example div').simplicityFancySelect({
     </div>
 </div>
 
-{% comment %}
-
 <div class="page-header">
   <h1>Checkboxes</h1>
 </div>
@@ -417,5 +415,3 @@ $('#example div').simplicityFancySelect({
         </script>
     </div>
 </div>
-
-{% endcomment %}

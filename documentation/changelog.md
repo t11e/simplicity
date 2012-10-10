@@ -21,6 +21,9 @@ Improvements
 * Makes `simplicityDiscoverySearch` handle the `initialSearchResponse` option as
   a straight JavaScript object instead of incorrectly serializing it into a JSON
   formatted string.
+* Stops `simplicityFancySelect` from swallowing `click` events that target
+  a checkbox or radio button. This allows them to be used from the `template`
+  option.
 
 <div class="page-header">
   <h1>3.1 <small>2012-08-14</small></h1>

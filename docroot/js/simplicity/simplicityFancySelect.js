@@ -111,7 +111,7 @@
      *   <dt>checkableInputSelector</dt>
      *   <dd>
      *     Determines the selector (within the option template) to use to identify a checkable DOM input that reflects the current
-     *     widget state. Defaults to <code>:checkbox.option-checkbox</code>.
+     *     widget state. Defaults to <code>:checkbox.option-checkbox,:radio.option-radio</code>.
      *   </dd>
      *   <dt>radioStyle</dt>
      *   <dd>
@@ -142,7 +142,7 @@
       refreshOnCreate: true,
       hideWhenEmpty: false,
       radioStyle: false,
-      checkableInputSelector: ':checkbox.option-checkbox',
+      checkableInputSelector: ':checkbox.option-checkbox,:radio.option-radio',
       template: '' +
         '<ul class="options ui-helper-clearfix">' +
           '<li class="option ui-helper-clearfix">' +
@@ -398,7 +398,9 @@
           this._ignoreChange = false;
         }
       }
-      evt.preventDefault();
+      if (!$(evt.target).is(":input")) {
+        evt.preventDefault();
+      }
     }
   });
 }(jQuery));
