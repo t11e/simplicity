@@ -6,8 +6,10 @@ subhead: Changelog
 lead: What's new, doc?
 ---
 
-<h1>3.1</h1>
-<div class="release-date">2012-08-14</div>
+
+<div class="page-header">
+  <h1>3.1 <small>2012-08-14</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -17,15 +19,16 @@ Compatibility
 Improvements
 ------------
 
-* Enhances simplicityDiscoverySearch to support CORS direct engine requests.
-* Enhances simplicityDiscoverySearch to make extracting a result set optional.
+* Enhances `simplicityDiscoverySearch` to support CORS direct engine requests.
+* Enhances `simplicityDiscoverySearch` to make extracting a result set optional.
 * Changes default behavior of `simplicityGoogleMapBoundsTracker` so that bounds event is not triggered when dragging. It now only triggers the bounds event if the map bounds actually changed.
 * Optimizes buffered shape creation and updating in the shape creator widgets.
 * Fixes to `simplicityMapShapeCreator` and `simplicityMapeShapeCreatorUi` to make them easier to use.
 
 
-<h1>3.0</h1>
-<div class="release-date">2012-07-19</div>
+<div class="page-header">
+  <h1>3.0 <small>2012-07-19</small></h1>
+</div>
 
 Improvements
 ------------
@@ -38,8 +41,9 @@ Improvements
 * Fixes invalid guard in `simplicityPagination` where the option `search` was used instead of `searchElement`.
 
 
-<h1>2.9.1</h1>
-<div class="release-date">2012-06-22</div>
+<div class="page-header">
+  <h1>2.9.1 <small>2012-06-22</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -52,8 +56,10 @@ Improvements
 * Adds `markerType` option to `simplicityGoogleMapResults`. Possible values are `overlay` (default) or `google`. This allows clients to choose between the standard google marker (google) or our new `simplicityGoogleMarker` (overlay). Adds supporting factory methods to `$.simplicityGoogleMarker`.
 * Improves $.simplicityGoogleMarker and removes the need for the Google Maps API to exist before it is declared.
 
-<h1>2.9</h1>
-<div class="release-date">2012-06-22</div>
+
+<div class="page-header">
+  <h1>2.9 <small>2012-06-22</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -68,8 +74,10 @@ Improvements
 * Enhances `simplicityDiscoverySearch` to optionally request and deliver query profile responses from the engine. Adds three new widget events that enable customers to manipulate the `$.ajax` parameter options, its success and error methods.
 * Adds support for radio buttons to `simplicityFancySelect`.
 
-<h1>2.8</h1>
-<div class="release-date">2012-04-12</div>
+
+<div class="page-header">
+  <h1>2.8 <small>2012-04-12</small></h1>
+</div>
 
 Improvements
 ------------
@@ -78,8 +86,10 @@ Improvements
 * Enhances `simplicityHistory` to use `#!`, making navigation and resets more user-friendly.
 * Applies StandardMarker (Nokia) and adds with default marker numbering and/or zIndex when supported.
 
-<h1>2.7</h1>
-<div class="release-date">2012-02-07</div>
+
+<div class="page-header">
+  <h1>2.7 <small>2012-02-07</small></h1>
+</div>
 
 Improvements
 ------------
@@ -87,16 +97,20 @@ Improvements
 * Adds support for Nokia map (will replace Yahoo maps).
 * Adds `removemarker` event to `simplicity{vendor}MapResults`.
 
-<h1>2.6</h1>
-<div class="release-date">2011-12-16</div>
+
+<div class="page-header">
+  <h1>2.6 <small>2011-12-16</small></h1>
+</div>
 
 Improvements
 ------------
 
 * Introduces `simplicityAjaxHelpher` that adds support for cancelling inflight Ajax requests for `simplicityDiscoverySearch`.
 
-<h1>2.5</h1>
-<div class="release-date">2011-10-24</div>
+
+<div class="page-header">
+  <h1>2.5 <small>2011-10-24</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -130,8 +144,9 @@ Improvements
 * Converts number to String in `simplicityPagination` to avoid false state change events when reading the page number from the simplicity state which generally uses strings for the values.
 
 
-<h1>2.4</h1>
-<div class="release-date">2011-07-25</div>
+<div class="page-header">
+  <h1>2.4 <small>2011-07-25</small></h1>
+</div>
 
 Improvements
 ------------
@@ -139,8 +154,10 @@ Improvements
 * Adds JSONP support to simplicityDiscoverySearch and an example of how to use it.
 * Adds BSD 2-clause license to the project.
 
-<h1>2.3</h1>
-<div class="release-date">2011-04-22</div>
+
+<div class="page-header">
+  <h1>2.3 <small>2011-04-22</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -266,8 +283,9 @@ Improvements
 * Removes vestigial this.element.unbind('change', this._changeHandler) from destroy methods of simplicityDiscoverySearch and simplicityState.
 
 
-<h1>2.2</h1>
-<div class="release-date">2011-02-23</div>
+<div class="page-header">
+  <h1>2.2 <small>2011-02-23</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -285,8 +303,9 @@ Improvements
 * Adds simplicityDebug which replaces a bunch of copy/pasted code. This widget adds four text areas to the page that show and allow edits to the state, search response, result set and facet counts.
 
 
-<h1>2.1</h1>
-<div class="release-date">2011-02-10</div>
+<div class="page-header">
+  <h1>2.1 <small>2011-02-10</small></h1>
+</div>
 
 Compatibility
 -------------
@@ -305,7 +324,9 @@ Improvements
 * Adds support for multiple grouped inputs to `simplicityInputs.` This can be used to atomically update multiple input fields at once.
 * Improves state event triggering logic in simplicityState to only trigger a changed state if it differs from the last triggered change state and was asked to trigger on change.
 
-<h1>2.0</h1>
-<div class="release-date">2011-01-06</div>
+
+<div class="page-header">
+  <h1>2.0 <small>2011-01-06</small></h1>
+</div>
 
 Initial release.
