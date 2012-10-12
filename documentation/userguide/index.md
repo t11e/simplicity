@@ -46,15 +46,24 @@ Add these external JavaScript references to the end of the `body` of the page.
 <script src="//cdn.transparensee.com/simplicity/{{site.simplicityRelease}}/simplicity.min.js"></script>
 {% endhighlight %}
 
-Note that some widgets have extra dependencies. You need to add `script` and `link` tags for them too.
+Some older browsers need extra JavaScript support to function well, you'll need to add `script` tags for
+the following libraries for most compatibility.
+
+<dl>
+    <dt><a href="https://github.com/douglascrockford/JSON-js">JSON2</a></dt>
+    <dd>
+        Gracefully adds support for <code>JSON.parse</code> and <code>JSON.stringify</code>
+        to browsers that do not have native <code>JSON</code> support.
+    </dd>
+    <dt><a href="http://brandonaaron.net/code/bgiframe/docs">jQuery bgiframe plugin</a></dt>
+    <dd>Recommended for IE6 compatibilty when using <code>$.simplicityFlyout</code>.</dd>
+</dl>
+
+Some widgets have extra dependencies, you'll need to add `script` tags for them too.
 
 <dl>
     <dt><a href="http://benalman.com/projects/jquery-bbq-plugin/">jQuery BBQ plugin</a></dt>
     <dd>Used by <code>$.simplicityDiscoverySearch('mergeQueryParams')</code> and <code>$.simplicityHistory</code>.</dd>
-    <dt><a href="http://github.com/gbirke/jquery_pagination">jQuery Pagination plugin</a></dt>
-    <dd>Used by <code>$.simplicityPagination</code>.</dd>
-    <dt><a href="http://brandonaaron.net/code/bgiframe/docs">jQuery bgiframe plugin</a></dt>
-    <dd>Recommended for IE6 compatibilty when using <code>$.simplicityFlyout</code>.</dd>
 </dl>
 
 You will add javascript code after the above tags to instantiate and configure the widgets that you want to use. We'll get to that
