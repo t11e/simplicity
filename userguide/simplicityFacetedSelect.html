@@ -66,7 +66,9 @@
         <ul class='nav nav-list'>
             <li class='nav-header'>Core</li>
             <li class=''><a href='/userguide/'>Getting started</a></li>
+            <li class=''><a href='/userguide/primer.html'>Primer</a></li>
             <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
             <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
         </ul>
     </div>
@@ -81,147 +83,195 @@
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Response Widgets</li>
+            <li class=''><a href='/userguide/simplicitySearchResults.html'>simplicitySearchResults</a></li>
             <li class='active'><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
         </ul>
     </div>
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Examples</li>
-            <li class=''><a href='/userguide/example/basic.html'>Basic</a></li>
+            <li class=''><a href='/userguide/example/gettingstarted.html'>Getting Started</a></li>
         </ul>
     </div>
-</div>
-<h1 id='simplicityfacetedselect'>simplicityFacetedSelect</h1>
+</div><div class='page-header'>
+  <h1>simplicityFacetedSelect</h1>
+</div><div class='row'>
+    <div class='span8'>
+        <p>
+            To enhance a <code>&lt;select></code> to automatically populate it
+            from the search results, first create the select.
+        </p>
 
-<p>To enhance a <code>&lt;select&gt;</code> to automatically populate it from the search results, first create the select.</p>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;example&quot;</span><span class='nt'>&gt;</span>
     <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;&quot;</span><span class='nt'>&gt;</span>Any...<span class='nt'>&lt;/option&gt;</span>
 <span class='nt'>&lt;/select&gt;</span>
 </code></pre>
 </div>
-<p>Then apply the <code>simplicityFacetedSelect</code> widget to it.</p>
+
+
+        <p>
+            Then apply the <code>simplicityFacetedSelect</code> widget to it.
+        </p>
+
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;select&#39;</span><span class='p'>).</span><span class='nx'>simplicityFacetedSelect</span><span class='p'>();</span>
 </code></pre>
 </div>
-<p>Example:</p>
-<div class='well' id='exampleFacetedSelect'>
-    <label><span class='badge'>1</span> faceted select</label>
-    <select name='example'>
-        <option value=''>Any...</option>
-    </select>
-    <label><span class='badge'>2</span> option template</label>
-    <select name='optionTemplate'>
-        <option>{option}</option>
-        <option>{option} {count}</option>
-    </select>
-    <label><span class='badge'>3</span> search response</label>
-    <select name='response'>
-        <option value=''>Empty</option>
-        <option selected='selected'>ABC</option>
-        <option>BCA</option>
-        <option>States</option>
-    </select>
-    <pre style='max-width: 32em; height: 8em; overflow: scroll;' />
-</div><script type='text/javascript'>
-    $(function () {
-        $('#exampleFacetedSelect select[name="example"]').simplicityFacetedSelect({
-            searchElement: '#exampleFacetedSelect'
-        });
-        // Copy any search response to the pre
-        $('#exampleFacetedSelect').bind('simplicitySearchResponse', function (evt, ui) {
-            $('#exampleFacetedSelect pre').text(JSON.stringify(ui, null, '  '));
-        });
-        // Fire off a search response when one is selected from the second dropdown
-        $('#exampleFacetedSelect select[name="response"]').change(function (evt) {
-            var value = $(evt.target).val();
-            var response = {};
-            switch (value) {
-            case 'ABC':
-                response = {_discovery:{response:{facets:{example:{
-                    childIds: ["A","B","C"],
-                    data: {
-                        A: {count:7, label:'Alpha'},
-                        B: {count:1, label:'Bravo'},
-                        C: {count:2, label:'Charlie'}
-                    }}}}}};
-                break;
-            case 'BCA':
-                response = {_discovery:{response:{facets:{example:{
-                    childIds: ["B","C","A"],
-                    data: {
-                        A: {count:7, label:'Alpha'},
-                        B: {count:1, label:'Bravo'},
-                        C: {count:2, label:'Charlie'}
-                    }}}}}};
-                break;
-            case 'States':
-                response = {_discovery:{response:{facets:{example:{
-                    childIds: ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"],
-                    data: {
-                        AL: {label:"Alabama",count:1},
-                        AK: {label:"Alaska",count:2},
-                        AZ: {label:"Arizona",count:3},
-                        AR: {label:"Arkansas",count:4},
-                        CA: {label:"California",count:5},
-                        CO: {label:"Colorado",count:6},
-                        CT: {label:"Connecticut",count:7},
-                        DE: {label:"Delaware",count:8},
-                        DC: {label:"District of Columbia",count:9},
-                        FL: {label:"Florida",count:8},
-                        GA: {label:"Georgia",count:7},
-                        HI: {label:"Hawaii",count:6},
-                        ID: {label:"Idaho",count:5},
-                        IL: {label:"Illinois",count:4},
-                        IN: {label:"Indiana",count:3},
-                        IA: {label:"Iowa",count:2},
-                        KS: {label:"Kansas",count:1},
-                        KY: {label:"Kentucky",count:2},
-                        LA: {label:"Louisiana",count:3},
-                        ME: {label:"Maine",count:4},
-                        MD: {label:"Maryland",count:5},
-                        MA: {label:"Massachusetts",count:6},
-                        MI: {label:"Michigan",count:7},
-                        MN: {label:"Minnesota",count:8},
-                        MS: {label:"Mississippi",count:9},
-                        MO: {label:"Missouri",count:8},
-                        MT: {label:"Montana",count:7},
-                        NE: {label:"Nebraska",count:6},
-                        NV: {label:"Nevada",count:5},
-                        NH: {label:"New Hampshire",count:4},
-                        NJ: {label:"New Jersey",count:3},
-                        NM: {label:"New Mexico",count:2},
-                        NY: {label:"New York",count:1},
-                        NC: {label:"North Carolina",count:2},
-                        ND: {label:"North Dakota",count:3},
-                        OH: {label:"Ohio",count:4},
-                        OK: {label:"Oklahoma",count:5},
-                        OR: {label:"Oregon",count:6},
-                        PA: {label:"Pennsylvania",count:7},
-                        RI: {label:"Rhode Island",count:8},
-                        SC: {label:"South Carolina",count:9},
-                        SD: {label:"South Dakota",count:8},
-                        TN: {label:"Tennessee",count:7},
-                        TX: {label:"Texas",count:6},
-                        UT: {label:"Utah",count:5},
-                        VT: {label:"Vermont",count:4},
-                        VA: {label:"Virginia",count:3},
-                        WA: {label:"Washington",count:2},
-                        WV: {label:"West Virginia",count:1},
-                        WI: {label:"Wisconsin",count:2},
-                        WY: {label:"Wyoming",count:3}
-                }}}}}};
-                break;
-            }
-            $('#exampleFacetedSelect').trigger('simplicitySearchResponse', response);
-        });
-        $('#exampleFacetedSelect select[name="optionTemplate"]').change(function (evt) {
-            var value = $(evt.target).val();
-            $('#exampleFacetedSelect  select[name="example"]').simplicityFacetedSelect('option', 'optionTemplate', value);
-            $('#exampleFacetedSelect  select[name="response"]').change();
-        }).change();
-    });
-</script>
-<p>Change the optionTemplate in <span class='badge'>2</span> or the search response in <span class='badge'>3</span> and see how the available options in <span class='badge'>1</span> are updated. Note how selections in <span class='badge'>1</span> are preserved across updates.</p>
+
+
+    </div>
+    <div class='span4'>
+        <h3>Example</h3>
+        <div id='exampleFacetedSelect'>
+            <label><span class='badge'>1</span> faceted select</label>
+            <select name='example'>
+                <option value=''>Any...</option>
+            </select>
+            <label><span class='badge'>2</span> option template</label>
+            <select name='optionTemplate'>
+                <option>{option}</option>
+                <option>{option} {count}</option>
+            </select>
+            <label><span class='badge'>3</span> search response</label>
+            <select name='response'>
+                <option value='{
+  _discovery:{
+    response:{
+      facets:{
+        example:{
+        }
+      }
+    }
+  }
+}'>None</option>
+                <option selected='selected' value='{
+  _discovery:{
+    response:{
+      facets:{
+        example:{
+          childIds: [&quot;A&quot;,&quot;B&quot;,&quot;C&quot;],
+          data: {
+            A: {count:7, label:&apos;Alpha&apos;},
+            B: {count:1, label:&apos;Bravo&apos;},
+            C: {count:2, label:&apos;Charlie&apos;}
+          }
+        }
+      }
+    }
+  }
+}'>ABC</option>
+                <option value='{
+  _discovery:{
+    response:{
+      facets:{
+        example:{
+          childIds: [&quot;B&quot;,&quot;C&quot;,&quot;A&quot;],
+          data: {
+            A: {count:7, label:&apos;Alpha&apos;},
+            B: {count:1, label:&apos;Bravo&apos;},
+            C: {count:2, label:&apos;Charlie&apos;}
+          }
+        }
+      }
+    }
+  }
+}'>BCA</option>
+                <option value='{
+  _discovery:{
+    response:{
+      facets:{
+        example:{
+          childIds: [&quot;AL&quot;,&quot;AK&quot;,&quot;AZ&quot;,&quot;AR&quot;,&quot;CA&quot;,&quot;CO&quot;,&quot;CT&quot;,&quot;DE&quot;,&quot;DC&quot;,&quot;FL&quot;,&quot;GA&quot;,&quot;HI&quot;,&quot;ID&quot;,&quot;IL&quot;,&quot;IN&quot;,&quot;IA&quot;,&quot;KS&quot;,&quot;KY&quot;,&quot;LA&quot;,&quot;ME&quot;,&quot;MD&quot;,&quot;MA&quot;,&quot;MI&quot;,&quot;MN&quot;,&quot;MS&quot;,&quot;MO&quot;,&quot;MT&quot;,&quot;NE&quot;,&quot;NV&quot;,&quot;NH&quot;,&quot;NJ&quot;,&quot;NM&quot;,&quot;NY&quot;,&quot;NC&quot;,&quot;ND&quot;,&quot;OH&quot;,&quot;OK&quot;,&quot;OR&quot;,&quot;PA&quot;,&quot;RI&quot;,&quot;SC&quot;,&quot;SD&quot;,&quot;TN&quot;,&quot;TX&quot;,&quot;UT&quot;,&quot;VT&quot;,&quot;VA&quot;,&quot;WA&quot;,&quot;WV&quot;,&quot;WI&quot;,&quot;WY&quot;],
+          data: {
+            AL: {label:&quot;Alabama&quot;,count:1},
+            AK: {label:&quot;Alaska&quot;,count:2},
+            AZ: {label:&quot;Arizona&quot;,count:3},
+            AR: {label:&quot;Arkansas&quot;,count:4},
+            CA: {label:&quot;California&quot;,count:5},
+            CO: {label:&quot;Colorado&quot;,count:6},
+            CT: {label:&quot;Connecticut&quot;,count:7},
+            DE: {label:&quot;Delaware&quot;,count:8},
+            DC: {label:&quot;District of Columbia&quot;,count:9},
+            FL: {label:&quot;Florida&quot;,count:8},
+            GA: {label:&quot;Georgia&quot;,count:7},
+            HI: {label:&quot;Hawaii&quot;,count:6},
+            ID: {label:&quot;Idaho&quot;,count:5},
+            IL: {label:&quot;Illinois&quot;,count:4},
+            IN: {label:&quot;Indiana&quot;,count:3},
+            IA: {label:&quot;Iowa&quot;,count:2},
+            KS: {label:&quot;Kansas&quot;,count:1},
+            KY: {label:&quot;Kentucky&quot;,count:2},
+            LA: {label:&quot;Louisiana&quot;,count:3},
+            ME: {label:&quot;Maine&quot;,count:4},
+            MD: {label:&quot;Maryland&quot;,count:5},
+            MA: {label:&quot;Massachusetts&quot;,count:6},
+            MI: {label:&quot;Michigan&quot;,count:7},
+            MN: {label:&quot;Minnesota&quot;,count:8},
+            MS: {label:&quot;Mississippi&quot;,count:9},
+            MO: {label:&quot;Missouri&quot;,count:8},
+            MT: {label:&quot;Montana&quot;,count:7},
+            NE: {label:&quot;Nebraska&quot;,count:6},
+            NV: {label:&quot;Nevada&quot;,count:5},
+            NH: {label:&quot;New Hampshire&quot;,count:4},
+            NJ: {label:&quot;New Jersey&quot;,count:3},
+            NM: {label:&quot;New Mexico&quot;,count:2},
+            NY: {label:&quot;New York&quot;,count:1},
+            NC: {label:&quot;North Carolina&quot;,count:2},
+            ND: {label:&quot;North Dakota&quot;,count:3},
+            OH: {label:&quot;Ohio&quot;,count:4},
+            OK: {label:&quot;Oklahoma&quot;,count:5},
+            OR: {label:&quot;Oregon&quot;,count:6},
+            PA: {label:&quot;Pennsylvania&quot;,count:7},
+            RI: {label:&quot;Rhode Island&quot;,count:8},
+            SC: {label:&quot;South Carolina&quot;,count:9},
+            SD: {label:&quot;South Dakota&quot;,count:8},
+            TN: {label:&quot;Tennessee&quot;,count:7},
+            TX: {label:&quot;Texas&quot;,count:6},
+            UT: {label:&quot;Utah&quot;,count:5},
+            VT: {label:&quot;Vermont&quot;,count:4},
+            VA: {label:&quot;Virginia&quot;,count:3},
+            WA: {label:&quot;Washington&quot;,count:2},
+            WV: {label:&quot;West Virginia&quot;,count:1},
+            WI: {label:&quot;Wisconsin&quot;,count:2},
+            WY: {label:&quot;Wyoming&quot;,count:3}
+          }
+        }
+      }
+    }
+  }
+}'>States</option>
+            </select>
+            <pre style='height: 8em; overflow: scroll;' />
+        </div>
+        <script type='text/javascript'>
+            $(function () {
+                $('#exampleFacetedSelect select[name="example"]').simplicityFacetedSelect({
+                    searchElement: '#exampleFacetedSelect'
+                });
+
+                $('#exampleFacetedSelect pre').simplicityDocsJsonSelector({
+                    selectElement: '#exampleFacetedSelect select[name="response"]',
+                    change: function (evt, json) {
+                        $('#exampleFacetedSelect').triggerHandler('simplicitySearchResponse', json);
+                    }
+                });
+                $('#exampleFacetedSelect select[name="optionTemplate"]')
+                    .change(function (evt) {
+                        $('#exampleFacetedSelect  select[name="example"]')
+                            .simplicityFacetedSelect('option', 'optionTemplate', $(evt.target).val());
+                        $('#exampleFacetedSelect  select[name="response"]').change();
+                    })
+                    .change();
+            });
+        </script>
+        <p>
+            Change the optionTemplate in <span class='badge'>2</span> or
+            the search response in <span class='badge'>3</span> and see how the
+            available options in <span class='badge'>1</span> are updated. Note
+            how selections in <span class='badge'>1</span> are preserved across
+            updates.
+        </p>
+    </div>
+</div>
     </div>
 
     <footer class="footer">

@@ -66,7 +66,9 @@
         <ul class='nav nav-list'>
             <li class='nav-header'>Core</li>
             <li class=''><a href='/userguide/'>Getting started</a></li>
+            <li class=''><a href='/userguide/primer.html'>Primer</a></li>
             <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
             <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
         </ul>
     </div>
@@ -81,19 +83,24 @@
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Response Widgets</li>
+            <li class=''><a href='/userguide/simplicitySearchResults.html'>simplicitySearchResults</a></li>
             <li class=''><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
         </ul>
     </div>
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Examples</li>
-            <li class=''><a href='/userguide/example/basic.html'>Basic</a></li>
+            <li class=''><a href='/userguide/example/gettingstarted.html'>Getting Started</a></li>
         </ul>
     </div>
-</div>
-<h1 id='simplicityselectslider'>simplicitySelectSlider</h1>
+</div><div class='page-header'>
+  <h1>simplicitySelectSlider</h1>
+</div><div class='row'>
+    <div class='span8'>
+        <p>
+            Create a <code>select</code> with the <code>option</code>s you wish to allow.
+        </p>
 
-<p>Create a <code>select</code> with the <code>option</code>s you wish to allow.</p>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;example&quot;</span><span class='nt'>&gt;</span>
     <span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;example&quot;</span><span class='nt'>&gt;</span>
         <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;a&quot;</span><span class='nt'>&gt;</span>A<span class='nt'>&lt;/option&gt;</span>
@@ -106,64 +113,91 @@
 <span class='nt'>&lt;/div&gt;</span>
 </code></pre>
 </div>
-<p>Then apply the <code>simplicitySelectSlider</code> widget to it.</p>
+
+
+        <p>
+            Then apply the <code>simplicitySelectSlider</code> widget to it.
+        </p>
+
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example div&#39;</span><span class='p'>).</span><span class='nx'>simplicitySelectSlider</span><span class='p'>({</span>
     <span class='nx'>select</span><span class='o'>:</span> <span class='s1'>&#39;#example select&#39;</span>
 <span class='p'>});</span>
 </code></pre>
 </div>
-<p>Example <div class='well' id='exampleSlider' style='width: 16em;'>
-    <label><span class='badge'>1</span> select</label>
-    <select name='example'>
-        <option value='a'>A</option>
-        <option value='b'>B</option>
-        <option value='c'>C</option>
-        <option value='d'>D</option>
-        <option value='e'>E</option>
-    </select>
-    <label><span class='badge'>2</span> slider</label>
-    <div style='margin: 4em 0 2em 0;'> </div>
-</div> <script type='text/javascript'>
-    $(function () {
-        $('#exampleSlider div').simplicitySelectSlider({
-          select: '#exampleSlider select'
-        });
-    });
-</script></p>
 
-<h1 id='options'>Options</h1>
 
-<p>There are a few different options to control the look and feel of the slider.</p>
-<div class='well' id='exampleSliderOptions' style='width: 32em;'>
-    <div style='margin: 3em 1em 2em 1em;'> </div>
-    <label><input class='checkbox' name='showTicks' type='checkbox' /> showTicks</label>
-    <label><input class='checkbox' name='showLabels' type='checkbox' /> showLabels</label>
-    <label><input class='checkbox' name='centerLabels' type='checkbox' /> centerLabels</label>
-    <label><input class='checkbox' name='justifyEndLabels' type='checkbox' /> justifyEndLabels</label>
-    <label><input class='checkbox' name='showTooltip' type='checkbox' /> showTooltip</label>
-    <label><input class='checkbox' name='centerTooltip' type='checkbox' /> centerTooltip</label>
-    <select id='exampleSliderCust' name='example'>
-        <option value='a'>Alpha</option>
-        <option value='b'>Beta</option>
-        <option value='c'>Charlie</option>
-        <option value='d'>Delta</option>
-        <option value='e'>Echo</option>
-    </select>
-</div><script type='text/javascript'>
-    $(function () {
-        $('#exampleSliderOptions div:first').simplicitySelectSlider({
-          select: '#exampleSliderOptions select'
-        });
-        $('#exampleSliderOptions :checkbox').each(function (idx, elem) {
-            elem.checked = $('#exampleSliderOptions div:first').simplicitySelectSlider('option', elem.name);
-        });
-        $('#exampleSliderOptions :checkbox').click(function (evt) {
-            var name = evt.target.name,
-                selected = evt.target.checked;
-            $('#exampleSliderOptions div:first').simplicitySelectSlider('option', name, selected);
-        });
-    });
-</script>
+    </div>
+    <div class='span4'>
+        <h3>Example</h3>
+        <div class='well' id='exampleSlider'>
+            <label><span class='badge'>1</span> select</label>
+            <select name='example'>
+                <option value='a'>A</option>
+                <option value='b'>B</option>
+                <option value='c'>C</option>
+                <option value='d'>D</option>
+                <option value='e'>E</option>
+            </select>
+            <label><span class='badge'>2</span> slider</label>
+            <div style='margin: 4em 0 2em 0;'> </div>
+        </div>
+        <script type='text/javascript'>
+            $(function () {
+                $('#exampleSlider div').simplicitySelectSlider({
+                  select: '#exampleSlider select'
+                });
+            });
+        </script>
+        <p>
+            Change the value in <span class='badge'>1</span> and see how the
+            slider in <span class='badge'>2</span> is updated.
+        </p>
+        <p>
+            Move the slider in <span class='badge'>2</span> and see how the
+            selection in <span class='badge'>1</span> is updated.
+        </p>
+    </div>
+</div><div class='page-header'>
+  <h1>Options</h1>
+</div><div class='row'>
+    <div class='span8'>
+        <p>
+            There are a few different options to control the look and feel of
+            the slider.
+        </p>
+        <div class='well' id='exampleSliderOptions'>
+            <div style='margin: 3em 1em 2em 1em;'> </div>
+            <label><input class='checkbox' name='showTicks' type='checkbox' /> showTicks</label>
+            <label><input class='checkbox' name='showLabels' type='checkbox' /> showLabels</label>
+            <label><input class='checkbox' name='centerLabels' type='checkbox' /> centerLabels</label>
+            <label><input class='checkbox' name='justifyEndLabels' type='checkbox' /> justifyEndLabels</label>
+            <label><input class='checkbox' name='showTooltip' type='checkbox' /> showTooltip</label>
+            <label><input class='checkbox' name='centerTooltip' type='checkbox' /> centerTooltip</label>
+            <select id='exampleSliderCust' name='example'>
+                <option value='a'>Alpha</option>
+                <option value='b'>Beta</option>
+                <option value='c'>Charlie</option>
+                <option value='d'>Delta</option>
+                <option value='e'>Echo</option>
+            </select>
+        </div>
+        <script type='text/javascript'>
+            $(function () {
+                $('#exampleSliderOptions div:first').simplicitySelectSlider({
+                  select: '#exampleSliderOptions select'
+                });
+                $('#exampleSliderOptions :checkbox').each(function (idx, elem) {
+                    elem.checked = $('#exampleSliderOptions div:first').simplicitySelectSlider('option', elem.name);
+                });
+                $('#exampleSliderOptions :checkbox').click(function (evt) {
+                    var name = evt.target.name,
+                        selected = evt.target.checked;
+                    $('#exampleSliderOptions div:first').simplicitySelectSlider('option', name, selected);
+                });
+            });
+        </script>
+    </div>
+</div>
     </div>
 
     <footer class="footer">

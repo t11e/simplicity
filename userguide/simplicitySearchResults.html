@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Simplicity Widgets - simplicitySearchResults</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="/css/syntax.css" rel="stylesheet">
+    <link href="/css/documentation.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Simplicity Widgets</a>
+          <ul class="nav">
+            
+              
+                <li><a href="/">home</a></li>
+              
+            
+              
+                <li class="active"><a href="/userguide/" class="active">userguide</a></li>
+              
+            
+              
+                <li><a href="/download.html">download</a></li>
+              
+            
+              
+                <li><a href="/jsdoc/">jsdoc</a></li>
+              
+            
+              
+                <li><a href="/changelog.html">changelog</a></li>
+              
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    
+      <header class="subhead">
+        <div class="container">
+          <h1>simplicitySearchResults</h1>
+          
+            <p class="lead">Displaying the best hits.</p>
+          
+        </div>
+      </header>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <div class="container">
+<div class='userguide-nav row'>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Core</li>
+            <li class=''><a href='/userguide/'>Getting started</a></li>
+            <li class=''><a href='/userguide/primer.html'>Primer</a></li>
+            <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
+            <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Request widgets</li>
+            <li class=''><a href='/userguide/simplicityInputs.html'>simplicityInputs</a></li>
+            <li class=''><a href='/userguide/simplicityFancySelect.html'>simplicityFancySelect</a></li>
+            <li class=''><a href='/userguide/simplicitySelectSlider.html'>simplicitySelectSlider</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Response Widgets</li>
+            <li class='active'><a href='/userguide/simplicitySearchResults.html'>simplicitySearchResults</a></li>
+            <li class=''><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Examples</li>
+            <li class=''><a href='/userguide/example/gettingstarted.html'>Getting Started</a></li>
+        </ul>
+    </div>
+</div><div class='page-header'>
+  <h1>simplicitySearchResults</h1>
+</div><div class='row'>
+    <div class='span8'>
+        <p>
+            This widget is responsible for displaying the results of a search on
+            the page.
+        </p>
+        <p>
+            You can either use server side rendering and provide HTML in the
+            response of the search controller or JavaScript templating to
+            generate the results in the browser.
+        </p>
+    </div>
+</div><div class='page-header'>
+  <h1>Server side rendering</h1>
+</div><div class='row'>
+    <div class='span8'>
+        <p>
+            The most common approach is to use server side rendering, this makes
+            it the responsibility of the server side search controller to
+            generate the HTML used to display search results. The generated HTML
+            is returned as a JSON string value inside the regular JSON response
+            from the search controller. The widget then just needs to splice it
+            into the page.
+        </p>
+        <h3>HTML</h3>
+
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;searchResults&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+
+        <h3>JavaScript</h3>
+
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#searchResults&#39;</span><span class='p'>).</span><span class='nx'>simplicitySearchResults</span><span class='p'>();</span>
+</code></pre>
+</div>
+
+
+    </div>
+    <div class='span4'>
+        <h3>Example</h3>
+        <div id='serverSideExample'>
+            <label><span class='badge'>1</span> choose response</label>
+            <select class='input-medium' name='response'>
+                <option value='{
+  resultsHtml: &apos;&lt;ol&gt;&lt;li&gt;First&lt;/li&gt;&lt;li&gt;Second&lt;/li&gt;&lt;li&gt;Third&lt;/li&gt;&lt;/ol&gt;&apos;
+}'>list</option>
+                <option value='{
+  resultsHtml: &apos;&lt;div class=&quot;items&quot;&gt;&lt;div class=&quot;item&quot;&gt;First&lt;/div&gt;&lt;div class=&quot;item&quot;&gt;Second&lt;/div&gt;&lt;div class=&quot;item&quot;&gt;Third&lt;/div&gt;&lt;/div&gt;&apos;
+}'>divs</option>
+                <option value='{
+  error: true,
+  status: 500,
+  statusText: &apos;Example error&apos;,
+  message: &apos;example error message goes here&apos;
+}'>error</option>
+            </select>
+            <label><span class='badge'>2</span> response details</label>
+            <pre style='height: 8em; overflow: scroll;'> </pre>
+            <label><span class='badge'>3</span> results</label>
+            <div class='well'> </div>
+        </div>
+        <script type='text/javascript'>
+            $(function () {
+                $('#serverSideExample div:last').simplicitySearchResults({
+                    searchElement: '#serverSideExample'
+                });
+                $('#serverSideExample pre').simplicityDocsJsonSelector({
+                    selectElement: '#serverSideExample select',
+                    change: function (evt, json) {
+                        $('#serverSideExample').triggerHandler('simplicitySearchResponse', json);
+                    }
+                });
+                $('#serverSideExample select').change();
+            });
+        </script>
+        <p>
+            Choose a response from <span class='badge'>1</span> and see the
+            actual response detail at <span class='badge'>2</span>. The
+            <code>simplicitySearchResults</code> widget renders the
+            <code>resultsHtml</code> in <span class='badge'>3</span>.
+        </p>
+    </div>
+</div><div class='page-header'>
+  <h1>Browser based rendering</h1>
+</div><div class='row'>
+    <div class='span8'>
+        <p>
+            You can take advantage of the browser to control the rendering of
+            search results by converting the JSON response from the search
+            controller to HTML with JavaScript. In this scenario the search
+            controller does <strong>not</strong> have to return a
+            <code>resultsHtml</code> field.
+        </p>
+        <h3>HTML</h3>
+
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;searchResults&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+
+        <h3>JavaScript</h3>
+
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#searchResults&#39;</span><span class='p'>).</span><span class='nx'>simplicitySearchResults</span><span class='p'>({</span>
+    <span class='nx'>resultsCallback</span><span class='o'>:</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>target</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='c1'>// Example to that puts the name of each result item in a div</span>
+        <span class='nx'>$</span><span class='p'>.</span><span class='nx'>each</span><span class='p'>(</span><span class='nx'>searchResponse</span><span class='p'>.</span><span class='nx'>_discovery</span><span class='p'>.</span><span class='nx'>response</span><span class='p'>.</span><span class='nx'>properties</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>idx</span><span class='p'>,</span> <span class='nx'>props</span><span class='p'>)</span> <span class='p'>{</span>
+          <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;&lt;div/&gt;&#39;</span><span class='p'>)</span>
+            <span class='p'>.</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;title&#39;</span><span class='p'>,</span> <span class='nx'>props</span><span class='p'>.</span><span class='nx'>_id</span><span class='p'>)</span>
+            <span class='p'>.</span><span class='nx'>text</span><span class='p'>(</span><span class='nx'>props</span><span class='p'>.</span><span class='nx'>name</span><span class='p'>)</span>
+            <span class='p'>.</span><span class='nx'>appendTo</span><span class='p'>(</span><span class='nx'>target</span><span class='p'>);</span>
+        <span class='p'>});</span>
+    <span class='p'>}</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+
+
+    </div>
+    <div class='span4'>
+        <h3>Example</h3>
+
+
+
+
+        <style>
+        #browserBasedResults .label {
+            padding: 0.2em;
+            margin: 0.4em;
+        }
+        #browserBasedExample .searchResponse pre {
+            height: 12em;
+            overflow: scroll;
+        }
+        </style>
+        <div id='browserBasedExample'>
+            <label><span class='badge'>1</span> search response</label>
+            <div class='searchResponse'>
+
+<div class='highlight'><pre><code class='javascript'><span class='p'>{</span>
+    <span class='nx'>_discovery</span><span class='o'>:</span> <span class='p'>{</span>
+        <span class='nx'>response</span><span class='o'>:</span> <span class='p'>{</span>
+            <span class='nx'>properties</span><span class='o'>:</span> <span class='p'>[</span>
+                <span class='p'>{</span> <span class='nx'>_id</span><span class='o'>:</span><span class='mi'>1</span><span class='p'>,</span> <span class='nx'>name</span><span class='o'>:</span><span class='s1'>&#39;first&#39;</span>  <span class='p'>},</span>
+                <span class='p'>{</span> <span class='nx'>_id</span><span class='o'>:</span><span class='mi'>2</span><span class='p'>,</span> <span class='nx'>name</span><span class='o'>:</span><span class='s1'>&#39;second&#39;</span> <span class='p'>},</span>
+                <span class='p'>{</span> <span class='nx'>_id</span><span class='o'>:</span><span class='mi'>3</span><span class='p'>,</span> <span class='nx'>name</span><span class='o'>:</span><span class='s1'>&#39;third&#39;</span>  <span class='p'>}</span>
+            <span class='p'>]</span>
+        <span class='p'>}</span>
+    <span class='p'>}</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+
+
+            </div>
+            <label><span class='badge'>2</span> choose resultsCallback</label>
+            <select>
+                <option>list</option>
+                <option>divs</option>
+                <option>labels</option>
+            </select>
+            <label><span class='badge'>3</span> resultsCallBack implementation</label>
+            <div id='resultCallbacks'>
+                <div class='resultsCallback ui-helper-hidden' id='resultsCallback-divs'>
+
+<div class='highlight'><pre><code class='javascript'><span class='kd'>function</span> <span class='p'>(</span><span class='nx'>target</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>target</span><span class='p'>.</span><span class='nx'>children</span><span class='p'>().</span><span class='nx'>remove</span><span class='p'>();</span>
+    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>each</span><span class='p'>(</span><span class='nx'>searchResponse</span><span class='p'>.</span><span class='nx'>_discovery</span><span class='p'>.</span><span class='nx'>response</span><span class='p'>.</span><span class='nx'>properties</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>idx</span><span class='p'>,</span> <span class='nx'>props</span><span class='p'>)</span> <span class='p'>{</span>
+      <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;&lt;div/&gt;&#39;</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>attr</span><span class='p'>(</span><span class='s1'>&#39;title&#39;</span><span class='p'>,</span> <span class='nx'>props</span><span class='p'>.</span><span class='nx'>_id</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>text</span><span class='p'>(</span><span class='nx'>props</span><span class='p'>.</span><span class='nx'>name</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>appendTo</span><span class='p'>(</span><span class='nx'>target</span><span class='p'>);</span>
+    <span class='p'>});</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+
+
+                </div>
+                <div class='resultsCallback ui-helper-hidden' id='resultsCallback-list'>
+
+<div class='highlight'><pre><code class='javascript'><span class='kd'>function</span> <span class='p'>(</span><span class='nx'>target</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='kd'>var</span> <span class='nx'>list</span> <span class='o'>=</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;&lt;ol/&gt;&#39;</span><span class='p'>);</span>
+    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>each</span><span class='p'>(</span><span class='nx'>searchResponse</span><span class='p'>.</span><span class='nx'>_discovery</span><span class='p'>.</span><span class='nx'>response</span><span class='p'>.</span><span class='nx'>properties</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>idx</span><span class='p'>,</span> <span class='nx'>props</span><span class='p'>)</span> <span class='p'>{</span>
+      <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;&lt;li/&gt;&#39;</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>text</span><span class='p'>(</span><span class='nx'>props</span><span class='p'>.</span><span class='nx'>name</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>appendTo</span><span class='p'>(</span><span class='nx'>list</span><span class='p'>);</span>
+    <span class='p'>});</span>
+    <span class='nx'>target</span><span class='p'>.</span><span class='nx'>html</span><span class='p'>(</span><span class='nx'>list</span><span class='p'>);</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+
+
+                </div>
+                <div class='resultsCallback ui-helper-hidden' id='resultsCallback-labels'>
+
+<div class='highlight'><pre><code class='javascript'><span class='kd'>function</span> <span class='p'>(</span><span class='nx'>target</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>target</span><span class='p'>.</span><span class='nx'>children</span><span class='p'>().</span><span class='nx'>remove</span><span class='p'>();</span>
+    <span class='nx'>$</span><span class='p'>.</span><span class='nx'>each</span><span class='p'>(</span><span class='nx'>searchResponse</span><span class='p'>.</span><span class='nx'>_discovery</span><span class='p'>.</span><span class='nx'>response</span><span class='p'>.</span><span class='nx'>properties</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>idx</span><span class='p'>,</span> <span class='nx'>props</span><span class='p'>)</span> <span class='p'>{</span>
+      <span class='nx'>$</span><span class='p'>(</span><span class='s2'>&quot;&lt;span class=&#39;label&#39;/&gt;&quot;</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>text</span><span class='p'>(</span><span class='nx'>props</span><span class='p'>.</span><span class='nx'>name</span><span class='p'>)</span>
+        <span class='p'>.</span><span class='nx'>appendTo</span><span class='p'>(</span><span class='nx'>target</span><span class='p'>);</span>
+    <span class='p'>});</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
+
+
+                </div>
+            </div>
+            <label><span class='badge'>4</span> results</label>
+            <div class='well' id='browserBasedResults'> </div>
+        </div>
+        <script type='text/javascript'>
+            $(function () {
+                $('#browserBasedExample').simplicityDiscoverySearch();
+                $('#browserBasedExample').simplicityDiscoverySearch('searchResponse', 
+{
+    _discovery: {
+        response: {
+            properties: [
+                { _id:1, name:'first'  },
+                { _id:2, name:'second' },
+                { _id:3, name:'third'  }
+            ]
+        }
+    }
+}
+);
+                $('#browserBasedResults').simplicitySearchResults({
+                    searchElement: '#browserBasedExample'
+                });
+                var resultsCallbacks = {
+                    'divs': 
+function (target, searchResponse) {
+    target.children().remove();
+    $.each(searchResponse._discovery.response.properties, function (idx, props) {
+      $('<div />')
+        .attr('title', props._id)
+        .text(props.name)
+        .appendTo(target);
+    });
+}
+,
+                    'list': 
+function (target, searchResponse) {
+    var list = $('<ol />');
+    $.each(searchResponse._discovery.response.properties, function (idx, props) {
+      $('<li />')
+        .text(props.name)
+        .appendTo(list);
+    });
+    target.html(list);
+}
+,
+                    'labels': 
+function (target, searchResponse) {
+    target.children().remove();
+    $.each(searchResponse._discovery.response.properties, function (idx, props) {
+      $("<span class='label' />")
+        .text(props.name)
+        .appendTo(target);
+    });
+}
+
+                };
+                $('#browserBasedExample select:first')
+                    .change(function (evt) {
+                        var val = $(evt.target).val();
+                        var resultsCallback = resultsCallbacks[val];
+                        $('#resultCallbacks .resultsCallback').hide();
+                        $('#resultsCallback-' + val).show();
+                        $('#browserBasedResults').simplicitySearchResults('option', 'resultsCallback', resultsCallback);
+                    })
+                    .change();
+            });
+        </script>
+        <p>
+            The search response used for this example is displayed in
+            <span class='badge'>1</span>. You can select a
+            <code>resultsCallback</code> function from
+            <span class='badge'>2</span>, see it's definition in
+            <span class='badge'>3</span> and it is applied to the
+            <code>simplicitySearchResults</code> widget on
+            <span class='badge'>4</span>.
+        </p>
+    </div>
+</div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right">
+            <a href="#" onclick="window.scrollTo(0,0);return false;">Back to top</a>
+        </p>
+        <p>
+          Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.
+        </p>
+      </div>
+    </footer>
+    <!--[if IE]>
+      <script src="/js/xdr.js"></script>
+      <script src="/js/json2.min.js"></script>
+      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
+    <script src="/js/jquery.pagination-2.1.min.js"></script>
+    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
+    <script src="/js/bootstrap-2.1.1.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="/js/documentation.js"></script>
+  </body>
+</html>

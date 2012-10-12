@@ -66,7 +66,9 @@
         <ul class='nav nav-list'>
             <li class='nav-header'>Core</li>
             <li class='active'><a href='/userguide/'>Getting started</a></li>
+            <li class=''><a href='/userguide/primer.html'>Primer</a></li>
             <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
             <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
         </ul>
     </div>
@@ -81,18 +83,19 @@
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Response Widgets</li>
+            <li class=''><a href='/userguide/simplicitySearchResults.html'>simplicitySearchResults</a></li>
             <li class=''><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
         </ul>
     </div>
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Examples</li>
-            <li class=''><a href='/userguide/example/basic.html'>Basic</a></li>
+            <li class=''><a href='/userguide/example/gettingstarted.html'>Getting Started</a></li>
         </ul>
     </div>
+</div><div class='page-header'>
+  <h1>Getting started</h1>
 </div>
-<h1 id='getting_started'>Getting started</h1>
-
 <p>The Simplicity Widgets are designed to be extensible, and to get out of the way when you need them to.</p>
 
 <p>They follow simple architectural patterns for communicating with a search server, coordinating widget state on the page, and displaying results.</p>
@@ -102,15 +105,15 @@
 <p>There are three high-level steps to use the widgets on a page:</p>
 
 <ol>
-<li>install the widgets on the page</li>
+<li>install the widgets on the page with <code>link</code> and <code>script</code> tags</li>
 
-<li>configure the page level widget sets, and</li>
+<li>add HTML elements for the search and result areas</li>
 
-<li>configure each set of widgets as needed (sometimes you can just use the defaults)</li>
+<li>add a few lines of JavaScript to configure the widgets</li>
 </ol>
-
-<h2 id='install'>Install</h2>
-
+<div class='page-header'>
+  <h1>Install</h1>
+</div>
 <p>You need to add <code>link</code> and <code>script</code> tags for the JavaScript and CSS resources for the widgets.</p>
 
 <p>Add the CSS references to the <code>head</code> of the page.</p>
@@ -136,40 +139,38 @@
     <dd>Recommended for IE6 compatibilty when using <code>$.simplicityFlyout</code>.</dd>
 </dl>
 <p>You will add javascript code after the above tags to instantiate and configure the widgets that you want to use. We&#8217;ll get to that in a bit.</p>
-
-<h2 id='html'>HTML</h2>
-
-<p>We create placeholder <code>div</code>s to display search results and some <code>input</code>s to hold the search parameters.</p>
-
+<div class='page-header'>
+  <h1>HTML</h1>
+</div>
 <p>Add the search navigation <code>form</code> to the left side of the page.</p>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;form</span> <span class='na'>id=</span><span class='s'>&quot;searchForm&quot;</span> <span class='na'>class=</span><span class='s'>&quot;form-search&quot;</span> <span class='na'>onsubmit=</span><span class='s'>&quot;return false;&quot;</span><span class='nt'>&gt;</span>
   <span class='nt'>&lt;button</span> <span class='na'>id=</span><span class='s'>&quot;searchButton&quot;</span> <span class='na'>type=</span><span class='s'>&quot;submit&quot;</span> <span class='na'>class=</span><span class='s'>&quot;btn&quot;</span><span class='nt'>&gt;</span>Search<span class='nt'>&lt;/button&gt;</span>
   <span class='nt'>&lt;button</span> <span class='na'>id=</span><span class='s'>&quot;resetButton&quot;</span> <span class='na'>type=</span><span class='s'>&quot;button&quot;</span> <span class='na'>class=</span><span class='s'>&quot;btn&quot;</span><span class='nt'>&gt;</span>Reset<span class='nt'>&lt;/button&gt;</span>
-  <span class='nt'>&lt;fieldset&gt;</span>
-    <span class='nt'>&lt;legend&gt;</span>Text Search<span class='nt'>&lt;/legend&gt;</span>
-    <span class='nt'>&lt;input</span> <span class='na'>type=</span><span class='s'>&quot;text&quot;</span> <span class='na'>name=</span><span class='s'>&quot;dataset_freetext&quot;</span> <span class='na'>class=</span><span class='s'>&quot;input-large search-query&quot;</span><span class='nt'>&gt;</span>
-  <span class='nt'>&lt;/fieldset&gt;</span>
-  <span class='nt'>&lt;fieldset&gt;</span>
-    <span class='nt'>&lt;legend&gt;</span>Category Type<span class='nt'>&lt;/legend&gt;</span>
-    <span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;category_type&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;label&gt;</span>
+    Text Search
+    <span class='nt'>&lt;input</span> <span class='na'>type=</span><span class='s'>&quot;text&quot;</span> <span class='na'>name=</span><span class='s'>&quot;dataset_freetext&quot;</span> <span class='na'>class=</span><span class='s'>&quot;input-medium search-query&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;/label&gt;</span>
+  <span class='nt'>&lt;label&gt;</span>
+    Category Type
+    <span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;category_type&quot;</span> <span class='na'>class=</span><span class='s'>&quot;input-medium&quot;</span><span class='nt'>&gt;</span>
       <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;&quot;</span><span class='nt'>&gt;</span>Any...<span class='nt'>&lt;/option&gt;</span>
       <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;1&quot;</span><span class='nt'>&gt;</span>Raw Data Catalog<span class='nt'>&lt;/option&gt;</span>
       <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;2&quot;</span><span class='nt'>&gt;</span>Tool Catalog<span class='nt'>&lt;/option&gt;</span>
     <span class='nt'>&lt;/select&gt;</span>
-  <span class='nt'>&lt;/fieldset&gt;</span>
-  <span class='nt'>&lt;fieldset&gt;</span>
-    <span class='nt'>&lt;legend&gt;</span>Formats Available<span class='nt'>&lt;/legend&gt;</span>
-    <span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;formats_avail&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;/label&gt;</span>
+  <span class='nt'>&lt;label&gt;</span>
+    Formats Available
+    <span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;formats_avail&quot;</span> <span class='na'>class=</span><span class='s'>&quot;input-medium&quot;</span><span class='nt'>&gt;</span>
       <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;&quot;</span><span class='nt'>&gt;</span>Any...<span class='nt'>&lt;/option&gt;</span>
     <span class='nt'>&lt;/select&gt;</span>
-  <span class='nt'>&lt;/fieldset&gt;</span>
-  <span class='nt'>&lt;fieldset&gt;</span>
-    <span class='nt'>&lt;legend&gt;</span>Agency<span class='nt'>&lt;/legend&gt;</span>
+  <span class='nt'>&lt;/label&gt;</span>
+  <span class='nt'>&lt;label&gt;</span>
+    Agency
     <span class='nt'>&lt;select</span> <span class='na'>name=</span><span class='s'>&quot;agency&quot;</span> <span class='na'>class=</span><span class='s'>&quot;ui-helper-hidden-accessible&quot;</span><span class='nt'>&gt;</span>
       <span class='nt'>&lt;option</span> <span class='na'>value=</span><span class='s'>&quot;&quot;</span><span class='nt'>&gt;</span>Any...<span class='nt'>&lt;/option&gt;</span>
     <span class='nt'>&lt;/select&gt;</span>
     <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;agencyFancy&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
-  <span class='nt'>&lt;/fieldset&gt;</span>
+  <span class='nt'>&lt;/label&gt;</span>
 <span class='nt'>&lt;/form&gt;</span>
 </code></pre>
 </div>
@@ -178,9 +179,9 @@
 <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;searchResults&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
 <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;paginationBottom&quot;</span><span class='nt'>&gt;&lt;/div&gt;</span>
 </code></pre>
+</div><div class='page-header'>
+  <h1>JavaScript</h1>
 </div>
-<h2 id='javascript'>JavaScript</h2>
-
 <p>We configure the widgets in a <code>script</code> tag below the script tags that loaded simplicity.js and its dependencies.</p>
 
 <p>Only one <a href='/userguide/widgetgroups.html'>widget group</a> is needed, so we create a <code>simplicityState</code> widget on the <code>body</code> element.</p>
@@ -203,7 +204,7 @@
 
 <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#resetButton&#39;</span><span class='p'>).</span><span class='nx'>click</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
   <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>(</span><span class='s1'>&#39;reset&#39;</span><span class='p'>);</span>
-<span class='p'>})</span>
+<span class='p'>});</span>
 </code></pre>
 </div>
 <p>The response widgets are created for the <code>div</code>s in the content area to display the search results and pagination links.</p>
@@ -224,11 +225,11 @@
 </code></pre>
 </div>
 <p>For the best user experience, we recommend placing any slow-loading scripts such map vendor scripts below all the Simplicity Widget JavaScript so that the widgets can be fully functional and displayed before the slow loading scripts are executed.</p>
-
-<h2 id='summary'>Summary</h2>
-
+<div class='page-header'>
+  <h1>Summary</h1>
+</div>
 <p>We&#8217;ve demonstrated how to build a basic search page that use an external PHP backed search controller accessed via AJAX CORS requests.</p>
-<a class='btn btn-primary button-large' href='/userguide/example/basic.html'>View Example</a>
+<a class='btn btn-primary button-large' href='/userguide/example/gettingstarted.html'>View Example</a>
     </div>
 
     <footer class="footer">

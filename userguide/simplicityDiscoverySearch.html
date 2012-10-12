@@ -66,7 +66,9 @@
         <ul class='nav nav-list'>
             <li class='nav-header'>Core</li>
             <li class=''><a href='/userguide/'>Getting started</a></li>
+            <li class=''><a href='/userguide/primer.html'>Primer</a></li>
             <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
             <li class='active'><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
         </ul>
     </div>
@@ -81,18 +83,63 @@
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Response Widgets</li>
+            <li class=''><a href='/userguide/simplicitySearchResults.html'>simplicitySearchResults</a></li>
             <li class=''><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
         </ul>
     </div>
     <div class='span3'>
         <ul class='nav nav-list'>
             <li class='nav-header'>Examples</li>
-            <li class=''><a href='/userguide/example/basic.html'>Basic</a></li>
+            <li class=''><a href='/userguide/example/gettingstarted.html'>Getting Started</a></li>
         </ul>
     </div>
+</div><div class='page-header'>
+  <h1>simplicityDiscoverySearch</h1>
 </div>
-<h1 id='simplicitydiscoverysearch'>simplicityDiscoverySearch</h1>
+<p>The <code>simplicityDiscoverySearch</code> widget coordinates with the <code>simplicityState</code> widget to perform the Ajax search. By default, whenever the state changes a search is performed.</p>
+<div class='page-header'>
+  <h1>Setup</h1>
+</div>
+<p>Pages have a snippet of JavaScript at the end of their <code>body</code> that configures the search.</p>
 
+<p>The minimal block would be:</p>
+<div class='highlight'><pre><code class='javascript'><span class='lineno'>1</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+<span class='lineno'>2</span>   <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span>
+<span class='lineno'>3</span> <span class='p'>});</span>
+</code></pre>
+</div>
+<p>Where as a more typical block is:</p>
+<div class='highlight'><pre><code class='javascript'><span class='lineno'>1</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>)</span>
+<span class='lineno'>2</span>   <span class='p'>.</span><span class='nx'>simplicityState</span><span class='p'>(</span><span class='s1'>&#39;mergeQueryParams&#39;</span><span class='p'>)</span>
+<span class='lineno'>3</span>   <span class='p'>.</span><span class='nx'>simplicityHistory</span><span class='p'>()</span>
+<span class='lineno'>4</span>   <span class='p'>.</span><span class='nx'>simplicityState</span><span class='p'>(</span><span class='s1'>&#39;triggerChangeEvent&#39;</span><span class='p'>)</span>
+<span class='lineno'>5</span>   <span class='p'>.</span><span class='nx'>simplicityPageSnapBack</span><span class='p'>()</span>
+<span class='lineno'>6</span>   <span class='p'>.</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+<span class='lineno'>7</span>     <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span>
+<span class='lineno'>8</span>   <span class='p'>})</span>
+<span class='lineno'>9</span>   <span class='p'>.</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>(</span><span class='s1'>&#39;search&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<p>This enables several optional features, let&#8217;s run through each line.</p>
+
+<ol>
+<li>We bind all the page level widgets to the <code>body</code> element (our default location).</li>
+
+<li><code>simplicityState(&#39;mergerQueryParams&#39;)</code> consumes parameters from the query string portion of the URL and applies them to the state. Concretely, the URL <code>http://example.com/search?example=hello+world&amp;category=3</code> would create the state <code>{&quot;example&quot;: &quot;hello world&quot;, &quot;category&quot;: &quot;3&quot;}</code>.</li>
+
+<li><code>simplicityHistory()</code> enables the history plugin that uses the hash fragment of the URL to support browser back/forward buttons and to allow for bookmarking of the Ajax search state. Concretely, the URL <code>http://example.com/search#!example=hello+world&amp;category=3</code> would create the state <code>{&quot;example&quot;: &quot;hello world&quot;, &quot;category&quot;: &quot;3&quot;}</code> and the URL would be updated whenever the state is changed.</li>
+
+<li><code>simplicityState(&#39;triggerChangeEvent&#39;)</code> causes the current state to be applied to all widgets by firing a <code>simplicityStateChange</code> event. The order of this in relation to the <code>mergeQueryParams</code> and <code>simplicityHistory</code> widget is important.</li>
+
+<li><code>simplicityPageSnapBack()</code> watches the state and flips the page parameter whenever the other search parameters change.</li>
+
+<li><code>simplicityDiscoverySearch({...})</code> is the only mandatory line to make search work. By default it will trigger a search whenever the state changes and it&#8217;s minimum configuration describes how it should communicate with the search service. This is described in more detail in the next section of this page.</li>
+
+<li><code>simplicityDiscoverySearch(&#39;search&#39;)</code> triggers an immediate search, useful for when you are not doing any server side search as part of generating the page.</li>
+</ol>
+<div class='page-header'>
+  <h1>Search Service</h1>
+</div>
 <p>The <code>simplicityDiscoverySearch</code> widget can perform Ajax search requests in a two different ways:</p>
 
 <ol>
@@ -102,9 +149,9 @@
 </ol>
 
 <p>You&#8217;ll typically use direct engine searches for development purposes, and a server side search controller for a production site.</p>
-
-<h2 id='production'>Production</h2>
-<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+<div class='page-header'>
+  <h1>Server side search controller</h1>
+</div><div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
     <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span>
 <span class='p'>});</span>
 </code></pre>
@@ -123,18 +170,22 @@
 
 <p>The server side search controller would build a Discovery Request from the query parameters, dispatch it to the Discovery Search Engine and then return a JSON document that fits this template:</p>
 <div class='highlight'><pre><code class='javascript'><span class='p'>{</span>
-    <span class='s2'>&quot;_discovery&quot;</span><span class='o'>:</span> <span class='p'>{</span>
-        <span class='s2'>&quot;request&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='cm'>/* original, unmodified Discovery Request */</span> <span class='p'>},</span>
-        <span class='s2'>&quot;response&quot;</span><span class='o'>:</span> <span class='p'>{</span> <span class='cm'>/* original, unmodified Discovery Response */</span> <span class='p'>}</span>
+  <span class='s2'>&quot;_discovery&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+    <span class='s2'>&quot;request&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='c1'>// Original, unmodified Discovery Request</span>
     <span class='p'>},</span>
-    <span class='s2'>&quot;resultsHtml&quot;</span><span class='o'>:</span> <span class='s2'>&quot;Rendered results go here&quot;</span>
+    <span class='s2'>&quot;response&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='c1'>// Original, unmodified Discovery Response</span>
+    <span class='p'>}</span>
+  <span class='p'>},</span>
+  <span class='s2'>&quot;resultsHtml&quot;</span><span class='o'>:</span> <span class='s2'>&quot;Rendered results go here&quot;</span>
 <span class='p'>}</span>
 </code></pre>
 </div>
 <p>The widgets would then process the response to insert the results directly into the page and update any facets, maps or other dynamic details as appropriate.</p>
-
-<h2 id='development'>Development</h2>
-<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>my_search_controller</span> <span class='o'>=</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>state</span><span class='p'>)</span> <span class='p'>{</span>
+<div class='page-header'>
+  <h1>JavaScript search controller with direct engine query</h1>
+</div><div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>my_search_controller</span> <span class='o'>=</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>state</span><span class='p'>)</span> <span class='p'>{</span>
     <span class='kd'>var</span> <span class='nx'>discoveryRequest</span> <span class='o'>=</span> <span class='p'>{</span>
         <span class='nx'>criteria</span><span class='o'>:</span> <span class='p'>[],</span>
         <span class='nx'>pageSize</span><span class='o'>:</span> <span class='mi'>10</span>
@@ -155,6 +206,84 @@
 </code></pre>
 </div>
 <p>This makes a direct POST request to the engine and uses the JavaScript function <code>my_search_controller</code> to create the Discovery Request from the state. You&#8217;ll need a <a href='http://en.wikipedia.org/wiki/Cross-origin_resource_sharing'>CORS</a> compatible browser to avoid any cross-origin sand-boxing issues.</p>
+<div class='page-header'>
+  <h1>Live search</h1>
+</div>
+<p>By default a search is triggered whenever the state changes. We call this &#8220;live search&#8221;. If you prefer to have the end user click on a button to trigger the search then you can set the <code>searchOnStateChange</code> option to <code>false</code> and manually call the <code>search</code> method on the <code>simplicityDiscoverySearch</code> widget from your click handler.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+    <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span><span class='p'>,</span>
+    <span class='nx'>searchOnStateChange</span><span class='o'>:</span> <span class='kc'>false</span>
+<span class='p'>});</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#searchButton&#39;</span><span class='p'>).</span><span class='nx'>click</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+  <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>(</span><span class='s1'>&#39;search&#39;</span><span class='p'>);</span>
+<span class='p'>});</span>
+</code></pre>
+</div><div class='page-header'>
+  <h1>Initial server side search</h1>
+</div>
+<p>If you&#8217;d like to SEO optimize your page, you can perform the first search when generating the HTML and splice that into the widget configuration.</p>
+
+<p>To do so, you&#8217;d need to inject the state and search JSON objects into the generated page.</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>injectedState</span> <span class='o'>=</span> <span class='p'>{</span>
+  <span class='s2'>&quot;example&quot;</span><span class='o'>:</span> <span class='s2'>&quot;my search string&quot;</span>
+<span class='p'>};</span>
+<span class='kd'>var</span> <span class='nx'>injectedSearch</span> <span class='o'>=</span> <span class='p'>{</span>
+  <span class='s2'>&quot;_discovery&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+    <span class='s2'>&quot;request&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='c1'>// Original Discovery request goes here</span>
+    <span class='p'>},</span>
+    <span class='s2'>&quot;response&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='c1'>// Original Discovery response goes here</span>
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+<span class='p'>};</span>
+
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>({</span>
+    <span class='nx'>initialState</span><span class='o'>:</span> <span class='nx'>injectedState</span><span class='p'>;</span>
+<span class='p'>});</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#searchNav :input&#39;</span><span class='p'>).</span><span class='nx'>simplicityInputs</span><span class='p'>();</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>(</span><span class='s1'>&#39;triggerChangeEvent&#39;</span><span class='p'>);</span>
+
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+    <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span><span class='p'>,</span>
+    <span class='nx'>initialSearchResponse</span><span class='o'>:</span> <span class='nx'>injectedSearch</span><span class='p'>;</span>
+<span class='p'>});</span>
+</code></pre>
+</div><div class='page-header'>
+  <h1>Programmatic search</h1>
+</div>
+<p>At any point you can call the <code>search</code> method of <code>simplicityDiscoverySearch</code> to trigger a search.</p>
+
+<p>To search using the current state:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>(</span><span class='s1'>&#39;search&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<p>To ignore the current state and force a particular search:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>(</span><span class='s1'>&#39;search&#39;</span><span class='p'>,</span> <span class='p'>{</span>
+  <span class='s1'>&#39;example&#39;</span><span class='o'>:</span> <span class='s1'>&#39;custom overriden search&#39;</span>
+<span class='p'>});</span>
+</code></pre>
+</div><div class='page-header'>
+  <h1>Search Response</h1>
+</div>
+<p>The current search response is buffered allowing you access it at any time.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>(</span><span class='s1'>&#39;searchResponse&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<p>This returns a JSON compatible object that should follow our standard template. Actual contents vary depending on the search controller implementation.</p>
+<div class='highlight'><pre><code class='javascript'><span class='p'>{</span>
+  <span class='s2'>&quot;_discovery&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+    <span class='s2'>&quot;request&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='c1'>// Original, unmodified Discovery Request</span>
+    <span class='p'>},</span>
+    <span class='s2'>&quot;response&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+      <span class='c1'>// Original, unmodified Discovery Response</span>
+    <span class='p'>}</span>
+  <span class='p'>},</span>
+  <span class='s2'>&quot;resultsHtml&quot;</span><span class='o'>:</span> <span class='s2'>&quot;Rendered results go here&quot;</span>
+<span class='p'>}</span>
+</code></pre>
+</div>
     </div>
 
     <footer class="footer">

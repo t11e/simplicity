@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Simplicity Widgets - Primer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="/css/syntax.css" rel="stylesheet">
+    <link href="/css/documentation.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">Simplicity Widgets</a>
+          <ul class="nav">
+            
+              
+                <li><a href="/">home</a></li>
+              
+            
+              
+                <li class="active"><a href="/userguide/" class="active">userguide</a></li>
+              
+            
+              
+                <li><a href="/download.html">download</a></li>
+              
+            
+              
+                <li><a href="/jsdoc/">jsdoc</a></li>
+              
+            
+              
+                <li><a href="/changelog.html">changelog</a></li>
+              
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    
+      <header class="subhead">
+        <div class="container">
+          <h1>Primer</h1>
+          
+            <p class="lead">Standing on the shoulders of $.giants.</p>
+          
+        </div>
+      </header>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <div class="container">
+<div class='userguide-nav row'>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Core</li>
+            <li class=''><a href='/userguide/'>Getting started</a></li>
+            <li class='active'><a href='/userguide/primer.html'>Primer</a></li>
+            <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
+            <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Request widgets</li>
+            <li class=''><a href='/userguide/simplicityInputs.html'>simplicityInputs</a></li>
+            <li class=''><a href='/userguide/simplicityFancySelect.html'>simplicityFancySelect</a></li>
+            <li class=''><a href='/userguide/simplicitySelectSlider.html'>simplicitySelectSlider</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Response Widgets</li>
+            <li class=''><a href='/userguide/simplicitySearchResults.html'>simplicitySearchResults</a></li>
+            <li class=''><a href='/userguide/simplicityFacetedSelect.html'>simplicityFacetedSelect</a></li>
+        </ul>
+    </div>
+    <div class='span3'>
+        <ul class='nav nav-list'>
+            <li class='nav-header'>Examples</li>
+            <li class=''><a href='/userguide/example/gettingstarted.html'>Getting Started</a></li>
+        </ul>
+    </div>
+</div><div class='page-header'>
+  <h1>Primer</h1>
+</div>
+<p>Here we&#8217;ll show you the common idiums of the upstream projects that the widgets depend upon.</p>
+<div class='page-header'>
+  <h1>jQuery</h1>
+</div>
+<p>External documentation:</p>
+
+<ul>
+<li><a href='http://jquery.com/'>jQuery Website</a></li>
+
+<li><a href='http://docs.jquery.com/'>jQuery Documentation</a></li>
+</ul>
+<h2>Selectors</h2>
+<p>Several Simplicity Widgets take a selector as an option. They always wrap the passed in object with <a href='http://api.jquery.com/jQuery/#jQuery1'>$(selector)</a> meaning that you can pass in a DOM element, jQuery object or CSS selector.</p>
+
+<p>In this example, all of the options refer to the same target element.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>selectorExample</span><span class='p'>({</span>
+   <span class='nx'>domElement</span><span class='o'>:</span> <span class='nb'>document</span><span class='p'>.</span><span class='nx'>getElementById</span><span class='p'>(</span><span class='s1'>&#39;target&#39;</span><span class='p'>),</span>
+   <span class='nx'>jQueryObject</span><span class='o'>:</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#target&#39;</span><span class='p'>),</span>
+   <span class='nx'>cssSelector</span><span class='o'>:</span> <span class='s1'>&#39;#target&#39;</span> 
+<span class='p'>});</span>
+</code></pre>
+</div><h2>Deferred execution</h2>
+<p>We recommend setting up any JavaScript on the page to execute when the DOM is ready using <a href='http://api.jquery.com/jQuery/#jQuery3'>$(callback)</a>. This prevents strange JavaScript errors, allows you to better optimize for page load and gives you a functional closure that prevents leaking local variables into the global scope.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+    <span class='c1'>// My code goes in here</span>
+    <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>text</span><span class='p'>(</span><span class='s1'>&#39;hello, world&#39;</span><span class='p'>);</span>
+<span class='p'>});</span>
+</code></pre>
+</div><div class='page-header'>
+  <h1>jQuery UI</h1>
+</div>
+<p>External documentation:</p>
+
+<ul>
+<li><a href='http://jqueryui.com/'>jQuery UI Website</a></li>
+
+<li><a href='http://jqueryui.com/demos/'>jQuery UI Documentation</a></li>
+
+<li><a href='http://jqueryui.com/docs/Theming'>jQuery UI Theming Overview</a></li>
+
+<li><a href='http://jqueryui.com/docs/Theming/API'>jQuery UI CSS Framework</a></li>
+</ul>
+
+<p>The Simplicity Widgets all follow the standard jQuery UI Widget model.</p>
+<h2>Creating widgets</h2>
+<p>You can construct them with their default options:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>();</span>
+</code></pre>
+</div>
+<p>Or override just the options you care about:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>({</span>
+    <span class='nx'>name</span><span class='o'>:</span> <span class='s1'>&#39;example&#39;</span><span class='p'>,</span>
+    <span class='nx'>rating</span><span class='o'>:</span> <span class='mf'>0.9</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+<p>And you can create more than one at a time:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;.example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>()</span>
+</code></pre>
+</div><h2>Widget options and methods</h2>
+<p>Once created, you get get the value of any option:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>(</span><span class='s1'>&#39;option&#39;</span><span class='p'>,</span> <span class='s1'>&#39;name&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<p>Or set it:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>(</span><span class='s1'>&#39;option&#39;</span><span class='p'>,</span> <span class='s1'>&#39;name&#39;</span><span class='p'>,</span> <span class='s1'>&#39;my new name&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<p>You can even call methods on a widget:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>(</span><span class='s1'>&#39;bounce&#39;</span><span class='p'>);</span>
+</code></pre>
+</div><h2>Widget events</h2>
+<p>Let&#8217;s presume that our widget is documented to fire a <code>bouncing</code> event.</p>
+
+<p>We can bind an event handler at widget creation time:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>exampleWidget</span><span class='p'>({</span>
+    <span class='nx'>bouncing</span><span class='o'>:</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>evt</span><span class='p'>,</span> <span class='nx'>ui</span><span class='p'>)</span> <span class='p'>{</span>
+        <span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;widget is bouncing&#39;</span><span class='p'>,</span> <span class='nx'>evt</span><span class='p'>,</span> <span class='nx'>ui</span><span class='p'>);</span>
+    <span class='p'>}</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+<p>Or we can explicity bind an event handler for the fully qualified event name:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>bind</span><span class='p'>(</span><span class='s1'>&#39;examplewidgetbouncing&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>evt</span><span class='p'>,</span> <span class='nx'>ui</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;widget is bouncing&#39;</span><span class='p'>,</span> <span class='nx'>evt</span><span class='p'>,</span> <span class='nx'>ui</span><span class='p'>);</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+<p>This highlights a subtle but important feature of jQuery UI. When binding to a widget event using an option, you use the short version of the event name. When binding to a widget event using <code>$.bind()</code> you use the long version of the event name. To generate the long version of the event name, you lowercase the name of the widget and then append the short event name. In our example above, the short event name is <code>bouncing</code> while the long event name is <code>examplewidgetbouncing</code>.</p>
+
+<p>Technically, this is handled by the widget factory&#8217;s use of the <code>widgetEventPrefix</code> option. The <a href='http://docs.jquery.com/UI/Slider#events'>jQuery UI slider</a> is a great example of customizing this as it sets <code>widgetEventPrefix</code> to <code>slide</code> instead of the default <code>slider</code> causing the events to be named <code>slidestart</code>, <code>slideslide</code>, <code>slidechange</code> and <code>slidestop</code> instead of <code>sliderstart</code>, <code>sliderslide</code>, <code>sliderchange</code> and <code>sliderstop</code>.</p>
+<h2>Simplicity Widget events</h2>
+<p>With the exception of <code>simplicityState</code> and <code>simplicityDiscoverySearch</code>, all the Simplicity Widgets fire regular jQuery widget events that follow the prefixing rules described above. These are regular DOM events that bubble up the document.</p>
+
+<p>The <code>simplicityState</code> and <code>simplicityDiscoverySearch</code> widgets use <a href='http://api.jquery.com/triggerHandler/'>$.triggerHandler()</a> instead to create non-prefixed non-bubbling events.</p>
+
+<p>This allows us to take advantage of <a href='/userguide/widgetgroups.html'>widget groups</a> without having to prevent events from bubbling into the wrong group.</p>
+
+<p>HTML</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;body&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;searchNav&quot;</span><span class='nt'>&gt;</span>...<span class='nt'>&lt;/div&gt;</span>
+    <span class='nt'>&lt;div</span> <span class='na'>id=</span><span class='s'>&quot;secondarySearch&quot;</span><span class='nt'>&gt;</span>...<span class='nt'>&lt;/div&gt;</span>
+<span class='nt'>&lt;/body&gt;</span>
+</code></pre>
+</div>
+<p>JavaScript</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>)</span>
+    <span class='p'>.</span><span class='nx'>simplicityState</span><span class='p'>()</span>
+    <span class='p'>.</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+        <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span>
+    <span class='p'>});</span>
+
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#secondarySearch&#39;</span><span class='p'>)</span>
+    <span class='p'>.</span><span class='nx'>simplicityState</span><span class='p'>()</span>
+    <span class='p'>.</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
+        <span class='nx'>stateElement</span><span class='o'>:</span> <span class='s1'>&#39;#secondarySearch&#39;</span><span class='p'>,</span>
+        <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;/my_search_controller.php&#39;</span>
+    <span class='p'>});</span>
+
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>bind</span><span class='p'>(</span><span class='s1'>&#39;simplicitySearchResponse&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>evt</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;body search response&#39;</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>);</span>
+<span class='p'>});</span>
+<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#secondarySearch&#39;</span><span class='p'>).</span><span class='nx'>bind</span><span class='p'>(</span><span class='s1'>&#39;simplicitySearchResponse&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>evt</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>)</span> <span class='p'>{</span>
+    <span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;secondary search response&#39;</span><span class='p'>,</span> <span class='nx'>searchResponse</span><span class='p'>);</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+<p>The use of <code>$.triggerHandler</code> means that the <code>simplicitySearchResponse</code> event triggered from <code>#secondarySearch</code> will not be picked up by the event handler that is bound to <code>body</code>.</p>
+<h2>CSS</h2>
+<p>jQuery UI widgets all set <a href='http://jqueryui.com/docs/Theming/API'>standard CSS classes</a> on their attached elements, at a minimum every widget&#8217;s element has the class <code>ui-widget</code>.</p>
+
+<p>The Simplicity Widgets additionally add a class to their element based on the name of the widget. As a rule of thumb, the widget name is lower cased and hyphens are inserted wherever a case change took place. There are a few exceptions, so check the <a href='/jsdoc/'>API documentation</a> when in doubt.</p>
+
+<p>For example: <table class='table table-bordered table-striped'>
+    <thead>
+        <tr>
+            <th>widget</th>
+            <th>css class</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>simplicityState</td>
+            <td>ui-simplicity-state</td>
+        </tr>
+        <tr>
+            <td>simplicityFancySelect</td>
+            <td>ui-simplicity-fancy-select</td>
+        </tr>
+        <tr>
+            <td>simplicityMapQuestMapBoundsCoordinator</td>
+            <td>ui-simplicity-mapquest-map-bounds-coordinator</td>
+        </tr>
+    </tbody>
+</table></p>
+<h2>Themes</h2>
+<p>jQuery UI has great support for <a href='http://jqueryui.com/docs/Theming'>theming</a> and the Simplicity Widgets make use of the standard jQuery UI CSS classes to take advantage of the current theme.</p>
+
+<p>You can use <a href='http://jqueryui.com/docs/Theming/Themeroller'>ThemeRoller</a> to download one of the standard themes or create your own.</p>
+
+<p>At development time, it is often useful to drop the <a href='http://jqueryui.com/docs/Theming/ThemeSwitcher'>Theme Switcher Widget</a> onto a page so you can change the theme on the fly.</p>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right">
+            <a href="#" onclick="window.scrollTo(0,0);return false;">Back to top</a>
+        </p>
+        <p>
+          Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.
+        </p>
+      </div>
+    </footer>
+    <!--[if IE]>
+      <script src="/js/xdr.js"></script>
+      <script src="/js/json2.min.js"></script>
+      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
+    <script src="/js/jquery.pagination-2.1.min.js"></script>
+    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
+    <script src="/js/bootstrap-2.1.1.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="/js/documentation.js"></script>
+  </body>
+</html>

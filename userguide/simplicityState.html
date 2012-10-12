@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Simplicity Widgets - Widget Groups</title>
+    <title>Simplicity Widgets - simplicityState</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -51,9 +51,9 @@
     
       <header class="subhead">
         <div class="container">
-          <h1>Widget Groups</h1>
+          <h1>simplicityState</h1>
           
-            <p class="lead">640K ought to be enough for anybody.</p>
+            <p class="lead">Recording the question.</p>
           
         </div>
       </header>
@@ -67,8 +67,8 @@
             <li class='nav-header'>Core</li>
             <li class=''><a href='/userguide/'>Getting started</a></li>
             <li class=''><a href='/userguide/primer.html'>Primer</a></li>
-            <li class='active'><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
-            <li class=''><a href='/userguide/simplicityState.html'>simplicityState</a></li>
+            <li class=''><a href='/userguide/widgetgroups.html'>Widget groups</a></li>
+            <li class='active'><a href='/userguide/simplicityState.html'>simplicityState</a></li>
             <li class=''><a href='/userguide/simplicityDiscoverySearch.html'>simplicityDiscoverySearch</a></li>
         </ul>
     </div>
@@ -94,34 +94,35 @@
         </ul>
     </div>
 </div><div class='page-header'>
-  <h1>Widget Groups</h1>
+  <h1>simplicityState</h1>
 </div>
-<p>The widgets support being placed in multiple independent groups on the same page. Typically only one group is used so the default options cater for that scenario.</p>
+<p>The <code>simplicityState</code> widget wraps a <a href='http://www.json.org'>JSON</a> representation of state which is typially used for driving search.</p>
 
-<p>Groups generally center around the <code>simplicityState</code> and <code>simplicityDiscoverySearch</code> widgets which we place on the <code>body</code> element by default. Other widgets look at the <code>body</code> element by default when needing to reference either <code>simplicityState</code> or <code>simplicityDiscoverySearch</code>.</p>
+<p>In the common case each page contains just one <code>simplicityState</code> widget bound to the <code>body</code> element.</p>
 
-<p>Here is a single default group of widgets on the page.</p>
+<p>To create an empty state.</p>
 <div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>();</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#mainSearch :input&#39;</span><span class='p'>).</span><span class='nx'>simplicityInputs</span><span class='p'>();</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#mainResults&#39;</span><span class='p'>).</span><span class='nx'>simplicitySearchResults</span><span class='p'>();</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
-  <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;http://example.com/search-controller&#39;</span>
+</code></pre>
+</div>
+<p>To create a pre-populated state, you&#8217;d use the <code>initialState</code> option.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>({</span>
+  <span class='nx'>example</span><span class='o'>:</span> <span class='s1'>&#39;this is my default state&#39;</span>
 <span class='p'>});</span>
 </code></pre>
 </div>
-<p>To add a second group of widgets to the page, we by create a <code>simplicityState</code> widget and a <code>simplicityDiscoverySearch</code> on a different element from the other widget group, and then configure all the widgets in this group to use that state.</p>
-
-<p>In this example we bind the <code>simplicityState</code> and <code>simplicityDiscoverySearch</code> widgets to <code>#secondary</code>, and override the <code>stateElement</code> and <code>searchElement</code> options of the other widgets in this group.</p>
-<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#secondary&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>();</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#secondary :input&#39;</span><span class='p'>).</span><span class='nx'>simplicityInputs</span><span class='p'>({</span>
-    <span class='nx'>stateElement</span><span class='o'>:</span> <span class='s1'>&#39;#secondary&#39;</span>
+<p>To obtain the current state.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>(</span><span class='s1'>&#39;state&#39;</span><span class='p'>);</span>
+</code></pre>
+</div>
+<p>To set the current state.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>simplicityState</span><span class='p'>(</span><span class='s1'>&#39;state&#39;</span><span class='p'>,</span> <span class='p'>{</span>
+  <span class='nx'>example</span><span class='o'>:</span> <span class='s1'>&#39;this is my new state&#39;</span>
 <span class='p'>});</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#secondaryResults&#39;</span><span class='p'>).</span><span class='nx'>simplicitySearchResults</span><span class='p'>({</span>
-    <span class='nx'>searchElement</span><span class='o'>:</span> <span class='s1'>&#39;#secondary&#39;</span>
-<span class='p'>});</span>
-<span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#secondary&#39;</span><span class='p'>).</span><span class='nx'>simplicityDiscoverySearch</span><span class='p'>({</span>
-  <span class='nx'>stateElement</span><span class='o'>:</span> <span class='s1'>&#39;#secondary&#39;</span><span class='p'>,</span>
-  <span class='nx'>url</span><span class='o'>:</span> <span class='s1'>&#39;http://example.com/search-controller&#39;</span>
+</code></pre>
+</div>
+<p>To get notified when the state changes. Note that the widget uses <a href='http://api.jquery.com/triggerHandler/'>$.triggerHandler</a> to prevent event bubbling.</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;body&#39;</span><span class='p'>).</span><span class='nx'>bind</span><span class='p'>(</span><span class='s1'>&#39;simplicityStateChange&#39;</span><span class='p'>,</span> <span class='kd'>function</span> <span class='p'>(</span><span class='nx'>state</span><span class='p'>)</span> <span class='p'>{</span>
+  <span class='nx'>console</span><span class='p'>.</span><span class='nx'>log</span><span class='p'>(</span><span class='s1'>&#39;state changed to&#39;</span><span class='p'>,</span> <span class='nx'>state</span><span class='p'>);</span>
 <span class='p'>});</span>
 </code></pre>
 </div>

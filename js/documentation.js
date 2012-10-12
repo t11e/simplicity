@@ -1,9 +1,35 @@
 (function ($) {
-  $.widget("ui.simplicityStateExampleEditor", $.ui.simplicityWidget, {
+  $.simplicityDocsParseJson = function (input, defaultValue) {
+      var result;
+      try {
+        result = JSON.parse(input);
+      } catch (e) {
+        try {
+          result = eval( '(' + input + ')');
+        } catch (e) {
+          result = defaultValue;
+        }
+      }
+      return result;
+  };
+  $.widget("ui.simplicityDocsJsonSelector", $.ui.simplicityWidget, {
+    options: {
+      selectElement: ''
+    },
+    _create: function () {
+      $(this.options.selectElement)
+        .change($.proxy(function (evt) {
+          var json = $.simplicityDocsParseJson($(evt.target).val());
+          this.element.text(JSON.stringify(json, null, '  '));
+          this._trigger('change', {}, json);
+        }, this));
+    }
+  });
+  $.widget("ui.simplicityDocsStateEditor", $.ui.simplicityWidget, {
     options: {
       stateElement: ''
     },
-    _create : function () {
+    _create: function () {
       if (!this.element.is('textarea')) {
         return;
       }
@@ -16,24 +42,14 @@
         ._bind(this.options.stateElement, 'simplicityStateChange', this._state_handler);
     },
     _val_handler: function () {
-      var value = this.element.val(),
-          parsed = null;
-      try {
-        parsed = JSON.parse(value);
-      } catch (e) {
-        try {
-          parsed = eval( '(' + value + ')');
-        } catch (e) {
-          parsed = null;
-        }
-      }
-      if (parsed === null) {
+      var json = $.simplicityDocsParseJson(this.element.val(), null);
+      if (json === null) {
         this.element.addClass('ui-state-error')
       } else {
         this.element
           .removeClass('ui-state-error')
-          .val(JSON.stringify(parsed, null, '    '));
-        $(this.options.stateElement).simplicityState('state', parsed);
+          .val(JSON.stringify(json, null, '    '));
+        $(this.options.stateElement).simplicityState('state', json);
       }
     },
     _state_handler: function(evt, state) {

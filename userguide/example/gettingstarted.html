@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Simplicity Widgets - Example</title>
+    <title>Simplicity Widgets - Getting Started Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -51,9 +51,9 @@
     
       <header class="subhead">
         <div class="container">
-          <h1>Example</h1>
+          <h1>Getting Started Example</h1>
           
-            <p class="lead">Basic working example.</p>
+            <p class="lead">Put it in neutral and turn the ignition.</p>
           
         </div>
       </header>
@@ -66,7 +66,9 @@
         <ul class="nav nav-list">
             <li class="nav-header">Core</li>
             <li class=""><a href="/userguide/">Getting started</a></li>
+            <li class=""><a href="/userguide/primer.html">Primer</a></li>
             <li class=""><a href="/userguide/widgetgroups.html">Widget groups</a></li>
+            <li class=""><a href="/userguide/simplicityState.html">simplicityState</a></li>
             <li class=""><a href="/userguide/simplicityDiscoverySearch.html">simplicityDiscoverySearch</a></li>
         </ul>
     </div>
@@ -81,19 +83,20 @@
     <div class="span3">
         <ul class="nav nav-list">
             <li class="nav-header">Response Widgets</li>
+            <li class=""><a href="/userguide/simplicitySearchResults.html">simplicitySearchResults</a></li>
             <li class=""><a href="/userguide/simplicityFacetedSelect.html">simplicityFacetedSelect</a></li>
         </ul>
     </div>
     <div class="span3">
         <ul class="nav nav-list">
             <li class="nav-header">Examples</li>
-            <li class="active"><a href="/userguide/example/basic.html">Basic</a></li>
+            <li class="active"><a href="/userguide/example/gettingstarted.html">Getting Started</a></li>
         </ul>
     </div>
 </div>
 
 <div class="well">
-  This example shows a basic working search page. It is described in more detail on the <a href="/userguide/">getting started</a> page of the userguide.
+  This example shows a basic search page. It is described in more detail on the <a href="/userguide/">getting started</a> page of the userguide.
 </div>
 
 <style>
@@ -120,31 +123,31 @@
 <form id="searchForm" class="form-search" onsubmit="return false;">
   <button id="searchButton" type="submit" class="btn">Search</button>
   <button id="resetButton" type="button" class="btn">Reset</button>
-  <fieldset>
-    <legend>Text Search</legend>
-    <input type="text" name="dataset_freetext" class="input-large search-query">
-  </fieldset>
-  <fieldset>
-    <legend>Category Type</legend>
-    <select name="category_type">
+  <label>
+    Text Search
+    <input type="text" name="dataset_freetext" class="input-medium search-query">
+  </label>
+  <label>
+    Category Type
+    <select name="category_type" class="input-medium">
       <option value="">Any...</option>
       <option value="1">Raw Data Catalog</option>
       <option value="2">Tool Catalog</option>
     </select>
-  </fieldset>
-  <fieldset>
-    <legend>Formats Available</legend>
-    <select name="formats_avail">
+  </label>
+  <label>
+    Formats Available
+    <select name="formats_avail" class="input-medium">
       <option value="">Any...</option>
     </select>
-  </fieldset>
-  <fieldset>
-    <legend>Agency</legend>
+  </label>
+  <label>
+    Agency
     <select name="agency" class="ui-helper-hidden-accessible">
       <option value="">Any...</option>
     </select>
     <div id="agencyFancy"></div>
-  </fieldset>
+  </label>
 </form>
 
   </div>
@@ -176,7 +179,7 @@ $('#agencyFancy').simplicityFancySelect({
 
 $('#resetButton').click(function () {
   $('body').simplicityState('reset');
-})
+});
 
 
 $('#searchResults').simplicitySearchResults();
