@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
-    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.2/simplicity.min.css" rel="stylesheet">
     <link href="/css/syntax.css" rel="stylesheet">
     <link href="/css/documentation.css" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -73,6 +73,8 @@
 	<li><a href="../symbols/%24.html">$</a></li>
 	
 	<li><a href="../symbols/%24.fn.html">$.fn</a></li>
+	
+	<li><a href="../symbols/%24.simplicity.html">$.simplicity</a></li>
 	
 	<li><a href="../symbols/%24.simplicityGeoFn.html">$.simplicityGeoFn</a></li>
 	
@@ -293,10 +295,37 @@ directly to the <code>simplicityState</code>.
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#._getStartEnd">_getStartEnd</a></b>()
+								</div>
+								<div class="description">Calculates the range of pagination links that might be displayed based on <code>num_display_entries</code>,
+<code>currentPage</code>, and <code>numPages</code>.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#._makeLink">_makeLink</a></b>()
+								</div>
+								<div class="description">Helper that makes a pagination link.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#._makeLinks">_makeLinks</a></b>()
+								</div>
+								<div class="description">Helper that makes a range of pagination links, appending them to the parent.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#._paginationCallback">_paginationCallback</a></b>()
 								</div>
-								<div class="description">Callback for the upstream pagination widget that gets called when a page change action
-has been taken.</div>
+								<div class="description">Callback for when a pagination link is clicked.</div>
 							</td>
 						</tr>
 					
@@ -312,9 +341,54 @@ has been taken.</div>
 						<tr>
 							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#._setPage">_setPage</a></b>()
+								</div>
+								<div class="description">Changes the underlying search to reflect the requested page if page is different from the current page.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;private&gt; &lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#._stateResetHandler">_stateResetHandler</a></b>()
 								</div>
 								<div class="description">Event handler for the <code>simplicityStateReset</code> event.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#.getPage">getPage</a></b>()
+								</div>
+								<div class="description">Get the current page - 1 based.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#.nextPage">nextPage</a></b>()
+								</div>
+								<div class="description">Move to the next page in the results.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#.prevPage">prevPage</a></b>()
+								</div>
+								<div class="description">Move to the previous page in the results.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">$.ui.simplicityPagination.<b><a href="../symbols/%24.ui.simplicityPagination.html#.setPage">setPage</a></b>()
+								</div>
+								<div class="description">Move to a specific page in the results.</div>
 							</td>
 						</tr>
 					
@@ -423,6 +497,47 @@ has been taken.</div>
   <dd>
     Determines the scroll top position to use for <code>$(window).scrollTop(0)</code>. Defaults to <code>0</code>.
   </dd>
+  <dt>num_display_entries</dt>
+  <dd>
+    Maximum number of pagination links to display.
+    Setting to <code>0</code> will trim the navigation down to simply, "Previous" and "Next" links.
+    Use an odd number so the current page will be displayed in the center of the
+    page links when there are more than <code>num_display_entries</code> pages. Defaults to <code>11</code>.
+  </dd>
+  <dt>num_edge_entries</dt>
+  <dd>
+    Number of page links to show at the min and max range regardless of other constraints.
+    If this number is set to 1, then links to the first and the last page are shown regardless of the current page
+    and the visibility constraints set by num_display_entries. Setting to a larger number shows more links.
+    Defaults to  <code>0</code>.
+  </dd>
+  <dt>link_to</dt>
+  <dd>
+    <code>href</code> template for the pagination links. The special value <code>__id__</code> will be replaced by the
+    page number. Defaults to <code>#</code>.
+  </dd>
+  <dt>prev_text</dt>
+  <dd>
+    Text for the "previous" link. Setting to an empty string will omit the link. Defaults to <code>Prev</code>.
+  </dd>
+  <dt>next_text</dt>
+    Text for the "next" link. Setting to an empty string will omit the link. Defaults to <code>Next</code>.
+  <dd>
+  </dd>
+  <dt>ellipse_text</dt>
+  <dd>
+     When there is a gap between the numbers created by num_edge_entries and the displayed number interval,
+     this text is inserted into the gap (in a span tag). Setting to an empty string omits the additional tag.
+     Defaults to <code>...</code>.
+  </dd>
+  <dt>prev_show_always</dt>
+  <dd>
+    When set to false, the "previous"-link is only shown if there is a previous page. Defaults to <code>true</code>.
+  </dd>
+  <dt>next_show_always</dt>
+  <dd>
+    When set to false, the "next"-link is only shown if there is a next page. Defaults to <code>true</code>.
+  </dd>
   <dt>debug</dt>
   <dd>
     Enable logging of key events to <code>console.log</code>. Defaults to <code>false</code>.
@@ -449,6 +564,83 @@ has been taken.</div>
 					Method Detail
 				</div>
 				
+					<a name="._getStartEnd"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>_getStartEnd</b>()
+					
+					</div>
+					<div class="description">
+						Calculates the range of pagination links that might be displayed based on <code>num_display_entries</code>,
+<code>currentPage</code>, and <code>numPages</code>.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._makeLink"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>_makeLink</b>()
+					
+					</div>
+					<div class="description">
+						Helper that makes a pagination link. All element event handlers and data are set in this method, so returned link is ready
+to be used.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="._makeLinks"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>_makeLinks</b>()
+					
+					</div>
+					<div class="description">
+						Helper that makes a range of pagination links, appending them to the parent.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="._paginationCallback"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
@@ -457,8 +649,7 @@ has been taken.</div>
 					
 					</div>
 					<div class="description">
-						Callback for the upstream pagination widget that gets called when a page change action
-has been taken.
+						Callback for when a pagination link is clicked.
 						
 						
 					</div>
@@ -501,6 +692,31 @@ the pagination widget to reflect the current search response.
 
 					<hr />
 				
+					<a name="._setPage"> </a>
+					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>_setPage</b>()
+					
+					</div>
+					<div class="description">
+						Changes the underlying search to reflect the requested page if page is different from the current page. Page is zero based.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="._stateResetHandler"> </a>
 					<div class="fixedFont">&lt;private&gt; &lt;static&gt; 
 					
@@ -511,6 +727,106 @@ the pagination widget to reflect the current search response.
 					<div class="description">
 						Event handler for the <code>simplicityStateReset</code> event. Resets the current page
 if the <code>pageParam</code> option is set.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".getPage"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>getPage</b>()
+					
+					</div>
+					<div class="description">
+						Get the current page - 1 based.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".nextPage"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>nextPage</b>()
+					
+					</div>
+					<div class="description">
+						Move to the next page in the results. Causes a new search if the last search indicated that there will be a next page.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".prevPage"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>prevPage</b>()
+					
+					</div>
+					<div class="description">
+						Move to the previous page in the results. Causes a new search if the current page is not the first page.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".setPage"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">$.ui.simplicityPagination.</span><b>setPage</b>()
+					
+					</div>
+					<div class="description">
+						Move to a specific page in the results. Causes a new search.
 						
 						
 					</div>
@@ -555,16 +871,15 @@ if the <code>pageParam</code> option is set.
       </div>
     </footer>
     <!--[if IE]>
-      <script src="/js/xdr.js"></script>
-      <script src="/js/json2.min.js"></script>
-      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js"></script>
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
-    <script src="/js/jquery.pagination-2.1.min.js"></script>
-    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
-    <script src="/js/bootstrap-2.1.1.min.js"></script>
-    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/jquery-plugin/touchpunch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.2/simplicity.min.js"></script>
     <script src="/js/documentation.js"></script>
   </body>
 </html>

@@ -30,153 +30,166 @@
 <span class='line'> 23</span>      *   &lt;dd>
 <span class='line'> 24</span>      *     The event to bind when listening for change events. Defaults to &lt;code>'change'&lt;/code>.
 <span class='line'> 25</span>      *   &lt;/dd>
-<span class='line'> 26</span>      *   &lt;dt>quietStateChange&lt;/dt>
+<span class='line'> 26</span>      *   &lt;dt>handleChildChange&lt;/dt>
 <span class='line'> 27</span>      *   &lt;dd>
-<span class='line'> 28</span>      *     When set to true cause change events to not propagate past the simplicityState widget.
-<span class='line'> 29</span>      *     This allows for incremental, partial updates of the shared state. Defaults to &lt;code>false&lt;/code>.
-<span class='line'> 30</span>      *   &lt;/dd>
-<span class='line'> 31</span>      *   &lt;dt>exportStateOnCreate&lt;/dt>
-<span class='line'> 32</span>      *   &lt;dd>
-<span class='line'> 33</span>      *     If the underlying input has a non empty state, export that
-<span class='line'> 34</span>      *     to the simplicityState widget. Defaults to &lt;code>true&lt;/code>.
-<span class='line'> 35</span>      *   &lt;/dd>
-<span class='line'> 36</span>      *   &lt;dt>supportsReset&lt;/dt>
-<span class='line'> 37</span>      *   &lt;dd>
-<span class='line'> 38</span>      *     When &lt;code>true&lt;/code this widget listens for a &lt;code>simplicityStateReset&lt;/code> event
-<span class='line'> 39</span>      *     to remove it's parameter from the state object. Defaults to &lt;code>true&lt;/code>.
-<span class='line'> 40</span>      *   &lt;/dd>
-<span class='line'> 41</span>      *   &lt;dt>trim&lt;/dt>
-<span class='line'> 42</span>      *   &lt;dd>
-<span class='line'> 43</span>      *     When &lt;code>true&lt;/code> causes leading and trailing whitespace to be removed from the
-<span class='line'> 44</span>      *     wrapped input(s) value when applying it to the state. Defaults to &lt;code>true&lt;/code>.
-<span class='line'> 45</span>      *   &lt;/dd>
-<span class='line'> 46</span>      *   &lt;dt>debug&lt;/dt>
-<span class='line'> 47</span>      *   &lt;dd>
-<span class='line'> 48</span>      *     Enable logging of key events to console.log. Defaults to &lt;code>false&lt;/code>.
+<span class='line'> 28</span>      *     When this widget is attached to a non-input element this option decides whether
+<span class='line'> 29</span>      *     &lt;code>change&lt;/code> events from child elements are handled. When &lt;code>true&lt;/code>
+<span class='line'> 30</span>      *     they are processed causing the state to change. When &lt;code>false&lt;/code> they are not
+<span class='line'> 31</span>      *     processed and the event is terminated so that it no longer bubbles up the DOM.
+<span class='line'> 32</span>      *     Defaults to &lt;code>true&lt;/code>. Prior to release 3.2 this option defaulted to
+<span class='line'> 33</span>      *     &lt;code>false&lt;/code>.
+<span class='line'> 34</span>      *   &lt;/dd>
+<span class='line'> 35</span>      *   &lt;dt>quietStateChange&lt;/dt>
+<span class='line'> 36</span>      *   &lt;dd>
+<span class='line'> 37</span>      *     When set to true cause change events to not propagate past the simplicityState widget.
+<span class='line'> 38</span>      *     This allows for incremental, partial updates of the shared state. Defaults to &lt;code>false&lt;/code>.
+<span class='line'> 39</span>      *   &lt;/dd>
+<span class='line'> 40</span>      *   &lt;dt>exportStateOnCreate&lt;/dt>
+<span class='line'> 41</span>      *   &lt;dd>
+<span class='line'> 42</span>      *     If the underlying input has a non empty state, export that
+<span class='line'> 43</span>      *     to the simplicityState widget. Defaults to &lt;code>true&lt;/code>.
+<span class='line'> 44</span>      *   &lt;/dd>
+<span class='line'> 45</span>      *   &lt;dt>supportsReset&lt;/dt>
+<span class='line'> 46</span>      *   &lt;dd>
+<span class='line'> 47</span>      *     When &lt;code>true&lt;/code this widget listens for a &lt;code>simplicityStateReset&lt;/code> event
+<span class='line'> 48</span>      *     to remove it's parameter from the state object. Defaults to &lt;code>true&lt;/code>.
 <span class='line'> 49</span>      *   &lt;/dd>
-<span class='line'> 50</span>      * &lt;/dl>
-<span class='line'> 51</span>      * @name $.ui.simplicityInputs.options
-<span class='line'> 52</span>      */</span><span class="WHIT">
-<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 54</span> </span><span class="WHIT">      </span><span class="NAME">stateElement</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 55</span> </span><span class="WHIT">      </span><span class="NAME">changeEvent</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'change'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 56</span> </span><span class="WHIT">      </span><span class="NAME">quietStateChange</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 57</span> </span><span class="WHIT">      </span><span class="NAME">exportStateOnCreate</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 58</span> </span><span class="WHIT">      </span><span class="NAME">supportsReset</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 59</span> </span><span class="WHIT">      </span><span class="NAME">trim</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 60</span> </span><span class="WHIT">      </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT">
-<span class='line'> 61</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 63</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.element.is</span><span class="PUNC">(</span><span class="NAME">invalidInputSelector</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 64</span> </span><span class="WHIT">        </span><span class="COMM">// We don't want to empty out the value attribute for these</span><span class="WHIT">
-<span class='line'> 65</span> </span><span class="WHIT">        </span><span class="COMM">// kinds of elements or potentially hijack their change events.</span><span class="WHIT">
-<span class='line'> 66</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 67</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 68</span> </span><span class="WHIT">      </span><span class="KEYW">this</span><span class="WHIT">
-<span class='line'> 69</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-inputs'</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'> 70</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.changeEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._changeHandler</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'> 71</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicityStateChange'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._stateChangeHandler</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'> 72</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicityStateReset'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._stateResetHandler</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.exportStateOnCreate</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 74</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 75</span> </span><span class="WHIT">        </span><span class="NAME">this.element.simplicityToState</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.trim</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 76</span> </span><span class="WHIT">        </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span>      *   &lt;dt>trim&lt;/dt>
+<span class='line'> 51</span>      *   &lt;dd>
+<span class='line'> 52</span>      *     When &lt;code>true&lt;/code> causes leading and trailing whitespace to be removed from the
+<span class='line'> 53</span>      *     wrapped input(s) value when applying it to the state. Defaults to &lt;code>true&lt;/code>.
+<span class='line'> 54</span>      *   &lt;/dd>
+<span class='line'> 55</span>      *   &lt;dt>debug&lt;/dt>
+<span class='line'> 56</span>      *   &lt;dd>
+<span class='line'> 57</span>      *     Enable logging of key events to console.log. Defaults to &lt;code>false&lt;/code>.
+<span class='line'> 58</span>      *   &lt;/dd>
+<span class='line'> 59</span>      * &lt;/dl>
+<span class='line'> 60</span>      * @name $.ui.simplicityInputs.options
+<span class='line'> 61</span>      */</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="NAME">options</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">      </span><span class="NAME">stateElement</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'body'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">      </span><span class="NAME">changeEvent</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'change'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">      </span><span class="NAME">handleChildChange</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">      </span><span class="NAME">quietStateChange</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">      </span><span class="NAME">exportStateOnCreate</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">      </span><span class="NAME">supportsReset</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">      </span><span class="NAME">trim</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">      </span><span class="NAME">debug</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">    </span><span class="NAME">_create</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.element.is</span><span class="PUNC">(</span><span class="NAME">invalidInputSelector</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">        </span><span class="COMM">// We don't want to empty out the value attribute for these</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">        </span><span class="COMM">// kinds of elements or potentially hijack their change events.</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 77</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 78</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 79</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 80</span>      * Returns the wrapped input or inputs.
-<span class='line'> 81</span>      *
-<span class='line'> 82</span>      * @name $.ui.simplicityInputs.inputs
-<span class='line'> 83</span>      * @function
-<span class='line'> 84</span>      */</span><span class="WHIT">
-<span class='line'> 85</span> </span><span class="WHIT">    </span><span class="NAME">inputs</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 86</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.element.is</span><span class="PUNC">(</span><span class="STRN">':input'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.element.find</span><span class="PUNC">(</span><span class="STRN">':input'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">not</span><span class="PUNC">(</span><span class="NAME">invalidInputSelector</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 87</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 89</span>      * Resets the input(s) to an empty state by altering the current state and triggering a state change.
-<span class='line'> 90</span>      *
-<span class='line'> 91</span>      * @name $.ui.simplicityInputs.reset
-<span class='line'> 92</span>      * @function
-<span class='line'> 93</span>      */</span><span class="WHIT">
-<span class='line'> 94</span> </span><span class="WHIT">    </span><span class="NAME">reset</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 95</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 96</span> </span><span class="WHIT">      </span><span class="NAME">this._reset</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 97</span> </span><span class="WHIT">      </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.quietStateChange</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 98</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 99</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>100</span>      * Handler for change events. When the underlying input is changed this
-<span class='line'>101</span>      * handler updates the state of the associated simplicityState widget
-<span class='line'>102</span>      * with this data.
-<span class='line'>103</span>      *
-<span class='line'>104</span>      * @name $.ui.simplicityInputs._changeHandler
-<span class='line'>105</span>      * @function
-<span class='line'>106</span>      * @private
-<span class='line'>107</span>      */</span><span class="WHIT">
-<span class='line'>108</span> </span><span class="WHIT">    </span><span class="NAME">_changeHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>109</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt.target</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>110</span> </span><span class="WHIT">        </span><span class="COMM">// Change event from a child element, stop it</span><span class="WHIT">
-<span class='line'>111</span> </span><span class="WHIT">        </span><span class="NAME">evt.stopImmediatePropagation</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>112</span> </span><span class="WHIT">        </span><span class="NAME">evt.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>113</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this._ignoreChangeEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>114</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>115</span> </span><span class="WHIT">        </span><span class="NAME">this.inputs</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityToState</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.trim</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>116</span> </span><span class="WHIT">        </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.quietStateChange</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>117</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>118</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>119</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>120</span>      * Handler for simplicityStateChange events. When the associated
-<span class='line'>121</span>      * simplicityState widget gets a new state this handler updates the
-<span class='line'>122</span>      * underlying input to reflect the new state.
-<span class='line'>123</span>      *
-<span class='line'>124</span>      * @name $.ui.simplicityInputs._stateChangeHandler
-<span class='line'>125</span>      * @function
-<span class='line'>126</span>      * @private
-<span class='line'>127</span>      */</span><span class="WHIT">
-<span class='line'>128</span> </span><span class="WHIT">    </span><span class="NAME">_stateChangeHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>129</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>130</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityInputs: Handling simplicityStateChange event for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>131</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>132</span> </span><span class="WHIT">      </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>133</span> </span><span class="WHIT">        </span><span class="NAME">this._ignoreChangeEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>134</span> </span><span class="WHIT">        </span><span class="NAME">this.inputs</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityFromState</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>135</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">finally</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>136</span> </span><span class="WHIT">        </span><span class="NAME">this._ignoreChangeEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>137</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>138</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>139</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityInputs: Handled simplicityStateChange event for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>140</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>141</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>142</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>143</span>      * Handler for simplicityStateReset events. When the option &lt;code>supportsReset&lt;/code> is
-<span class='line'>144</span>      * &lt;code>true&lt;/code> this handler will reset the bound parameters.
-<span class='line'>145</span>      *
-<span class='line'>146</span>      * @name $.ui.simplicityInputs._stateResetHandler
-<span class='line'>147</span>      * @function
-<span class='line'>148</span>      * @private
-<span class='line'>149</span>      */</span><span class="WHIT">
-<span class='line'>150</span> </span><span class="WHIT">    </span><span class="NAME">_stateResetHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>151</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.supportsReset</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>152</span> </span><span class="WHIT">        </span><span class="NAME">this._reset</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">      </span><span class="KEYW">this</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_addClass</span><span class="PUNC">(</span><span class="STRN">'ui-simplicity-inputs'</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.changeEvent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._changeHandler</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicityStateChange'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._stateChangeHandler</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">        </span><span class="PUNC">.</span><span class="NAME">_bind</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'simplicityStateReset'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._stateResetHandler</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.exportStateOnCreate</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">        </span><span class="NAME">this.element.simplicityToState</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.trim</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">        </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 90</span>      * Returns the wrapped input or inputs.
+<span class='line'> 91</span>      *
+<span class='line'> 92</span>      * @name $.ui.simplicityInputs.inputs
+<span class='line'> 93</span>      * @function
+<span class='line'> 94</span>      */</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="NAME">inputs</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.element.is</span><span class="PUNC">(</span><span class="STRN">':input'</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">this.element.find</span><span class="PUNC">(</span><span class="STRN">':input'</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">not</span><span class="PUNC">(</span><span class="NAME">invalidInputSelector</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 99</span>      * Resets the input(s) to an empty state by altering the current state and triggering a state change.
+<span class='line'>100</span>      *
+<span class='line'>101</span>      * @name $.ui.simplicityInputs.reset
+<span class='line'>102</span>      * @function
+<span class='line'>103</span>      */</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">    </span><span class="NAME">reset</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">      </span><span class="NAME">this._reset</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">      </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.quietStateChange</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>110</span>      * Handler for change events. When the underlying input is changed this
+<span class='line'>111</span>      * handler updates the state of the associated simplicityState widget
+<span class='line'>112</span>      * with this data.
+<span class='line'>113</span>      *
+<span class='line'>114</span>      * @name $.ui.simplicityInputs._changeHandler
+<span class='line'>115</span>      * @function
+<span class='line'>116</span>      * @private
+<span class='line'>117</span>      */</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">    </span><span class="NAME">_changeHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this._ignoreChangeEvent</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this.options.handleChildChange</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">evt.target</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">          </span><span class="COMM">// Change event from a child element, do not handle the change and prevent anyone</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">          </span><span class="COMM">// else from getting this event.</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">          </span><span class="NAME">evt.stopImmediatePropagation</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">          </span><span class="NAME">evt.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">          </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">state</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">          </span><span class="NAME">this.inputs</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityToState</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.trim</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">          </span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">this.options.stateElement</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityState</span><span class="PUNC">(</span><span class="STRN">'state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.quietStateChange</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>133</span>      * Handler for simplicityStateChange events. When the associated
+<span class='line'>134</span>      * simplicityState widget gets a new state this handler updates the
+<span class='line'>135</span>      * underlying input to reflect the new state.
+<span class='line'>136</span>      *
+<span class='line'>137</span>      * @name $.ui.simplicityInputs._stateChangeHandler
+<span class='line'>138</span>      * @function
+<span class='line'>139</span>      * @private
+<span class='line'>140</span>      */</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">    </span><span class="NAME">_stateChangeHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityInputs: Handling simplicityStateChange event for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">      </span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">        </span><span class="NAME">this._ignoreChangeEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">        </span><span class="NAME">this.inputs</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">simplicityFromState</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">finally</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">        </span><span class="NAME">this._ignoreChangeEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">        </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityInputs: Handled simplicityStateChange event for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.element</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'with state'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>153</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>154</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>155</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>156</span>      * Implementation of reset, used by &lt;code>reset&lt;/code> and &lt;code>_stateResetHandler&lt;/code>.
-<span class='line'>157</span>      *
-<span class='line'>158</span>      * @name $.ui.simplicityInputs._reset
-<span class='line'>159</span>      * @function
-<span class='line'>160</span>      * @private
-<span class='line'>161</span>      */</span><span class="WHIT">
-<span class='line'>162</span> </span><span class="WHIT">    </span><span class="NAME">_reset</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>163</span> </span><span class="WHIT">      </span><span class="NAME">this.inputs</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">each</span><span class="PUNC">(</span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">element</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>164</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.trim</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">attr</span><span class="PUNC">(</span><span class="STRN">'name'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>165</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>166</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>167</span> </span><span class="WHIT">            </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityInputs: Resetting state parameter'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>168</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>169</span> </span><span class="WHIT">          </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>170</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>171</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>172</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>173</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>174</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>175</span> </span></pre></body></html>
+<span class='line'>156</span>      * Handler for simplicityStateReset events. When the option &lt;code>supportsReset&lt;/code> is
+<span class='line'>157</span>      * &lt;code>true&lt;/code> this handler will reset the bound parameters.
+<span class='line'>158</span>      *
+<span class='line'>159</span>      * @name $.ui.simplicityInputs._stateResetHandler
+<span class='line'>160</span>      * @function
+<span class='line'>161</span>      * @private
+<span class='line'>162</span>      */</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">    </span><span class="NAME">_stateResetHandler</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.supportsReset</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">        </span><span class="NAME">this._reset</span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>169</span>      * Implementation of reset, used by &lt;code>reset&lt;/code> and &lt;code>_stateResetHandler&lt;/code>.
+<span class='line'>170</span>      *
+<span class='line'>171</span>      * @name $.ui.simplicityInputs._reset
+<span class='line'>172</span>      * @function
+<span class='line'>173</span>      * @private
+<span class='line'>174</span>      */</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">    </span><span class="NAME">_reset</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">      </span><span class="NAME">this.inputs</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">each</span><span class="PUNC">(</span><span class="NAME">$.proxy</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">element</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">$.trim</span><span class="PUNC">(</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">attr</span><span class="PUNC">(</span><span class="STRN">'name'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">name</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">name</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this.options.debug</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">            </span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">'simplicityInputs: Resetting state parameter'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">name</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">'for'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">element</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">          </span><span class="KEYW">delete</span><span class="WHIT"> </span><span class="NAME">state</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>188</span> </span></pre></body></html>

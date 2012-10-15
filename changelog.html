@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
-    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.2/simplicity.min.css" rel="stylesheet">
     <link href="/css/syntax.css" rel="stylesheet">
     <link href="/css/documentation.css" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -61,7 +61,53 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <div class="container">
-<h1>3.1</h1><div class='release-date'>2012-08-14</div>
+<div class='page-header'>
+  <h1>3.2 <small>2012-10-15</small></h1>
+</div>
+<h2 id='compatibility'>Compatibility</h2>
+
+<ul>
+<li>You no longer need to include the external library <code>jquery.pagination-2.1.js</code> as the <code>simplicityPagination</code> widget now implements equivalent functionality directly.</li>
+
+<li>The default behavior of <code>simplicityInputs</code> when bound to a non-input element has changed. To obtain the previous behavior set the <code>handleChildChange</code> option to <code>false</code>. This will only affect you if you&#8217;ve grouped multiple inputs and take explicit action to trigger a <code>change</code> event on their contained <code>simplicityInputs</code>. An example would be a custom geocoder binding that doesn&#8217;t use our sample setup JavaScript. Concretely, you would need to change this option to <code>false</code> if you have code that looks like this:</li>
+</ul>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;fieldset</span> <span class='na'>id=</span><span class='s'>&quot;example&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;input</span> <span class='na'>name=</span><span class='s'>&quot;a&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;input</span> <span class='na'>name=</span><span class='s'>&quot;b&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;input</span> <span class='na'>name=</span><span class='s'>&quot;c&quot;</span><span class='nt'>&gt;</span>
+  <span class='nt'>&lt;button&gt;</span>Change<span class='nt'>&lt;/button&gt;</span>
+<span class='nt'>&lt;/fieldset&gt;</span>
+</code></pre>
+</div><div class='highlight'><pre><code class='javascript'><span class='lineno'>1</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>simplicityInputs</span><span class='p'>();</span>
+<span class='lineno'>2</span> <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example button&#39;</span><span class='p'>).</span><span class='nx'>change</span><span class='p'>(</span><span class='kd'>function</span> <span class='p'>()</span> <span class='p'>{</span>
+<span class='lineno'>3</span>   <span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>change</span><span class='p'>();</span>
+<span class='lineno'>4</span> <span class='p'>});</span>
+</code></pre>
+</div>
+<p>To maintain previous functionality, you&#8217;d change line 1 to read:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>$</span><span class='p'>(</span><span class='s1'>&#39;#example&#39;</span><span class='p'>).</span><span class='nx'>simplicityInputs</span><span class='p'>({</span>
+  <span class='nx'>handleChildChange</span><span class='o'>:</span> <span class='kc'>false</span>
+<span class='p'>});</span>
+</code></pre>
+</div>
+<h2 id='improvements'>Improvements</h2>
+
+<ul>
+<li>Adds <code>$.simplicity.version</code> to be used for diagnostic purposes not feature detection.</li>
+
+<li>Fixes <code>$.simplicityAjaxHelper</code> to prevent <code>simplicitySearchResults</code> from displaying <code>[0] abort, abort</code> when an Ajax request was aborted due to the user interacting too quickly.</li>
+
+<li>Makes <code>simplicityDiscoverySearch</code> handle the <code>initialSearchResponse</code> option as a straight JavaScript object instead of incorrectly serializing it into a JSON formatted string.</li>
+
+<li>Stops <code>simplicityFancySelect</code> from swallowing <code>click</code> events that target a checkbox or radio button. This allows them to be used from the <code>template</code> option.</li>
+
+<li>Refactors <code>simplicityPagination</code> widget to no longer require the external <a href='https://github.com/gbirke/jquery_pagination'>jQuery Pagination plugin</a>.</li>
+
+<li>Improves <code>change</code> event handling in <code>simplicityInputs</code> when bound to a non-input element. This allows you to bind a single <code>simplicityInputs</code> widget to a collection of radio buttons or checkboxes for a more efficient setup.</li>
+</ul>
+<div class='page-header'>
+  <h1>3.1 <small>2012-08-14</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -71,9 +117,9 @@
 <h2 id='improvements'>Improvements</h2>
 
 <ul>
-<li>Enhances simplicityDiscoverySearch to support CORS direct engine requests.</li>
+<li>Enhances <code>simplicityDiscoverySearch</code> to support CORS direct engine requests.</li>
 
-<li>Enhances simplicityDiscoverySearch to make extracting a result set optional.</li>
+<li>Enhances <code>simplicityDiscoverySearch</code> to make extracting a result set optional.</li>
 
 <li>Changes default behavior of <code>simplicityGoogleMapBoundsTracker</code> so that bounds event is not triggered when dragging. It now only triggers the bounds event if the map bounds actually changed.</li>
 
@@ -81,7 +127,9 @@
 
 <li>Fixes to <code>simplicityMapShapeCreator</code> and <code>simplicityMapeShapeCreatorUi</code> to make them easier to use.</li>
 </ul>
-<h1>3.0</h1><div class='release-date'>2012-07-19</div>
+<div class='page-header'>
+  <h1>3.0 <small>2012-07-19</small></h1>
+</div>
 <h2 id='improvements'>Improvements</h2>
 
 <ul>
@@ -97,7 +145,9 @@
 
 <li>Fixes invalid guard in <code>simplicityPagination</code> where the option <code>search</code> was used instead of <code>searchElement</code>.</li>
 </ul>
-<h1>2.9.1</h1><div class='release-date'>2012-06-22</div>
+<div class='page-header'>
+  <h1>2.9.1 <small>2012-06-22</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -111,7 +161,9 @@
 
 <li>Improves $.simplicityGoogleMarker and removes the need for the Google Maps API to exist before it is declared.</li>
 </ul>
-<h1>2.9</h1><div class='release-date'>2012-06-22</div>
+<div class='page-header'>
+  <h1>2.9 <small>2012-06-22</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -129,7 +181,9 @@
 
 <li>Adds support for radio buttons to <code>simplicityFancySelect</code>.</li>
 </ul>
-<h1>2.8</h1><div class='release-date'>2012-04-12</div>
+<div class='page-header'>
+  <h1>2.8 <small>2012-04-12</small></h1>
+</div>
 <h2 id='improvements'>Improvements</h2>
 
 <ul>
@@ -139,7 +193,9 @@
 
 <li>Applies StandardMarker (Nokia) and adds with default marker numbering and/or zIndex when supported.</li>
 </ul>
-<h1>2.7</h1><div class='release-date'>2012-02-07</div>
+<div class='page-header'>
+  <h1>2.7 <small>2012-02-07</small></h1>
+</div>
 <h2 id='improvements'>Improvements</h2>
 
 <ul>
@@ -147,13 +203,17 @@
 
 <li>Adds <code>removemarker</code> event to <code>simplicity{vendor}MapResults</code>.</li>
 </ul>
-<h1>2.6</h1><div class='release-date'>2011-12-16</div>
+<div class='page-header'>
+  <h1>2.6 <small>2011-12-16</small></h1>
+</div>
 <h2 id='improvements'>Improvements</h2>
 
 <ul>
 <li>Introduces <code>simplicityAjaxHelpher</code> that adds support for cancelling inflight Ajax requests for <code>simplicityDiscoverySearch</code>.</li>
 </ul>
-<h1>2.5</h1><div class='release-date'>2011-10-24</div>
+<div class='page-header'>
+  <h1>2.5 <small>2011-10-24</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -207,7 +267,9 @@
 
 <li>Converts number to String in <code>simplicityPagination</code> to avoid false state change events when reading the page number from the simplicity state which generally uses strings for the values.</li>
 </ul>
-<h1>2.4</h1><div class='release-date'>2011-07-25</div>
+<div class='page-header'>
+  <h1>2.4 <small>2011-07-25</small></h1>
+</div>
 <h2 id='improvements'>Improvements</h2>
 
 <ul>
@@ -215,7 +277,9 @@
 
 <li>Adds BSD 2-clause license to the project.</li>
 </ul>
-<h1>2.3</h1><div class='release-date'>2011-04-22</div>
+<div class='page-header'>
+  <h1>2.3 <small>2011-04-22</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -317,7 +381,9 @@
 
 <li>Removes vestigial this.element.unbind(&#8216;change&#8217;, this._changeHandler) from destroy methods of simplicityDiscoverySearch and simplicityState.</li>
 </ul>
-<h1>2.2</h1><div class='release-date'>2011-02-23</div>
+<div class='page-header'>
+  <h1>2.2 <small>2011-02-23</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -339,7 +405,9 @@
 
 <li>Adds simplicityDebug which replaces a bunch of copy/pasted code. This widget adds four text areas to the page that show and allow edits to the state, search response, result set and facet counts.</li>
 </ul>
-<h1>2.1</h1><div class='release-date'>2011-02-10</div>
+<div class='page-header'>
+  <h1>2.1 <small>2011-02-10</small></h1>
+</div>
 <h2 id='compatibility'>Compatibility</h2>
 
 <ul>
@@ -365,7 +433,9 @@
 
 <li>Improves state event triggering logic in simplicityState to only trigger a changed state if it differs from the last triggered change state and was asked to trigger on change.</li>
 </ul>
-<h1>2.0</h1><div class='release-date'>2011-01-06</div>
+<div class='page-header'>
+  <h1>2.0 <small>2011-01-06</small></h1>
+</div>
 <p>Initial release.</p>
     </div>
 
@@ -380,16 +450,15 @@
       </div>
     </footer>
     <!--[if IE]>
-      <script src="/js/xdr.js"></script>
-      <script src="/js/json2.min.js"></script>
-      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js"></script>
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
-    <script src="/js/jquery.pagination-2.1.min.js"></script>
-    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
-    <script src="/js/bootstrap-2.1.1.min.js"></script>
-    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/jquery-plugin/touchpunch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.2/simplicity.min.js"></script>
     <script src="/js/documentation.js"></script>
   </body>
 </html>

@@ -118,7 +118,7 @@
 <span class='line'>111</span>      *   &lt;dt>checkableInputSelector&lt;/dt>
 <span class='line'>112</span>      *   &lt;dd>
 <span class='line'>113</span>      *     Determines the selector (within the option template) to use to identify a checkable DOM input that reflects the current
-<span class='line'>114</span>      *     widget state. Defaults to &lt;code>:checkbox.option-checkbox&lt;/code>.
+<span class='line'>114</span>      *     widget state. Defaults to &lt;code>:checkbox.option-checkbox,:radio.option-radio&lt;/code>.
 <span class='line'>115</span>      *   &lt;/dd>
 <span class='line'>116</span>      *   &lt;dt>radioStyle&lt;/dt>
 <span class='line'>117</span>      *   &lt;dd>
@@ -149,7 +149,7 @@
 <span class='line'>142</span> </span><span class="WHIT">      </span><span class="NAME">refreshOnCreate</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>143</span> </span><span class="WHIT">      </span><span class="NAME">hideWhenEmpty</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>144</span> </span><span class="WHIT">      </span><span class="NAME">radioStyle</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>145</span> </span><span class="WHIT">      </span><span class="NAME">checkableInputSelector</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">':checkbox.option-checkbox'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">      </span><span class="NAME">checkableInputSelector</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">':checkbox.option-checkbox,:radio.option-radio'</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>146</span> </span><span class="WHIT">      </span><span class="NAME">template</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">''</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
 <span class='line'>147</span> </span><span class="WHIT">        </span><span class="STRN">'&lt;ul class="options ui-helper-clearfix">'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
 <span class='line'>148</span> </span><span class="WHIT">          </span><span class="STRN">'&lt;li class="option ui-helper-clearfix">'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT">
@@ -405,8 +405,10 @@
 <span class='line'>398</span> </span><span class="WHIT">          </span><span class="NAME">this._ignoreChange</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>399</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>400</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>401</span> </span><span class="WHIT">      </span><span class="NAME">evt.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>402</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>403</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>404</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>405</span> </span></pre></body></html>
+<span class='line'>401</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">$</span><span class="PUNC">(</span><span class="NAME">evt.target</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">is</span><span class="PUNC">(</span><span class="STRN">":input"</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>402</span> </span><span class="WHIT">        </span><span class="NAME">evt.preventDefault</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>403</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>404</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="NAME">jQuery</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>407</span> </span></pre></body></html>

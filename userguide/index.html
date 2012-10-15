@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="/css/bootstrap-2.1.1.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-responsive-2.1.1.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
-    <link href="//cdn.transparensee.com/simplicity/3.1/simplicity.min.css" rel="stylesheet">
+    <link href="//cdn.transparensee.com/simplicity/3.2/simplicity.min.css" rel="stylesheet">
     <link href="/css/syntax.css" rel="stylesheet">
     <link href="/css/documentation.css" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -118,7 +118,7 @@
 
 <p>Add the CSS references to the <code>head</code> of the page.</p>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;link</span> <span class='na'>href=</span><span class='s'>&quot;//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css&quot;</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span><span class='nt'>&gt;</span>
-<span class='nt'>&lt;link</span> <span class='na'>href=</span><span class='s'>&quot;//cdn.transparensee.com/simplicity/3.1/simplicity.min.css&quot;</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;link</span> <span class='na'>href=</span><span class='s'>&quot;//cdn.transparensee.com/simplicity/3.2/simplicity.min.css&quot;</span> <span class='na'>rel=</span><span class='s'>&quot;stylesheet&quot;</span><span class='nt'>&gt;</span>
 </code></pre>
 </div>
 <p>Note: You can use any of the available <a href='http://jqueryui.com/themeroller/'>jQuery UI themes</a>.</p>
@@ -126,17 +126,23 @@
 <p>Add these external JavaScript references to the end of the <code>body</code> of the page.</p>
 <div class='highlight'><pre><code class='html'><span class='nt'>&lt;script </span><span class='na'>src=</span><span class='s'>&quot;//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
 <span class='nt'>&lt;script </span><span class='na'>src=</span><span class='s'>&quot;//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
-<span class='nt'>&lt;script </span><span class='na'>src=</span><span class='s'>&quot;//cdn.transparensee.com/simplicity/3.1/simplicity.min.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
+<span class='nt'>&lt;script </span><span class='na'>src=</span><span class='s'>&quot;//cdn.transparensee.com/simplicity/3.2/simplicity.min.js&quot;</span><span class='nt'>&gt;&lt;/script&gt;</span>
 </code></pre>
 </div>
-<p>Note that some widgets have extra dependencies. You need to add <code>script</code> and <code>link</code> tags for them too.</p>
+<p>Some older browsers need extra JavaScript support to function well, you&#8217;ll need to add <code>script</code> tags for the following libraries for most compatibility.</p>
+<dl>
+    <dt><a href='https://github.com/douglascrockford/JSON-js'>JSON2</a></dt>
+    <dd>
+        Gracefully adds support for <code>JSON.parse</code> and <code>JSON.stringify</code>
+        to browsers that do not have native <code>JSON</code> support.
+    </dd>
+    <dt><a href='http://brandonaaron.net/code/bgiframe/docs'>jQuery bgiframe plugin</a></dt>
+    <dd>Recommended for IE6 compatibilty when using <code>$.simplicityFlyout</code>.</dd>
+</dl>
+<p>Some widgets have extra dependencies, you&#8217;ll need to add <code>script</code> tags for them too.</p>
 <dl>
     <dt><a href='http://benalman.com/projects/jquery-bbq-plugin/'>jQuery BBQ plugin</a></dt>
     <dd>Used by <code>$.simplicityDiscoverySearch('mergeQueryParams')</code> and <code>$.simplicityHistory</code>.</dd>
-    <dt><a href='http://github.com/gbirke/jquery_pagination'>jQuery Pagination plugin</a></dt>
-    <dd>Used by <code>$.simplicityPagination</code>.</dd>
-    <dt><a href='http://brandonaaron.net/code/bgiframe/docs'>jQuery bgiframe plugin</a></dt>
-    <dd>Recommended for IE6 compatibilty when using <code>$.simplicityFlyout</code>.</dd>
 </dl>
 <p>You will add javascript code after the above tags to instantiate and configure the widgets that you want to use. We&#8217;ll get to that in a bit.</p>
 <div class='page-header'>
@@ -243,16 +249,15 @@
       </div>
     </footer>
     <!--[if IE]>
-      <script src="/js/xdr.js"></script>
-      <script src="/js/json2.min.js"></script>
-      <script src="/js/jquery.bgiframe-2.1.2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js"></script>
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-    <script src="/js/jquery.ui.touch-punch-0.2.2.min.js"></script>
-    <script src="/js/jquery.pagination-2.1.min.js"></script>
-    <script src="/js/jquery.ba-bbq-1.2.1.min.js"></script>
-    <script src="/js/bootstrap-2.1.1.min.js"></script>
-    <script src="//cdn.transparensee.com/simplicity/3.1/simplicity.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/jquery-plugin/touchpunch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js"></script>
+    <script src="//cdn.transparensee.com/lib/bootstrap/2.1.1/bootstrap.min.js"></script>
+    <script src="//cdn.transparensee.com/simplicity/3.2/simplicity.min.js"></script>
     <script src="/js/documentation.js"></script>
   </body>
 </html>
