@@ -92,7 +92,7 @@
      *  &lt;span class="radius">Radius&lt;span class="control"/>&lt;/span>
      *  &lt;span class="tbBox">
      *    &lt;button class="drawBtn btn" title="Start drawing a shape to search on the map.">&lt;i class="icon-edit">&lt;/i>&lt;span>Draw&lt;/span>&lt;/button>
-     *    &lt;button class="linkerBtn btn" title="Click to draw points only">&lt;span>●­­–●–●&lt;/span>&lt;/button>
+     *    &lt;button class="linkerBtn btn" title="Click to draw points only">&lt;span>&#x25CF;&#x2013;&#x25CF;&#x2013;&#x25CF;&lt;/span>&lt;/button>
      *    &lt;button class="clear btn" title="Clear any drawn shape">&lt;i class="icon-remove">&lt;/i> Clear&lt;/button>
      *    &lt;button class="showhelp btn" title="Show help">&lt;i class="icon-info-sign">&lt;/i> Help&lt;/button>
      *  &lt;/span>
@@ -143,7 +143,7 @@
            ' <span class="radius">Radius <span class="control"/></span>' +
            ' <span class="tbBox">' +
            '  <button class="drawBtn btn" title="Start drawing a shape to search on the map."><i class="icon-edit"></i> <span>Draw</span></button>' +
-           '  <button class="linkerBtn btn" title="Click to draw points only"><span>●­­–●–●</span></button>' +
+           '  <button class="linkerBtn btn" title="Click to draw points only"><span>\u25CF\u2013\u25CF\u2013\u25CF</span></button>' +
            '  <button class="clear btn" title="Clear any drawn shape"><i class="icon-remove"></i> Clear</button>' +
            '  <button class="showhelp btn" title="Show help"><i class="icon-info-sign"></i> Help</button>' +
            ' </span>' +
@@ -510,7 +510,7 @@
       this.element.find(".linkerBtn")
         .attr("title", value ? 'Click to draw points only' : 'Click to draw lines and closed shapes')
         .find('span')
-        .text(value ? '●­­–●–●' : '● ● ●')
+        .text(value ? '\u25CF\u2013\u25CF\u2013\u25CF' : '\u25CF \u25CF \u25CF')
         .prop("checked", value);
     },
     /**

@@ -12,6 +12,7 @@
     description="Lint, concatenate and compress media files as configured in media.yml.">
     <mkdir dir="build.ant/compressed"/>
     <java jar="tools/mediacompressor-app-1.2.jar" fork="true" failonerror="true">
+      <sysproperty key="file.encoding" value="UTF-8"/>
       <arg value="--config=media.yml"/>
     </java>
   </target>
