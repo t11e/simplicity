@@ -1,5 +1,5 @@
 destination: ../build.ant/documentation/
-simplicityRelease: 3.1
+simplicityRelease: 3.2
 jQueryRelease: 1.8.1
 jQueryUiRelease: 1.8.23
 jQueryUiTheme: base

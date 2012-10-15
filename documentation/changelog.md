@@ -8,7 +8,7 @@ lead: What's new, doc?
 
 
 <div class="page-header">
-  <h1>Development <small>in progress</small></h1>
+  <h1>3.2 <small>2012-10-15</small></h1>
 </div>
 
 Compatibility
