@@ -157,7 +157,7 @@ $('textarea').simplicityInputs();
             Then apply the <code>simplicityInputs</code> widget to them.
         </p>
 {% highlight javascript %}
-$('input').simplicityInputs();
+$('fieldset').simplicityInputs();
 {% endhighlight %}
         <p>
             Changes to the checkboxes will cause the state to be updated and
@@ -167,23 +167,25 @@ $('input').simplicityInputs();
     <div class="span4">
         <h3>Example</h3>
         <div id="exampleCheckboxes" class="well">
-            <label><span class="badge">1</span> checkboxes</label>
-            <label class="checkbox">
-                <input type="checkbox" name="example" value="1" />First
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="example" value="2" />Second
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="example" value="3" />Third
-            </label>
+            <fieldset>
+                <label><span class="badge">1</span> checkboxes</label>
+                <label class="checkbox">
+                    <input type="checkbox" name="example" value="1" />First
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="example" value="2" />Second
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="example" value="3" />Third
+                </label>
+            </fieldset>
             <label><span class="badge">2</span> state</label>
             <textarea name="state" rows="7" class="input-large"> </textarea>
         </div>
         <script type="text/javascript">
             $(function () {
                 $('#exampleCheckboxes textarea:last').simplicityState();
-                $('#exampleCheckboxes input').simplicityInputs({
+                $('#exampleCheckboxes fieldset').simplicityInputs({
                   stateElement: '#exampleCheckboxes textarea:last'
                 });
                 $('#exampleCheckboxes textarea:last')
@@ -222,7 +224,7 @@ $('input').simplicityInputs();
             Then apply the <code>simplicityInputs</code> widget to them.
         </p>
 {% highlight javascript %}
-$('input').simplicityInputs();
+$('fieldset').simplicityInputs();
 {% endhighlight %}
         <p>
             Changes to the checkboxes will cause the state to be updated and
@@ -232,23 +234,25 @@ $('input').simplicityInputs();
     <div class="span4">
         <h3>Example</h3>
         <div id="exampleRadios" class="well">
-            <label><span class="badge">1</span> radio buttons</label>
-            <label class="radio">
-                <input type="radio" name="example" value="a" />Alpha
-            </label>
-            <label class="radio">
-                <input type="radio" name="example" value="b" />Bravo
-            </label>
-            <label class="radio">
-                <input type="radio" name="example" value="c" />Charlie
-            </label>
+            <fieldset>
+                <label><span class="badge">1</span> radio buttons</label>
+                <label class="radio">
+                    <input type="radio" name="example" value="a" />Alpha
+                </label>
+                <label class="radio">
+                    <input type="radio" name="example" value="b" />Bravo
+                </label>
+                <label class="radio">
+                    <input type="radio" name="example" value="c" />Charlie
+                </label>
+            </fieldset>
             <label><span class="badge">2</span> state</label>
             <textarea name="state" rows="3" class="input-large"> </textarea>
         </div>
         <script type="text/javascript">
             $(function () {
                 $('#exampleRadios textarea:last').simplicityState();
-                $('#exampleRadios input').simplicityInputs({
+                $('#exampleRadios fieldset').simplicityInputs({
                   stateElement: '#exampleRadios textarea:last'
                 });
                 $('#exampleRadios textarea:last')

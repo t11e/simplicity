@@ -23,6 +23,15 @@
      *   <dd>
      *     The event to bind when listening for change events. Defaults to <code>'change'</code>.
      *   </dd>
+     *   <dt>handleChildChange</dt>
+     *   <dd>
+     *     When this widget is attached to a non-input element this option decides whether
+     *     <code>change</code> events from child elements are handled. When <code>true</code>
+     *     they are processed causing the state to change. When <code>false</code> they are not
+     *     processed and the event is terminated so that it no longer bubbles up the DOM.
+     *     Defaults to <code>true</code>. Prior to release 3.2 this option defaulted to
+     *     <code>false</code>.
+     *   </dd>
      *   <dt>quietStateChange</dt>
      *   <dd>
      *     When set to true cause change events to not propagate past the simplicityState widget.
@@ -53,6 +62,7 @@
     options: {
       stateElement: 'body',
       changeEvent: 'change',
+      handleChildChange: true,
       quietStateChange: false,
       exportStateOnCreate: true,
       supportsReset: true,
@@ -106,14 +116,17 @@
      * @private
      */
     _changeHandler: function (evt) {
-      if (evt.target !== this.element[0]) {
-        // Change event from a child element, stop it
-        evt.stopImmediatePropagation();
-        evt.preventDefault();
-      } else if (!this._ignoreChangeEvent) {
-        var state = $(this.options.stateElement).simplicityState('state');
-        this.inputs().simplicityToState(state, this.options.trim);
-        $(this.options.stateElement).simplicityState('state', state, this.options.quietStateChange ? false : undefined);
+      if (!this._ignoreChangeEvent) {
+        if (!this.options.handleChildChange && evt.target !== this.element[0]) {
+          // Change event from a child element, do not handle the change and prevent anyone
+          // else from getting this event.
+          evt.stopImmediatePropagation();
+          evt.preventDefault();
+        } else {
+          var state = $(this.options.stateElement).simplicityState('state');
+          this.inputs().simplicityToState(state, this.options.trim);
+          $(this.options.stateElement).simplicityState('state', state, this.options.quietStateChange ? false : undefined);
+        }
       }
     },
     /**

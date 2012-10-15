@@ -230,7 +230,9 @@
         $('#nav :input,#nav2 :input,#nav3Form1 :input').simplicityInputs();
         $('#addressQuiet, #latitudeQuiet').simplicityInputs('option', 'quietStateChange', true);
 
-        $('#groupedInputs').simplicityInputs();
+        $('#groupedInputs').simplicityInputs({
+          handleChildChange: false
+        });
         $('#changeGrouped').click(function (evt) {
           $('#groupedInputs').change();
         });

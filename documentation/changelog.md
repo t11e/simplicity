@@ -17,6 +17,34 @@ Compatibility
 * You no longer need to include the external library `jquery.pagination-2.1.js`
   as the `simplicityPagination` widget now implements equivalent functionality
   directly.
+* The default behavior of `simplicityInputs` when bound to a non-input element
+  has changed. To obtain the previous behavior set the `handleChildChange`
+  option to `false`. This will only affect you if you've grouped multiple inputs
+  and take explicit action to trigger a `change` event on their contained
+  `simplicityInputs`. An example would be a custom geocoder binding that doesn't
+   use our sample setup JavaScript. Concretely, you would need to change this
+   option to `false` if you have code that looks like this:
+{% highlight html %}
+<fieldset id="example">
+  <input name="a">
+  <input name="b">
+  <input name="c">
+  <button>Change</button>
+</fieldset>
+{% endhighlight %}
+{% highlight javascript linenos %}
+$('#example').simplicityInputs();
+$('#example button').change(function () {
+  $('#example').change();
+});
+{% endhighlight %}
+To maintain previous functionality, you'd change line 1 to read:
+{% highlight javascript %}
+$('#example').simplicityInputs({
+  handleChildChange: false
+});
+{% endhighlight %}
+
 
 Improvements
 ------------
@@ -33,6 +61,10 @@ Improvements
   option.
 * Refactors `simplicityPagination` widget to no longer require the external
   [jQuery Pagination plugin](https://github.com/gbirke/jquery_pagination).
+* Improves `change` event handling in `simplicityInputs` when bound to a
+  non-input element. This allows you to bind a single `simplicityInputs`
+  widget to a collection of radio buttons or checkboxes for a more efficient
+  setup.
 
 <div class="page-header">
   <h1>3.1 <small>2012-08-14</small></h1>
