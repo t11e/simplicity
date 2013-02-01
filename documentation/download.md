@@ -16,15 +16,6 @@ You can hotlink directly to the [Transparensee](http://transparensee.com) CDN.
 
 Older releases are available by changing the version number in the URL.
 
-Bundled
--------
-
-You can bundle the JS and CSS with your application.
-
-The prebuilt zipfile is available from the [downloads page](http://github.com/t11e/simplicity/downloads) of the github project.
-
-* [https://github.com/downloads/t11e/simplicity/simplicity-{{site.simplicityRelease}}.zip](https://github.com/downloads/t11e/simplicity/simplicity-{{site.simplicityRelease}}.zip)
-
 Source
 ------
 
