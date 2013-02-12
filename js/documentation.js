@@ -44,7 +44,7 @@
     _val_handler: function () {
       var json = $.simplicityDocsParseJson(this.element.val(), null);
       if (json === null) {
-        this.element.addClass('ui-state-error')
+        this.element.addClass('ui-state-error');
       } else {
         this.element
           .removeClass('ui-state-error')
