@@ -140,16 +140,16 @@
             <label><span class='badge'>1</span> choose response</label>
             <select class='input-medium' name='response'>
                 <option value='{
-  resultsHtml: &apos;&lt;ol&gt;&lt;li&gt;First&lt;/li&gt;&lt;li&gt;Second&lt;/li&gt;&lt;li&gt;Third&lt;/li&gt;&lt;/ol&gt;&apos;
+  &quot;resultsHtml&quot;: &quot;&lt;ol&gt;&lt;li&gt;First&lt;/li&gt;&lt;li&gt;Second&lt;/li&gt;&lt;li&gt;Third&lt;/li&gt;&lt;/ol&gt;&quot;
 }'>list</option>
                 <option value='{
-  resultsHtml: &apos;&lt;div class=&quot;items&quot;&gt;&lt;div class=&quot;item&quot;&gt;First&lt;/div&gt;&lt;div class=&quot;item&quot;&gt;Second&lt;/div&gt;&lt;div class=&quot;item&quot;&gt;Third&lt;/div&gt;&lt;/div&gt;&apos;
+  &quot;resultsHtml&quot;: &quot;&lt;div class=\&quot;items\&quot;&gt;&lt;div class=\&quot;item\&quot;&gt;First&lt;/div&gt;&lt;div class=\&quot;item\&quot;&gt;Second&lt;/div&gt;&lt;div class=\&quot;item\&quot;&gt;Third&lt;/div&gt;&lt;/div&gt;&quot;
 }'>divs</option>
                 <option value='{
-  error: true,
-  status: 500,
-  statusText: &apos;Example error&apos;,
-  message: &apos;example error message goes here&apos;
+  &quot;error&quot;: true,
+  &quot;status&quot;: 500,
+  &quot;statusText&quot;: &quot;Example error&quot;,
+  &quot;message&quot;: &quot;example error message goes here&quot;
 }'>error</option>
             </select>
             <label><span class='badge'>2</span> response details</label>
@@ -235,12 +235,12 @@
             <div class='searchResponse'>
 
 <div class='highlight'><pre><code class='javascript'><span class='p'>{</span>
-    <span class='nx'>_discovery</span><span class='o'>:</span> <span class='p'>{</span>
-        <span class='nx'>response</span><span class='o'>:</span> <span class='p'>{</span>
-            <span class='nx'>properties</span><span class='o'>:</span> <span class='p'>[</span>
-                <span class='p'>{</span> <span class='nx'>_id</span><span class='o'>:</span><span class='mi'>1</span><span class='p'>,</span> <span class='nx'>name</span><span class='o'>:</span><span class='s1'>&#39;first&#39;</span>  <span class='p'>},</span>
-                <span class='p'>{</span> <span class='nx'>_id</span><span class='o'>:</span><span class='mi'>2</span><span class='p'>,</span> <span class='nx'>name</span><span class='o'>:</span><span class='s1'>&#39;second&#39;</span> <span class='p'>},</span>
-                <span class='p'>{</span> <span class='nx'>_id</span><span class='o'>:</span><span class='mi'>3</span><span class='p'>,</span> <span class='nx'>name</span><span class='o'>:</span><span class='s1'>&#39;third&#39;</span>  <span class='p'>}</span>
+    <span class='s2'>&quot;_discovery&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+        <span class='s2'>&quot;response&quot;</span><span class='o'>:</span> <span class='p'>{</span>
+            <span class='s2'>&quot;properties&quot;</span><span class='o'>:</span> <span class='p'>[</span>
+                <span class='p'>{</span><span class='s2'>&quot;_id&quot;</span><span class='o'>:</span><span class='mi'>1</span><span class='p'>,</span> <span class='s2'>&quot;name&quot;</span><span class='o'>:</span><span class='s2'>&quot;first&quot;</span><span class='p'>},</span>
+                <span class='p'>{</span><span class='s2'>&quot;_id&quot;</span><span class='o'>:</span><span class='mi'>2</span><span class='p'>,</span> <span class='s2'>&quot;name&quot;</span><span class='o'>:</span><span class='s2'>&quot;second&quot;</span><span class='p'>},</span>
+                <span class='p'>{</span><span class='s2'>&quot;_id&quot;</span><span class='o'>:</span><span class='mi'>3</span><span class='p'>,</span> <span class='s2'>&quot;name&quot;</span><span class='o'>:</span><span class='s2'>&quot;third&quot;</span><span class='p'>}</span>
             <span class='p'>]</span>
         <span class='p'>}</span>
     <span class='p'>}</span>
@@ -314,12 +314,12 @@
                 $('#browserBasedExample').simplicityDiscoverySearch({
                     initialSearchResponse: 
 {
-    _discovery: {
-        response: {
-            properties: [
-                { _id:1, name:'first'  },
-                { _id:2, name:'second' },
-                { _id:3, name:'third'  }
+    "_discovery": {
+        "response": {
+            "properties": [
+                {"_id":1, "name":"first"},
+                {"_id":2, "name":"second"},
+                {"_id":3, "name":"third"}
             ]
         }
     }
