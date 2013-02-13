@@ -44,7 +44,7 @@ $('select').simplicityFacetedSelect();
             </select>
             <label><span class="badge">3</span> search response</label>
             <select name="response">
-                <option value="{% capture value %}{
+                <option value='{% capture value %}{
   _discovery:{
     response:{
       facets:{
@@ -53,40 +53,40 @@ $('select').simplicityFacetedSelect();
       }
     }
   }
-}{% endcapture %}{{ value | escape }}">None</option>
-                <option selected="selected" value="{% capture value %}{
+}{% endcapture %}{{ value | escape }}'>None</option>
+                <option selected="selected" value='{% capture value %}{
   _discovery:{
     response:{
       facets:{
         example:{
           childIds: ["A","B","C"],
           data: {
-            A: {count:7, label:'Alpha'},
-            B: {count:1, label:'Bravo'},
-            C: {count:2, label:'Charlie'}
+            A: {count:7, label:"Alpha"},
+            B: {count:1, label:"Bravo"},
+            C: {count:2, label:"Charlie"}
           }
         }
       }
     }
   }
-}{% endcapture %}{{ value | escape }}">ABC</option>
-                <option value="{% capture value %}{
+}{% endcapture %}{{ value | escape }}'>ABC</option>
+                <option value='{% capture value %}{
   _discovery:{
     response:{
       facets:{
         example:{
           childIds: ["B","C","A"],
           data: {
-            A: {count:7, label:'Alpha'},
-            B: {count:1, label:'Bravo'},
-            C: {count:2, label:'Charlie'}
+            A: {count:7, label:"Alpha"},
+            B: {count:1, label:"Bravo"},
+            C: {count:2, label:"Charlie"}
           }
         }
       }
     }
   }
-}{% endcapture %}{{ value | escape }}">BCA</option>
-                <option value="{% capture value %}{
+}{% endcapture %}{{ value | escape }}'>BCA</option>
+                <option value='{% capture value %}{
   _discovery:{
     response:{
       facets:{
@@ -149,7 +149,7 @@ $('select').simplicityFacetedSelect();
       }
     }
   }
-}{% endcapture %}{{ value | escape }}">States</option>
+}{% endcapture %}{{ value | escape }}'>States</option>
             </select>
             <pre style="height: 8em; overflow: scroll;"></pre>
         </div>

@@ -53,18 +53,18 @@ $('#searchResults').simplicitySearchResults();
         <div id="serverSideExample">
             <label><span class="badge">1</span> choose response</label>
             <select name="response" class="input-medium">
-                <option value="{% capture value %}{
-  resultsHtml: '<ol><li>First</li><li>Second</li><li>Third</li></ol>'
-}{% endcapture %}{{ value | escape }}">list</option>
-                <option value="{% capture value %}{
-  resultsHtml: '<div class="items"><div class="item">First</div><div class="item">Second</div><div class="item">Third</div></div>'
-}{% endcapture %}{{ value | escape }}">divs</option>
-                <option value="{% capture value %}{
-  error: true,
-  status: 500,
-  statusText: 'Example error',
-  message: 'example error message goes here'
-}{% endcapture %}{{ value | escape }}">error</option>
+                <option value='{% capture value %}{
+  "resultsHtml": "<ol><li>First</li><li>Second</li><li>Third</li></ol>"
+}{% endcapture %}{{ value | escape }}'>list</option>
+                <option value='{% capture value %}{
+  "resultsHtml": "<div class=\"items\"><div class=\"item\">First</div><div class=\"item\">Second</div><div class=\"item\">Third</div></div>"
+}{% endcapture %}{{ value | escape }}'>divs</option>
+                <option value='{% capture value %}{
+  "error": true,
+  "status": 500,
+  "statusText": "Example error",
+  "message": "example error message goes here"
+}{% endcapture %}{{ value | escape }}'>error</option>
             </select>
             <label><span class="badge">2</span> response details</label>
             <pre style="height: 8em; overflow: scroll;"> </pre>
@@ -129,12 +129,12 @@ $('#searchResults').simplicitySearchResults({
         <h3>Example</h3>
 {% capture searchResponse %}
 {
-    _discovery: {
-        response: {
-            properties: [
-                { _id:1, name:'first'  },
-                { _id:2, name:'second' },
-                { _id:3, name:'third'  }
+    "_discovery": {
+        "response": {
+            "properties": [
+                {"_id":1, "name":"first"},
+                {"_id":2, "name":"second"},
+                {"_id":3, "name":"third"}
             ]
         }
     }
