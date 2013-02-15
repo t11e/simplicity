@@ -85,9 +85,6 @@
       <zipfileset prefix="simplicity-${version}/js/" dir="docroot/js/lib">
         <exclude name="jquery.numberformatter-*.js"/>
       </zipfileset>
-      <zipfileset prefix="simplicity-${version}/js/" dir="docroot/js/build">
-        <include name="json2.min.js"/>
-      </zipfileset>
     </zip>
     <delete dir="build.ant/dist"/>
   </target>
