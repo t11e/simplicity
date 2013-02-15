@@ -113,7 +113,6 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/lib/jquery.numberformatter-1.1.0.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.js" charset="utf-8"></script>
@@ -155,13 +154,7 @@
 
       $('#nav :input[name="type"]').simplicityFacetedInput({
         dimension: 'type',
-        placement: 'append-label',
-        numberFormatter: function (count) {
-          return $('<option/>').text(count).format({
-            format: '#,###',
-            locale: 'us'
-          }).text();
-        }
+        placement: 'append-label'
       });
 
       $('#conditionCheckboxes :checkbox').simplicityFacetedInput({

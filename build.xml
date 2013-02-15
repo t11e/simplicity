@@ -81,10 +81,6 @@
         <include name="simplicity-*.min.css"/>
       </zipfileset>
       <zipfileset prefix="simplicity-${version}/css/images" dir="docroot/css/simplicity/images"/>
-      <!-- JavaScript dependencies -->
-      <zipfileset prefix="simplicity-${version}/js/" dir="docroot/js/lib">
-        <exclude name="jquery.numberformatter-*.js"/>
-      </zipfileset>
     </zip>
     <delete dir="build.ant/dist"/>
   </target>

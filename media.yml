@@ -101,14 +101,6 @@ groups:
       - tutorial/js/real_estate_search_controller.js
       - tutorial/js/real_estate_search_results.js
 
-  - groupName: jquery_number_formatter_js
-    mediaType: js
-    jslint: off
-    outputFileName: js/build/jquery.numberformatter-1.1.0.js
-    outputFileNameMinified: js/build/jquery.numberformatter-1.1.0.min.js
-    sourceFileNames:
-      - js/lib/jquery.numberformatter-1.1.0.js
-
 jslintOptions:
     - passfail
     - indent=2
