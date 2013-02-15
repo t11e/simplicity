@@ -44,43 +44,29 @@
     <delete dir="build.ant/dist"/>
     <mkdir dir="build.ant/dist"/>
     <!-- Copy and rename the Simplicity widgets, to add the current version -->
-    <copy todir="build.ant/dist">
+    <copy todir="build.ant/dist" flatten="true">
       <fileset dir="docroot">
         <include name="js/build/simplicity.js"/>
         <include name="js/build/simplicity.min.js"/>
         <include name="css/build/simplicity.css"/>
         <include name="css/build/simplicity.min.css"/>
-        <include name="js/build/simplicity-*.js"/>
-        <include name="js/build/simplicity-*.min.js"/>
-        <include name="css/build/simplicity-*.css"/>
-        <include name="css/build/simplicity-*.min.css"/>
       </fileset>
-      <mapper type="regexp"
-        from="(simplicity|simplicity-[^.]+)(\.min\.css|\.min\.js|\.js|\.css)"
-        to="\1-${version}\2"/>
     </copy>
     <!-- Splice the release version into the JavaScript files. -->
     <replaceregexp>
       <regexp pattern="(simplicity\.version *= *['&quot;])dev(['&quot;])"/>
       <substitution expression="\1${version}\2"/>
       <fileset dir="build.ant/dist">
-        <include name="simplicity-${version}.js"/>
-        <include name="simplicity-${version}.min.js"/>
+        <include name="simplicity.js"/>
+        <include name="simplicity.min.js"/>
       </fileset>
     </replaceregexp>
     <!-- The target zipfile -->
     <delete file="simplicity-${version}.zip"/>
     <zip destfile="simplicity-${version}.zip">
       <!-- Simplicity Widgets -->
-      <zipfileset prefix="simplicity-${version}/js/" dir="build.ant/dist">
-        <include name="simplicity-*.js"/>
-        <include name="simplicity-*.min.js"/>
-      </zipfileset>
-      <zipfileset prefix="simplicity-${version}/css/" dir="build.ant/dist">
-        <include name="simplicity-*.css"/>
-        <include name="simplicity-*.min.css"/>
-      </zipfileset>
-      <zipfileset prefix="simplicity-${version}/css/images" dir="docroot/css/simplicity/images"/>
+      <zipfileset prefix="simplicity-${version}/" dir="build.ant/dist"/>
+      <zipfileset prefix="simplicity-${version}/images" dir="docroot/css/simplicity/images"/>
     </zip>
     <delete dir="build.ant/dist"/>
   </target>
