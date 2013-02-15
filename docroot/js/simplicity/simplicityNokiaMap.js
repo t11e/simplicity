@@ -40,9 +40,7 @@
      */
     options : {
       map: '',
-      mapOptions: '',
-      // The following options are for internal use only
-      mapVersion: '2.1.0'
+      mapOptions: ''
     },
     _create: function () {
       this._addClass('ui-simplicity-nokia-map');
@@ -97,30 +95,6 @@
     map: function () {
       this._initWhenAvailable();
       return this._map;
-    },
-    /**
-     * Try to dynamically load the necessary JavaScript from the upstream vendor that will
-     * allow the map to function.
-     *
-     * @name $.ui.simplicityNokiaMap.loadMap
-     * @function
-     * @private
-     */
-    loadMap: function () {
-      if ('undefined' === typeof this._map) {
-        if ('undefined' === typeof YMap) {
-          var src = 'http://api.maps.nokia.com/' + this.options.mapVersion + '/jsl.js';
-          if ('undefined' === typeof $.simplicityLoadJs) {
-            src = src + '&appid=YOUR_APP_ID';
-            alert('Dynamic loading of Nokia maps is not supported. Enable this widget by adding the following script tag to your page:\n\n' +
-              '<script type="text/javascript" src="' + src + '"></script>');
-          } else {
-            $.simplicityLoadJs(src, $.proxy(function () {
-              this.refreshMap();
-            }, this));
-          }
-        }
-      }
     },
     destroy: function () {
       delete this._map;

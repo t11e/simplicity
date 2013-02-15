@@ -41,7 +41,6 @@ groups:
       - js/simplicity/simplicityGoogleMapResults.js
       - js/simplicity/simplicityGoogleMapBoundsCoordinator.js
       - js/simplicity/simplicityGoogleMapBoundsTracker.js
-      - js/simplicity/simplicityGoogleMapLoader.js
       - js/simplicity/simplicityGoogleMarker.js
       - js/simplicity/simplicityBingMap.js
       - js/simplicity/simplicityBingMapResults.js
@@ -85,13 +84,6 @@ groups:
       - css/simplicity/simplicityGoogleMarker.css
       - css/simplicity/simplicityMapShapeCreator.css
       - css/simplicity/simplicityMapShapeCreatorUi.css
-
-  - groupName: simplicityLoadJs_js
-    mediaType: js
-    outputFileName: js/build/simplicityLoadJs.js
-    outputFileNameMinified: js/build/simplicityLoadJs.min.js
-    sourceFileNames:
-      - js/simplicity/simplicityLoadJs.js
 
   - groupName: real_estate_cors_js
     mediaType: js

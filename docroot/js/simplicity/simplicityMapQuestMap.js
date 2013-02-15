@@ -41,10 +41,7 @@
      */
     options : {
       map: '',
-      mapOptions: '',
-      // The following options are for internal use only
-      apiKey: '',
-      mapVersion: '6.0.0'
+      mapOptions: ''
     },
     _create: function () {
       this._addClass('ui-simplicity-mapquest-map');
@@ -101,35 +98,6 @@
     map: function () {
       this._initWhenAvailable();
       return this._map;
-    },
-    /**
-     * Try to dynamically load the necessary JavaScript from the upstream vendor that will
-     * allow the map to function.
-     *
-     * @name $.ui.simplicityMapQuestMap.loadMap
-     * @function
-     * @private
-     */
-    loadMap: function () {
-      if ('undefined' === typeof this._map) {
-        if ('undefined' === typeof MQA || 'undefined' === typeof MQA.TileMap) {
-          var src = 'http://mapquestapi.com/sdk/js/v' + this.options.mapVersion + '/mqa.toolkit.js';
-          if ('undefined' === typeof $.simplicityLoadJs) {
-            src = src + '?key=YOUR_API_KEY';
-            alert('Dynamic loading of MapQuest maps is not supported. Enable this widget by adding the following script tag to your page:\n\n' +
-              '<script src="http://mapquestapi.com/sdk/js/v6.0.0/mqa.toolkit.js?key=YOUR_KEY"></script>');
-          } else {
-            if (this.options.apiKey !== '') {
-              src = src + '?key=' + this.options.apiKey;
-            }
-            $.simplicityLoadJs(src, $.proxy(function () {
-              MQA.withModule('mapinit', $.proxy(function () {
-                this.refreshMap();
-              }, this));
-            }, this));
-          }
-        }
-      }
     },
     destroy: function () {
       delete this._map;

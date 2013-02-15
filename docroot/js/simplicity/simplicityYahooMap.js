@@ -41,10 +41,7 @@
      */
     options : {
       map: '',
-      mapOptions: '',
-      // The following options are for internal use only
-      apiKey: '',
-      mapVersion: '3.8'
+      mapOptions: ''
     },
     _create: function () {
       this._addClass('ui-simplicity-yahoo-map');
@@ -102,33 +99,6 @@
     map: function () {
       this._initWhenAvailable();
       return this._map;
-    },
-    /**
-     * Try to dynamically load the necessary JavaScript from the upstream vendor that will
-     * allow the map to function.
-     *
-     * @name $.ui.simplicityYahooMap.loadMap
-     * @function
-     * @private
-     */
-    loadMap: function () {
-      if ('undefined' === typeof this._map) {
-        if ('undefined' === typeof YMap) {
-          var src = 'http://api.maps.yahoo.com/ajaxymap?v=' + this.options.mapVersion;
-          if ('undefined' === typeof $.simplicityLoadJs) {
-            src = src + '&appid=YOUR_APP_ID';
-            alert('Dynamic loading of Yahoo! maps is not supported. Enable this widget by adding the following script tag to your page:\n\n' +
-              '<script type="text/javascript" src="' + src + '"></script>');
-          } else {
-            if (this.options.apiKey !== '') {
-              src = src + '&appid=' + this.options.apiKey;
-            }
-            $.simplicityLoadJs(src, $.proxy(function () {
-              this.refreshMap();
-            }, this));
-          }
-        }
-      }
     },
     destroy: function () {
       delete this._map;

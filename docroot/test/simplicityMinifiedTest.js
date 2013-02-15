@@ -146,9 +146,6 @@ test("defines $.ui.simplicityGoogleMapBoundsCoordinator", function() {
 test("defines $.ui.simplicityGoogleMapBoundsTracker", function() {
   ok('undefined' !== typeof($.ui.simplicityGoogleMapBoundsTracker), 'undefined widget: $.ui.simplicityGoogleMapBoundsTracker');
 });
-test("defines $.ui.simplicityGoogleMapLoader", function() {
-  ok('undefined' !== typeof($.ui.simplicityGoogleMapLoader), 'undefined widget: $.ui.simplicityGoogleMapLoader');
-});
 test("defines $.simplicityGoogleMarker", function() {
   ok('undefined' !== typeof($.simplicityGoogleMarker), 'undefined widget: $.simplicityGoogleMarker');
 });

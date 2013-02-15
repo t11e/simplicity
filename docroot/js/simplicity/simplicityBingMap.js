@@ -48,9 +48,7 @@
     options : {
       credentials: '',
       map: '',
-      mapOptions: '',
-      // The following options are for internal use only
-      mapVersion: '7.0'
+      mapOptions: ''
     },
     _create : function () {
       this._addClass('ui-simplicity-bing-map');
@@ -107,29 +105,6 @@
     map: function () {
       this._initWhenAvailable();
       return this._map;
-    },
-    /**
-     * Try to dynamically load the necessary JavaScript from the upstream vendor that will
-     * allow the map to function.
-     *
-     * @name $.ui.simplicityBingMap.loadMap
-     * @function
-     * @private
-     */
-    loadMap: function () {
-      if ('undefined' === typeof this._map) {
-        if ('undefined' === typeof Microsoft || 'undefined' === typeof Microsoft.Maps || 'undefined' === typeof Microsoft.Maps.Map) {
-          var src = 'http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=' + this.options.mapVersion;
-          if ('undefined' === typeof $.simplicityLoadJs) {
-            alert('Dynamic loading of Bing maps is not supported. Enable this widget by adding the following script tag to your page:\n\n' +
-              '<script charset="UTF-8" type="text/javascript" src="' + src + '"></script>');
-          } else {
-            $.simplicityLoadJs(src, $.proxy(function () {
-              this.refreshMap();
-            }, this));
-          }
-        }
-      }
     },
     destroy: function () {
       delete this._map;

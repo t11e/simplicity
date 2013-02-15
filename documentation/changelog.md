@@ -19,6 +19,11 @@ Compatibility
   need to manually include the
   <code>js/lib/jquery.ui.autocomplete.autofocus.fix.js</code> file from the
   previous release in your page.
+* The <code>simplicityLoadJs</code> and <code>simplicityGoogleMapLoader</code>
+  widgets have been removed. The <code>loadMap</code> method has been removed
+  from the Bing, MapQuest, Nokia and Yahoo map widgets. If you were previously
+  calling these methods, you must now manually place the vendor specific script
+  tag on the page.
 
 <div class="page-header">
   <h1>3.2 <small>2012-10-15</small></h1>
