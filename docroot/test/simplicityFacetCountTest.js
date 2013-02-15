@@ -3,22 +3,22 @@ module("simplicityFacetCount");
 test("span basics", function() {
   expect(6);
   
-  var elem = $('<span>not a widget</span>').appendTo('#main');
+  var elem = $('<span>not a widget</span>').appendTo('#qunit-fixture');
   equal(elem.hasClass('ui-simplicity-facet-count'), false);
   equal(elem.text(), 'not a widget');
   
   elem.simplicityFacetCount({
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     facetId: 'myFacetId',
     facetsKey: 'myFacetsKey'
   });
   equal(elem.hasClass('ui-simplicity-facet-count'), true);
   equal(elem.text(), 'not a widget');
   
-  $('#main').trigger('simplicitySearchResponse', {});
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {});
   equal(elem.text(), '?');
 
-  $('#main').trigger('simplicitySearchResponse', {
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {
     drillDown: {
       'myFacetsKey': {
         'exact': {
@@ -34,23 +34,23 @@ test("option basics", function() {
   expect(6);
   
   var select = $('<select name="q"><option value="1">label</option></select>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
   var option = select.find('option');
   equal(option.hasClass('ui-simplicity-facet-count'), false);
   equal(option.text(), 'label');
   
   option.simplicityFacetCount({
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     facetId: 'myFacetId',
     facetsKey: 'myFacetsKey'
   });
   equal(option.hasClass('ui-simplicity-facet-count'), true);
   equal(option.text(), 'label');
   
-  $('#main').trigger('simplicitySearchResponse', {});
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {});
   equal(option.text(), 'label ?');
 
-  $('#main').trigger('simplicitySearchResponse', {
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {
     drillDown: {
       'myFacetsKey': {
         'exact': {
@@ -65,14 +65,14 @@ test("option basics", function() {
 test("span lifecycle", function() {
   expect(12);
   
-  var elem1 = $('<span>not a widget</span>').appendTo('#main');
-  var elem2 = $('<span>not a widget either</span>').appendTo('#main');
+  var elem1 = $('<span>not a widget</span>').appendTo('#qunit-fixture');
+  var elem2 = $('<span>not a widget either</span>').appendTo('#qunit-fixture');
   $([elem1, elem2]).simplicityFacetCount({
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     facetId: 'myFacetId',
     facetsKey: 'myFacetsKey'
   });
-  $('#main').trigger('simplicitySearchResponse', {
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {
     drillDown: {
       'myFacetsKey': {
         'exact': {
@@ -92,7 +92,7 @@ test("span lifecycle", function() {
   equal(elem1.text(), '23');
   equal(elem2.text(), '23');
 
-  $('#main').trigger('simplicitySearchResponse', {
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {
     drillDown: {
       'myFacetsKey': {
         'exact': {
@@ -111,15 +111,15 @@ test("option lifecycle", function() {
   expect(12);
   
   var select = $('<select name="q"><option value="1">label</option><option value="2">other</option></select>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
   var option1 = $(select.find('option')[0]);
   var option2 = $(select.find('option')[1]);
   $([option1, option2]).simplicityFacetCount({
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     facetId: 'myFacetId',
     facetsKey: 'myFacetsKey'
   });
-  $('#main').trigger('simplicitySearchResponse', {
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {
     drillDown: {
       'myFacetsKey': {
         'exact': {
@@ -139,7 +139,7 @@ test("option lifecycle", function() {
   equal(option1.text(), 'label 23');
   equal(option2.text(), 'other 23');
 
-  $('#main').trigger('simplicitySearchResponse', {
+  $('#qunit-fixture').trigger('simplicitySearchResponse', {
     drillDown: {
       'myFacetsKey': {
         'exact': {

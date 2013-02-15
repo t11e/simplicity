@@ -10,7 +10,7 @@ test("single select with default option", function() {
     '  <option value="2">two</option>' +
     '  <option value="3">three</option>' +
     '</select>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
 
   var state;
   $(input).simplicityToState(state = {});
@@ -71,7 +71,7 @@ test("multi select with default option", function() {
     '  <option value="2">two</option>' +
     '  <option value="3">three</option>' +
     '</select>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
 
   var state;
   $(input).simplicityToState(state = {});

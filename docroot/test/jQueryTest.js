@@ -10,7 +10,7 @@ module('jQuery', {
 });
 
 test('bind $.proxy', function() {
-  var element = $('<a href="#">link</a>').appendTo('#main');
+  var element = $('<a href="#">link</a>').appendTo('#qunit-fixture');
   var proxy1 = $.proxy(this.eventRecorder, {'name': 'one'});
   var proxy2 = $.proxy(this.eventRecorder, {'name': 'two'});
   $(element).bind('click', proxy1);
@@ -21,7 +21,7 @@ test('bind $.proxy', function() {
 });
 
 test('unbind $.proxy', function() {
-  var element = $('<a href="#">link</a>').appendTo('#main');
+  var element = $('<a href="#">link</a>').appendTo('#qunit-fixture');
   var proxy1 = $.proxy(this.eventRecorder, {'name': 'one'});
   var proxy2 = $.proxy(this.eventRecorder, {'name': 'two'});
   $(element).bind('click', proxy1);
@@ -33,7 +33,7 @@ test('unbind $.proxy', function() {
 });
 
 test('unbind the target of $.proxy', function() {
-  var element = $('<a href="#">link</a>').appendTo('#main');
+  var element = $('<a href="#">link</a>').appendTo('#qunit-fixture');
   var proxy1 = $.proxy(this.eventRecorder, {'name': 'one'});
   var proxy2 = $.proxy(this.eventRecorder, {'name': 'two'});
   $(element).bind('click', proxy1);

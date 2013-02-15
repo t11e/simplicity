@@ -10,6 +10,7 @@ test("has no errors", function() {
     });
     ok(false, errors.length + " errors occurred when loading the page JavaScript, see console.log for details");
   }
+  ok(true, "no errors found");
 });
 
 // Core widgets

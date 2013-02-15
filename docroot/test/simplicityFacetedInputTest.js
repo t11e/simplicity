@@ -1,13 +1,13 @@
 module("simplicityFacetedInput", {
   setup: function () {
-    $('<div id="state"/>').simplicityState().appendTo('#main');
+    $('<div id="state"/>').simplicityState().appendTo('#qunit-fixture');
   }
 });
 
 test("checkbox basic", function() {
   expect(14);
   var content = $('<div><label for="myInput">My Label</label><input id="myInput" type="checkbox" name="q" value="foo"></div>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
   var input = content.find('input');
   equal(input.hasClass('ui-simplicity-faceted-input'), false);
   equal(input.hasClass('ui-simplicity-inputs'), false);
@@ -15,7 +15,7 @@ test("checkbox basic", function() {
   
   input.simplicityFacetedInput({
     stateElement: '#state',
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     template: '<span class="myCountClass"/>',
     facetsKey: 'q'
   });
@@ -30,7 +30,7 @@ test("checkbox basic", function() {
   equal(content.find('span.myCountClass').length, 1);
   equal(content.find('span.myCountClass').text(), '');
 
-  $('#main').triggerHandler('simplicitySearchResponse', {
+  $('#qunit-fixture').triggerHandler('simplicitySearchResponse', {
     drillDown: {
       'q': {
         'exact': {
@@ -47,7 +47,7 @@ test("checkbox basic", function() {
 test("select basic", function() {
   expect(12);
   var content = $('<select name="q"><option value="1">first</option><option value="2">second</option></select')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
   var option1 = $(content.find('option')[0]);
   var option2 = $(content.find('option')[1]);
   equal(content.hasClass('ui-simplicity-faceted-input'), false);
@@ -56,7 +56,7 @@ test("select basic", function() {
 
   content.simplicityFacetedInput({
     stateElement: '#state',
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     facetsKey: 'q'
   });
   equal(content.hasClass('ui-simplicity-faceted-input'), true);
@@ -68,7 +68,7 @@ test("select basic", function() {
   equal(option1.text(), 'first');
   equal(option2.text(), 'second');
 
-  $('#main').triggerHandler('simplicitySearchResponse', {
+  $('#qunit-fixture').triggerHandler('simplicitySearchResponse', {
     drillDown: {
       'q': {
         'exact': {
@@ -86,19 +86,19 @@ test("select basic", function() {
 test("lifecycle basic", function() {
   expect(30);
   var content1 = $('<div><label for="myInput">My Label</label><input id="myInput" type="checkbox" name="q" value="foo"></div>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
   var content2 = $('<div><label for="otherInput">Other Label</label><input id="otherInput" type="checkbox" name="q" value="bar"></div>')
-    .appendTo('#main');
+    .appendTo('#qunit-fixture');
   var input1 = content1.find('#myInput');
   var input2 = content2.find('#otherInput');
   $([input1, input2]).simplicityFacetedInput({
     stateElement: '#state',
-    searchElement: '#main',
+    searchElement: '#qunit-fixture',
     template: '<span class="myCountClass"/>',
     facetsKey: 'q'
   });
   $('#state').simplicityState('state', {'q': 'bar'});
-  $('#main').triggerHandler('simplicitySearchResponse', {
+  $('#qunit-fixture').triggerHandler('simplicitySearchResponse', {
     drillDown: {
       'q': {
         'exact': {
@@ -132,7 +132,7 @@ test("lifecycle basic", function() {
   equal(content2.find('span.myCountClass').text(), '45');
 
   $('#state').simplicityState('state', {'q': 'foo'});
-  $('#main').triggerHandler('simplicitySearchResponse', {
+  $('#qunit-fixture').triggerHandler('simplicitySearchResponse', {
     drillDown: {
       'q': {
         'exact': {
