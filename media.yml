@@ -21,8 +21,6 @@ groups:
       - js/simplicity/simplicityAjaxHelper.js
       - js/simplicity/simplicityDiscoverySearch.js
       - js/simplicity/simplicityDebug.js
-      # JQuery UI autocomplete $.autofocus patch for pre 1.9 versions
-      - js/lib/jquery.ui.autocomplete.autofocus.fix.js
       # Widget sensitive to search
       - js/simplicity/simplicitySearchResults.js
       - js/simplicity/simplicityRenderParamsSearchResults.js
@@ -118,14 +116,6 @@ groups:
     outputFileNameMinified: js/build/jquery.numberformatter-1.1.0.min.js
     sourceFileNames:
       - js/lib/jquery.numberformatter-1.1.0.js
-
-  - groupName: jquery_ui_autocomplete_html_js
-    mediaType: js
-    jslint: off
-    outputFileName: js/build/jquery.ui.autocomplete.html-2010-10-25.js
-    outputFileNameMinified: js/build/jquery.ui.autocomplete.html-2010-10-25.min.js
-    sourceFileNames:
-      - js/lib/jquery.ui.autocomplete.html-2010-10-25.js
 
 jslintOptions:
     - passfail

@@ -6,6 +6,19 @@ subhead: Changelog
 lead: What's new, doc?
 ---
 
+<div class="page-header">
+  <h1>3.3 <small>TBD</small></h1>
+</div>
+
+Compatibility
+-------------
+
+* We've removed some patching code that was added as part of the 3.0 release.
+  Simplicity no longer patches the <code>autoFocus</code> option of
+  <code>jquery.ui.autocomplete</code>, if you wish to retain this behavior you
+  need to manually include the
+  <code>js/lib/jquery.ui.autocomplete.autofocus.fix.js</code> file from the
+  previous release in your page.
 
 <div class="page-header">
   <h1>3.2 <small>2012-10-15</small></h1>
