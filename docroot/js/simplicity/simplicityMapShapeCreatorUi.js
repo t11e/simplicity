@@ -165,10 +165,10 @@
     },
     _create: function () {
       if (this.options.shapeCreator !== '') {
-        this._shapeCreator = this._locateShapeCreator($(this.options.shapeCreator), new RegExp("^simplicity(.+)MapShapeCreator$"));
+        this._shapeCreator = this._locateShapeCreator($(this.options.shapeCreator), new RegExp("^(uiS|s)implicity(.+)MapShapeCreator$"));
       }
       if (this.options.mapElement !== '' && 'undefined' === typeof this._shapeCreator) {
-        this._shapeCreator = this._locateShapeCreator($(this.options.mapElement), new RegExp("^simplicity(.+)Map$"));
+        this._shapeCreator = this._locateShapeCreator($(this.options.mapElement), new RegExp("^(uiS|s)implicity(.+)Map$"));
       }
       if ('undefined' === typeof this._shapeCreator) {
         if (this.options.debug) {
@@ -225,7 +225,7 @@
       }
       var match = candidateWidgetNames[0].match(regex);
       // $1 is in match[1]
-      var widgetName = 'simplicity' + match[1] + 'MapShapeCreator';
+      var widgetName = 'simplicity' + match[2] + 'MapShapeCreator';
       var widget = target[widgetName];
       if ('undefined' === typeof target.data(widgetName)) {
         // instantiate the widget since the element has been set up
