@@ -1,6 +1,6 @@
 destination: ../build.ant/documentation/
 simplicityRelease: 3.2
-jQueryRelease: 1.8.1
+jQueryRelease: 1.9.1
 jQueryUiRelease: 1.10.0
 jQueryUiTheme: base
 topnav:
