@@ -84,7 +84,7 @@
         // and then perform a deep equality check to avoid depending on the order of keys in the Objects.
         var prevState = this.state();
         var newState = JSON.parse(JSON.stringify(state));
-        var stateChanged = !$.simplicityEquiv(prevState, newState);
+        var stateChanged = !$.simplicity.equiv(prevState, newState);
         if (stateChanged) {
           if (this.options.debug) {
             console.log('simplicityState: Triggering simplicityStateChanging event for', this.element, 'from', prevState, 'to', newState);
@@ -93,7 +93,7 @@
           if (this.options.debug) {
             console.log('simplicityState: Triggered simplicityStateChanging event for', this.element, 'from', prevState, 'to', newState);
           }
-          stateChanged = !$.simplicityEquiv(prevState, newState);
+          stateChanged = !$.simplicity.equiv(prevState, newState);
           if (stateChanged) {
             this._state = JSON.stringify(newState);
             if (this.options.debug) {
@@ -106,7 +106,7 @@
           if (triggerChangeEventStyle !== true) {
             // Only trigger if the current state differs from the last triggered state
             var lastTriggeredState = typeof this._lastTriggeredState === 'undefined' ? undefined : JSON.parse(this._lastTriggeredState);
-            triggerEvent = !$.simplicityEquiv(lastTriggeredState, newState);
+            triggerEvent = !$.simplicity.equiv(lastTriggeredState, newState);
           }
           if (triggerEvent) {
             this.triggerChangeEvent();

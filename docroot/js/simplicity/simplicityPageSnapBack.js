@@ -66,7 +66,7 @@
       var newCopy = JSON.parse(JSON.stringify(newState));
       delete prevCopy[this.options.pageParam];
       delete newCopy[this.options.pageParam];
-      if (!$.simplicityEquiv(prevCopy, newCopy)) {
+      if (!$.simplicity.equiv(prevCopy, newCopy)) {
         if (this.options.debug) {
           console.log('simplicityPageSnapBack: State changed, snapping page back');
         }

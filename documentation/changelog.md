@@ -24,6 +24,22 @@ Compatibility
   from the Bing, MapQuest, Nokia and Yahoo map widgets. If you were previously
   calling these methods, you must now manually place the vendor specific script
   tag on the page.
+* Global functions have been consolidated into the <code>$.simplicity</code>
+  namespace.
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>old</th>
+      <th>new</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>$.simplicityEquiv</td>
+      <td>$.simplicity.equiv</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="page-header">
   <h1>3.2 <small>2012-10-15</small></h1>

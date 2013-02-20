@@ -224,7 +224,7 @@
     },
     _addMarker: function (idx, latLng) {
       var marker = null;
-      if (idx <= 2 || !$.simplicityEquiv(latLng, this._markers[0].marker.getLocation())) {
+      if (idx <= 2 || !$.simplicity.equiv(latLng, this._markers[0].marker.getLocation())) {
         var markerOpts = $.extend({}, this.options.markerOptions, this._vertexMarkerImage);
         marker = new Microsoft.Maps.Pushpin(latLng, markerOpts);
         this._markers.push({"marker": marker, "moveListener": null, "dragEndListener": null});
@@ -250,7 +250,7 @@
         var clickHandler = function (evt) {
           // Click is triggered at end of drag. :(, so we need to see if the marker
           // moved before deciding if we're going to close the polygon
-          if ($.simplicityEquiv(this._dragStartLocation, this._dragEndLocation)) {
+          if ($.simplicity.equiv(this._dragStartLocation, this._dragEndLocation)) {
             $.proxy(handler, this)(evt);
           }
         };

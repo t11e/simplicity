@@ -20,8 +20,8 @@ test("defines $.simplicity", function() {
 test("defines $.simplicity.version", function() {
   ok('undefined' !== typeof($.simplicity.version), 'undefined property: $.simplicity.version');
 });
-test("defines $.simplicityEquiv", function() {
-  ok('undefined' !== typeof($.simplicityEquiv), 'undefined widget: $.simplicityEquiv');
+test("defines $.simplicity.equiv", function() {
+  ok('undefined' !== typeof($.simplicity.equiv), 'undefined function: $.simplicity.equiv');
 });
 test("defines $.simplicityProxy", function() {
   ok('undefined' !== typeof($.simplicityProxy), 'undefined widget: $.simplicityProxy');

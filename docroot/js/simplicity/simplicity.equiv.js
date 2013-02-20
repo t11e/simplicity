@@ -1,5 +1,5 @@
 /**
- * @name $.simplicityEquiv
+ * @name $.simplicity.equiv
  * @function
  * @description
  *
@@ -211,5 +211,6 @@
 
   }();
 
-  $.simplicityEquiv = equiv;
+  $.simplicity = $.simplicity || {};
+  $.simplicity.equiv = equiv;
 }(jQuery));

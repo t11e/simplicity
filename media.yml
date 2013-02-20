@@ -10,7 +10,7 @@ groups:
     sourceFileNames:
       # Core
       - js/simplicity/simplicity.version.js
-      - js/simplicity/simplicityEquiv.js
+      - js/simplicity/simplicity.equiv.js
       - js/simplicity/simplicityProxy.js
       - js/simplicity/simplicityWidget.js
       - js/simplicity/simplicityFromState.js

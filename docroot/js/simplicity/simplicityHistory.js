@@ -131,14 +131,14 @@
         var fragmentState = $.deparam(fragment);
         var newFragment;
         if (fragment === '') {
-          if ($.simplicityEquiv(this.initialState, state)) {
+          if ($.simplicity.equiv(this.initialState, state)) {
             if (this.options.debug) {
               console.log('simplicityHistory: State reset to initial page state, leaving the hash state empty');
             }
           } else {
             newFragment = $.param.fragment('', state);
           }
-        } else if ($.simplicityEquiv(fragmentState, state)) {
+        } else if ($.simplicity.equiv(fragmentState, state)) {
           if (this.options.debug) {
             console.log('simplicityHistory: Ignoring state change as is matches current history, state is', state, 'fragment is', decodeURIComponent(fragment));
           }
