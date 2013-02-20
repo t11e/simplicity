@@ -21,7 +21,7 @@
  *     .simplicityState('triggerChangeEvent')
  *     .simplicityPageSnapBack()
  *     .simplicityDiscoverySearch({
- *       url: 'search_controller.php'
+ *       url: '/my_search_controller.php'
  *     })
  *     .simplicityDiscoverySearch('search');
  */
