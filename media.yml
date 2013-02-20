@@ -65,7 +65,6 @@ groups:
       - js/simplicity/simplicityYahooGeocoder.js
       - js/simplicity/simplicityNokiaGeocoder.js
       # Shape Creators
-      - js/simplicity/simplicityGeoFn.js
       - js/simplicity/simplicityMapShapeCreator.js
       - js/simplicity/simplicityMapShapeCreatorUi.js
       - js/simplicity/simplicityBingMapShapeCreator.js
