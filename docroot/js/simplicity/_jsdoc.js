@@ -14,12 +14,6 @@
  * See <a href="http://docs.jquery.com">jQuery UI external documentation</a>
  */
 
-
-/**
- * @name $.ui-fix
- * @namespace jQuery UI Widget Patches
- */
-
 /**
  * @name $.fn
  * @namespace jQuery Plugins
