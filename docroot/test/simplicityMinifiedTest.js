@@ -14,6 +14,12 @@ test("has no errors", function() {
 });
 
 // Core widgets
+test("defines $.simplicity", function() {
+  ok('undefined' !== typeof($.simplicity), 'undefined namespace: $.simplicity');
+});
+test("defines $.simplicity.version", function() {
+  ok('undefined' !== typeof($.simplicity.version), 'undefined property: $.simplicity.version');
+});
 test("defines $.simplicityEquiv", function() {
   ok('undefined' !== typeof($.simplicityEquiv), 'undefined widget: $.simplicityEquiv');
 });

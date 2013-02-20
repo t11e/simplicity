@@ -3,7 +3,7 @@
  * @namespace Simplicity Widgets
  */
 (function ($) {
-  $.simplicity = {};
+  $.simplicity = $.simplicity || {};
   /**
    * The current version of Simplicity Widgets.
    * <p>

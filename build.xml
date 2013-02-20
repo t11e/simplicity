@@ -46,7 +46,7 @@
     <!-- Copy and rename the Simplicity widgets, to add the current version -->
     <copy todir="build.ant/dist" flatten="true">
       <fileset dir="docroot">
-        <include name="js/build/simplicity.js"/>
+        <include name="js/build/simplicity.version.js"/>
         <include name="js/build/simplicity.min.js"/>
         <include name="css/build/simplicity.css"/>
         <include name="css/build/simplicity.min.css"/>
