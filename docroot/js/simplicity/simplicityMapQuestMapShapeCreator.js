@@ -194,7 +194,7 @@
       };
       this.boundsHandler()({}, ui);
       if ('undefined' !== typeof ui.locations && 0 !== ui.locations.length) {
-        var bounds = undefined;
+        var bounds;
         $.each(ui.locations, function (idx, loc) {
           if (typeof bounds === 'undefined') {
             bounds = new MQA.RectLL(loc, loc);

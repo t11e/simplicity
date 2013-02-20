@@ -612,7 +612,7 @@
      * @throws Error on invalid geoJson
      */
     _validateGeoJson: function (geoJson) {
-      var result = undefined;
+      var result;
       if ('undefined' !== typeof geoJson.placemarks) {
         if ('undefined' !== typeof geoJson.placemarks.type) {
           if ($.inArray(geoJson.placemarks.type, supportedShapeTypes) > -1) {

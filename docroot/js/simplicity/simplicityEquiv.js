@@ -94,6 +94,7 @@
           // e.g. var i = 1;
           //    var j = new Number(1);
           /*jslint eqeqeq: false */
+          /*jshint eqeqeq: false */
           return a == b;
         } else {
           return a === b;
@@ -154,7 +155,7 @@
         },
 
         "object": function (b, a) {
-          var i = undefined;
+          var i;
           var eq = true; // unless we can proove it
           var aProperties = [], bProperties = []; // collection of strings
 

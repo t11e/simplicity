@@ -133,7 +133,7 @@
      * @private
      */
     _searchResponseHandler: function (event, searchResponse) {
-      var result = undefined;
+      var result;
       var discoveryResponse = searchResponse._discovery || {};
       var engineResponse = discoveryResponse.response || {};
       var facets = engineResponse.facets;

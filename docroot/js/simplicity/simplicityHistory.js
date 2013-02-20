@@ -129,7 +129,7 @@
       if (!this._ignoreStateChange) {
         var fragment = $.param.fragment();
         var fragmentState = $.deparam(fragment);
-        var newFragment = undefined;
+        var newFragment;
         if (fragment === '') {
           if ($.simplicityEquiv(this.initialState, state)) {
             if (this.options.debug) {
