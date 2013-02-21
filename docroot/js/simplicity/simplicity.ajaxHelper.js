@@ -17,7 +17,7 @@
  * @example
  *   var ajaxHelper = new $.simplicity.ajaxHelper(this);
  *   var xhr = ajaxHelper.ajax({
- *     url: 'searchController.php',
+ *     url: '/my_search_controller.php',
  *     type: 'GET',
  *     contentType: 'application/json',
  *     error: function (data, textStatus, xhr) {...},
