@@ -1,5 +1,5 @@
 /**
- * @name $.simplicityAjaxHelper
+ * @name $.simplicity.ajaxHelper
  * @function
  * @description
  *
@@ -15,7 +15,7 @@
  *   $.ajax() success and error callback options.
  *
  * @example
- *   var ajaxHelper = new $.simplicityAjaxHelper(this);
+ *   var ajaxHelper = new $.simplicity.ajaxHelper(this);
  *   var xhr = ajaxHelper.ajax({
  *     url: 'searchController.php',
  *     type: 'GET',
@@ -27,7 +27,8 @@
  *   console.log(ajaxHelper.getStats());
  */
 (function ($) {
-  $.simplicityAjaxHelper = function (exeContext) {
+  $.simplicity = $.simplicity || {};
+  $.simplicity.ajaxHelper = function (exeContext) {
     var numRequest = 0,
         numSuccess = 0,
         numError = 0,

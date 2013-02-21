@@ -42,6 +42,10 @@ Compatibility
       <td>$.simplicityProxy</td>
       <td>$.simplicity.proxy</td>
     </tr>
+    <tr>
+      <td>$.simplicityAjaxHelper</td>
+      <td>$.simplicity.ajaxHelper</td>
+    </tr>
   </tbody>
 </table>
 

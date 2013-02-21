@@ -44,8 +44,8 @@ test("defines $.ui.simplicityInputs", function() {
 test("defines $.ui.simplicityHistory", function() {
   ok('undefined' !== typeof($.ui.simplicityHistory), 'undefined widget: $.ui.simplicityHistory');
 });
-test("defines $.simplicityAjaxHelper", function() {
-  ok('undefined' !== typeof($.simplicityAjaxHelper), 'undefined widget: $.simplicityAjaxHelper');
+test("defines $.simplicity.ajaxHelper", function() {
+  ok('undefined' !== typeof($.simplicity.ajaxHelper), 'undefined function: $.simplicity.ajaxHelper');
 });
 test("defines $.ui.simplicityDiscoverySearch", function() {
   ok('undefined' !== typeof($.ui.simplicityDiscoverySearch), 'undefined widget: $.ui.simplicityDiscoverySearch');
