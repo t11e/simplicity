@@ -13,7 +13,7 @@ groups:
       - js/simplicity/simplicity.equiv.js
       - js/simplicity/simplicity.proxy.js
       - js/simplicity/simplicityWidget.js
-      - js/simplicity/simplicityFromState.js
+      - js/simplicity/fn.simplicityFromState.js
       - js/simplicity/simplicityToState.js
       - js/simplicity/simplicityState.js
       - js/simplicity/simplicityInputs.js
