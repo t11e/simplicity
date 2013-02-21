@@ -46,7 +46,7 @@
       } else {
         target = $(target);
       }
-      var proxy = $.simplicityProxy(handler, this);
+      var proxy = $.simplicity.proxy(handler, this);
       target.bind(eventName, proxy);
       return this._registerDestroyHook(function () {
         target.unbind(eventName, proxy);

@@ -1,5 +1,5 @@
 /**
- * @name $.simplicityProxy
+ * @name $.simplicity.proxy
  * @function
  * @description
  *
@@ -12,13 +12,14 @@
  *   The object to apply the function to.
  *
  * @example
- *   var clickHandler = $.simplicityProxy(function () {}, this);
+ *   var clickHandler = $.simplicity.proxy(function () {}, this);
  *   $('#example').bind('click', clickHandler);
  *   // Do something
  *   $('#example).unbind('click', clickHandler);
  */
 (function ($) {
-  $.simplicityProxy = function (fn, thisObject) {
+  $.simplicity = $.simplicity || {};
+  $.simplicity.proxy = function (fn, thisObject) {
     return function () {
       var currentFn = ('string' === typeof fn) ? thisObject[fn] : fn;
       return currentFn.apply(thisObject, arguments);

@@ -23,8 +23,8 @@ test("defines $.simplicity.version", function() {
 test("defines $.simplicity.equiv", function() {
   ok('undefined' !== typeof($.simplicity.equiv), 'undefined function: $.simplicity.equiv');
 });
-test("defines $.simplicityProxy", function() {
-  ok('undefined' !== typeof($.simplicityProxy), 'undefined widget: $.simplicityProxy');
+test("defines $.simplicity.proxy", function() {
+  ok('undefined' !== typeof($.simplicity.proxy), 'undefined function: $.simplicity.proxy');
 });
 test("defines $.ui.simplicityWidget", function() {
   ok('undefined' !== typeof($.ui.simplicityWidget), 'undefined widget: $.ui.simplicityWidget');

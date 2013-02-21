@@ -38,6 +38,10 @@ Compatibility
       <td>$.simplicityEquiv</td>
       <td>$.simplicity.equiv</td>
     </tr>
+    <tr>
+      <td>$.simplicityProxy</td>
+      <td>$.simplicity.proxy</td>
+    </tr>
   </tbody>
 </table>
 

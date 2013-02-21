@@ -11,7 +11,7 @@ groups:
       # Core
       - js/simplicity/simplicity.version.js
       - js/simplicity/simplicity.equiv.js
-      - js/simplicity/simplicityProxy.js
+      - js/simplicity/simplicity.proxy.js
       - js/simplicity/simplicityWidget.js
       - js/simplicity/simplicityFromState.js
       - js/simplicity/simplicityToState.js
