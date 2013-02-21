@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us">
   <head>
-    <title>Tutorial Search - Cross Origin</title>
+    <title>Tutorial Search</title>
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicity/simplicityPagination.css" rel="stylesheet" type="text/css" />
@@ -26,22 +26,32 @@
       .ui-simplicity-facet-count {
         float: right;
       }
-      #styleCheckboxes ul,
-      #styleCheckboxesFlyout ul {
+      #styleCheckboxes ul {
         list-style-type: none;
         padding-left: 1em;
       }
     </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search - Cross Origin</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with Yahoo</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
           <fieldset>
             <legend>Search Controls</legend>
             <button id="searchButton">Search</button>
+            <br />
             <button id="resetButton">Reset</button>
+            <br />
+            <label for="pageSize">Page Size</label>
+            <select id="pageSize" name="pageSize">
+              <option value=""></option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Type</legend>
@@ -74,15 +84,23 @@
               <label for="condition_4">Excellent condition</label>
             </div>
           </fieldset>
-          <fieldset>
-            <legend>Cross Origin Method</legend>
-            <select name="cors-method">
-              <option value="json">CORS</option>
-              <option value="jsonp">JSONP</option>
-            </select>
+          <fieldset id="locationFields">
+            <legend>Location</legend>
+            <input id="address" name="address" />
+            <br />
+            <label for="latitude">Latitude</label>
+            <input id="latitude" name="lat" />
+            <br />
+            <label for="longitude">Longitude</label>
+            <input id="longitude" name="lon" />
           </fieldset>
         </div>
         <div id="main" class="yui3-u">
+          <div class="yui3-g">
+            <fieldset class="ui-widget ui-widget-content">
+              <div id="map" style="width: 700px; height: 300px;"></div>
+            </fieldset>
+          </div>
           <fieldset class="ui-widget">
             <legend>Search Results</legend>
             <div id="searchResults"></div>
@@ -91,9 +109,7 @@
             <legend>Pagination</legend>
             <div id="paginationWidget"></div>
           </fieldset>
-          <div class="yui3-g">
-            <div id="debug"></div>
-          </div>
+          <div id="debug" class="yui3-g"></div>
         </div>
       </div>
     </form>
@@ -101,6 +117,8 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
@@ -122,10 +140,17 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicitySearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFlyout.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
       $('body').simplicityState();
+
+      $('#nav :input[name="pageSize"]').simplicityInputs();
 
       $('#nav :input[name="type"]').simplicityFacetedInput({
         dimension: 'type',
@@ -137,11 +162,70 @@
         placement: 'append-label'
       });
 
-      $('#nav :input[name="cors-method"]').change(function() {
-        var dataType = $('#nav :input[name="cors-method"]').val();
-        $('body')
-          .simplicityDiscoverySearch("option", "dataType", dataType)
-          .simplicityDiscoverySearch('search');
+      (function () {
+        $('#map')
+          .simplicityYahooMap()
+          .simplicityYahooMapBoundsCoordinator()
+          .simplicityYahooMapResults();
+
+        var map = $('#map').simplicityYahooMap('map');
+        map.addPanControl();
+        map.addZoomShort();
+        map.setMapType(YAHOO_MAP_REG);
+        map.drawZoomAndCenter(new YGeoPoint(0, 0), 16);
+      }());
+
+      $('#map').bind('simplicityyahoomapresultsmarker', function (evt, ui) {
+        var marker = ui.marker;
+        var properties = ui.row.properties;
+        marker.changeImage(new YImage('images/markers/yahoo/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png'));
+        if (properties.type === 'rentals') {
+          marker.addAutoExpand('$' + properties.lease);
+        } else {
+          marker.addAutoExpand('$' + properties.price);
+        }
+        YEvent.Capture(marker, EventsList.MouseClick, function (evt) {
+          $('#result-' + ui.row.id).effect("highlight", {}, 3000);
+        });
+      });
+
+      var apikey = 'YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H';
+
+      $('#locationFields')
+        .simplicityInputs()
+        .simplicityYahooGeocoder({
+          url: '../sandbox/yahooGeocoderProxy.php',
+          requestTemplate: {
+            apikey: apikey
+          }
+        });
+      var selectCallback = function (evt, ui) {
+        var address = '';
+        var latitude = '';
+        var longitude = '';
+        if (ui.item) {
+          address = ui.item.value;
+          latitude = ui.item.latitude;
+          longitude = ui.item.longitude;
+        }
+        $('#address').val(address);
+        $('#latitude').val(latitude);
+        $('#longitude').val(longitude);
+        $('#locationFields').change();
+      };
+      $('#address').autocomplete({
+        minLength: 0,
+        source: $('#locationFields').simplicityYahooGeocoder('autocompleteSource'),
+        select: selectCallback,
+        change: selectCallback,
+        search: function (evt, ui) {
+          if ($(evt.target).val() === '') {
+            selectCallback(evt, ui);
+            return false;
+          }
+          return true;
+        },
+        autoFocus: true
       });
 
       $('#paginationWidget').simplicityPagination();
@@ -157,6 +241,7 @@
 
       $('#debug').simplicityDebug();
 
+      // Rendered search results
       $('#searchResults').simplicitySearchResults();
 
       $('body')
@@ -165,7 +250,7 @@
         .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({
-          url: 'http://tutorial.discoverysearchengine.com/search_controller_real_estate.php'
+          url: 'search_controller_real_estate.php'
         })
         .simplicityDiscoverySearch('search');
     //]]>--></script>

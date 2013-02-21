@@ -33,7 +33,7 @@
     </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search with MapQuest</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with Yahoo</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
@@ -61,7 +61,6 @@
               <option value="sales">Sales</option>
             </select>
           </fieldset>
-
           <fieldset id="conditionCheckboxes">
             <legend>Condition</legend>
             <div class="row">
@@ -104,9 +103,9 @@
         </div>
         <div id="main" class="yui3-u">
           <div class="yui3-g">
-            <fieldset class="ui-widget ui-widget-content">
-              <div id="map" style="width: 700px; height: 300px; letter-spacing: normal;"></div>
-            </fieldset>
+           <fieldset class="ui-widget ui-widget-content">
+             <div id="map" style="width: 700px; height: 300px; letter-spacing: normal;"></div>
+           </fieldset>
           </div>
           <fieldset class="ui-widget">
             <legend>Search Results</legend>
@@ -125,7 +124,7 @@
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
 
-    <script type="text/javascript" src="http://mapquestapi.com/sdk/js/v6.0.0/mqa.toolkit.js?key=Fmjtd%7Cluu22q68nq%2C75%3Do5-h67wg"></script>
+    <script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
@@ -147,14 +146,12 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicitySearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFlyout.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMap.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsCoordinator.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsTracker.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
-      MQA.withModule('mapinit', 'geocoder', 'shapes', 'zoomcontrol3', function() {
-
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
       $('body').simplicityState();
@@ -173,59 +170,56 @@
 
       (function () {
         $('#map')
-          .simplicityMapQuestMap()
-          .simplicityMapQuestMapResults()
-          .simplicityMapQuestMapBoundsTracker();
+          .simplicityYahooMap()
+          .simplicityYahooMapBoundsTracker()
+          .simplicityYahooMapResults();
 
-        var map = $('#map').simplicityMapQuestMap('map');
-        map.addControl(new MQA.LargeZoomControl3(), new MQA.MapCornerPlacement(MQA.MapCorner.TOP_RIGHT));
-        map.setZoomLevel(7);
-        map.setCenter({lat:40.75792020879332, lng:-74.00699615478442})
+        var map = $('#map').simplicityYahooMap('map');
+        map.addPanControl();
+        map.addZoomShort();
+        map.drawZoomAndCenter(new YGeoPoint(40.75792020879332, -74.00699615478442), 8);
       }());
 
-      $('#map').bind('simplicitymapquestmapresultsmarker', function (evt, ui) {
-        var poi = ui.marker;
+      $('#map').bind('simplicityyahoomapresultsmarker', function (evt, ui) {
+        var marker = ui.marker;
         var properties = ui.row.properties;
-        var icon = new MQA.Icon('images/markers/mapquest/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png', 30, 30);
-        poi.setIcon(icon)
+        marker.changeImage(new YImage('images/markers/yahoo/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png'));
         if (properties.type === 'rentals') {
-          poi.setRolloverContent('$' + properties.lease);
+          marker.addAutoExpand('$' + properties.lease);
         } else {
-          poi.setRolloverContent('$' + properties.price);
+          marker.addAutoExpand('$' + properties.price);
         }
-        MQA.EventManager.addListener(poi, 'click', function (evt) {
+        YEvent.Capture(marker, EventsList.MouseClick, function (evt) {
           $('#result-' + ui.row.id).effect("highlight", {}, 3000);
         });
       });
 
+      var apikey = 'YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H';
+
       $('#locationFields2')
         .simplicityInputs()
-        .simplicityMapQuestGeocoder();
-      var mapQuestQualityZoomLevels = {
-        'POINT': 14,
-        'ADDRESS': 14,
-        'INTERSECTION': 13,
-        'STREET': 13,
-        'ZIP': 10,
-        'ZIP_EXTENDED': 11,
-        'CITY': 9,
-        'COUNTY': 7,
-        'STATE': 3,
-        'COUNTRY': 2
-      };
+        .simplicityYahooGeocoder({
+          url: '../sandbox/yahooGeocoderProxy.php',
+          requestTemplate: {
+            apikey: apikey
+          }
+        });
       // Position the map based on geocoded address
       var selectCallback = function (evt, ui) {
-        if (ui.item) {
-          var map = $('#map').simplicityMapQuestMap('map');
-          var zoomLevel = mapQuestQualityZoomLevels[ui.item.vendor.geocodeQuality];
-          if (zoomLevel) {
-            map.setZoomLevel(zoomLevel);
-          }
-          map.setCenter({lat: ui.item.latitude, lng: ui.item.longitude});
+        if (ui.item && ui.item.bounds) {
+          var map = $('#map').simplicityYahooMap('map');
+          var bounds = ui.item.bounds;
+          var best = map.getBestZoomAndCenter([
+            new YGeoPoint(bounds.north, bounds.west),
+            new YGeoPoint(bounds.north, bounds.east),
+            new YGeoPoint(bounds.south, bounds.east),
+            new YGeoPoint(bounds.south, bounds.west)
+          ]);
+          map.drawZoomAndCenter(best.YGeoPoint, best.zoomLevel);
         }
       };
       // Drive search from current map position
-      $('#map').bind('simplicitymapquestmapboundstrackerbounds', function (evt, ui) {
+      $('#map').bind('simplicityyahoomapboundstrackerbounds', function (evt, ui) {
         $('#north').val(ui.bounds.north);
         $('#east').val(ui.bounds.east);
         $('#south').val(ui.bounds.south);
@@ -235,7 +229,7 @@
       // Autocomplete based geocoder
       $('#address2').autocomplete({
         minLength: 0,
-        source: $('#locationFields2').simplicityMapQuestGeocoder('autocompleteSource'),
+        source: $('#locationFields2').simplicityYahooGeocoder('autocompleteSource'),
         select: selectCallback,
         change: selectCallback,
         search: function (evt, ui) {
@@ -272,8 +266,6 @@
           url: 'search_controller_real_estate.php'
         })
         .simplicityDiscoverySearch('search');
-
-      });
     //]]>--></script>
   </body>
 </html>

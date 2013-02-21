@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us">
   <head>
-    <title>Tutorial Search</title>
+    <title>Tutorial Search (CORS)</title>
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicity/simplicityPagination.css" rel="stylesheet" type="text/css" />
@@ -44,7 +44,7 @@
   </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search with Google</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with Google (CORS)</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
@@ -172,6 +172,8 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicityGoogleMapBoundsTracker.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityGoogleGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityGoogleMarker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/real_estate_search_controller.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/real_estate_search_results.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
@@ -204,22 +206,21 @@
         $('#map').bind('simplicitygooglemapresultsmarker', function (evt, ui) {
           var marker = ui.marker;
           var row = ui.row;
-          if ('undefined' !== typeof marker.setTitle) {
+          var clickHandler = function() {
+            $('#result-' + ui.row.id).effect("highlight", {}, 3000);
+          };
+          var exactOrFuzzy = ui.row.exact ? 'exact' : 'fuzzy'
+          if ('undefined' !== typeof marker.setIcon) {
             // Standard google marker
-            marker.setIcon('images/markers/google/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png');
+            marker.setIcon('images/markers/google/' + exactOrFuzzy + '.png');
             marker.setTitle('$' + row.properties[row.properties.type === 'rentals' ? 'lease' : 'price']);
-            google.maps.event.addListener(marker, 'click', function() {
-              $('#result-' + ui.row.id).effect("highlight", {}, 3000);
-            });
+            google.maps.event.addListener(marker, 'click', clickHandler);
           } else {
-            // Overlay - $.simplicityGoogleMarker
-            marker.title('$' + row.properties[row.properties.type === 'rentals' ? 'lease' : 'price']);
+            // Overlay - $.simplicityDomMarker
             marker.getElement()
-              .addClass(row.exact ? 'white exact' : 'white fuzzy')
-              .click(function(evt) {
-                var $ele = $(evt.target).closest('.simplicity-google-marker');
-                $('#result-' + $ele.data("row").id).effect("highlight", {}, 3000);
-              });
+              .addClass(exactOrFuzzy)
+              .click(clickHandler)
+              .attr('title', row.properties[row.properties.type === 'rentals' ? 'lease' : 'price']);
           }
         });
       }());
@@ -259,7 +260,7 @@
       $('#paginationWidget').simplicityPagination();
 
       $('#searchButton').button().click(function (evt) {
-        $('body').simplicityDiscoverySearch('search');
+        $('body').simplicityDiscoverySearch('query');
         evt.stopPropagation();
       });
       $('#resetButton').button().click(function (evt) {
@@ -270,7 +271,9 @@
       $('#debug').simplicityDebug();
 
       // Rendered search results
-      $('#searchResults').simplicitySearchResults();
+      $('#searchResults').simplicitySearchResults({
+        resultsCallback: window.real_estate_search_results
+      });
 
       $(':input[name="markerType"]')
         // Update the markerType input for the currently configured one at page load
@@ -279,14 +282,16 @@
         .bind('change', function (evt, ui) {
           $('#map').simplicityGoogleMapResults('option', 'markerType', $(evt.target).val());
         });
-
+      $('')
       $('body')
         .simplicityState('mergeQueryParams')
         .simplicityHistory()
         .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({
-          url: 'search_controller_real_estate.php'
+          url: 'http://tutorial.discoverysearchengine.com:8090/json/query',
+          backend: "engine",
+          controllerCallback: window.real_estate_search_controller
         })
         .simplicityDiscoverySearch('search');
     //]]>--></script>

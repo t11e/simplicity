@@ -2,6 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9" />
     <title>Tutorial Search</title>
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -33,7 +34,7 @@
     </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search with Bing</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with Nokia</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
@@ -104,18 +105,16 @@
         <div id="main" class="yui3-u">
           <div class="yui3-g">
             <fieldset class="ui-widget ui-widget-content">
-              <div style="width: 700px; height: 300px">
-                <div id="map" style="position: absolute; width: 700px; height: 300px; letter-spacing: normal;"></div>
-              </div>
+              <div id="map" style="width: 700px; height: 300px"></div>
             </fieldset>
           </div>
-          <fieldset class="ui-widget">
-            <legend>Search Results</legend>
-            <div id="searchResults"></div>
-          </fieldset>
           <fieldset class="ui-widget ui-widget-content">
             <legend>Pagination</legend>
             <div id="paginationWidget"></div>
+          </fieldset>
+          <fieldset class="ui-widget">
+            <legend>Search Results</legend>
+            <div id="searchResults"></div>
           </fieldset>
           <div id="debug" class="yui3-g"></div>
         </div>
@@ -126,7 +125,7 @@
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
 
-    <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript" src="http://api.maps.nokia.com/2.1.0/jsl.js"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
@@ -152,11 +151,11 @@
     <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceRadians.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceMiles.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceKm.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMap.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapBoundsCoordinator.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapBoundsTracker.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
@@ -174,60 +173,54 @@
         placement: 'append-label'
       });
 
-      var credentials = 'AqsWuHqZWoV942yySq7z7YZcyz7skrvFfPX_if4OmK5FyHkyJDmQSvX17Z7ymtok';
-
       $('#map')
-        .simplicityBingMap({
-          credentials: credentials,
+        .simplicityNokiaMap({
           mapOptions: {
-            center: new Microsoft.Maps.Location(40.75792020879332, -74.00699615478442),
-            zoom: 10
-          }
+            center: [40.75792020879332, -74.00699615478442],
+            zoomLevel: 10,
+            components: [
+              new nokia.maps.map.component.Behavior(),
+              new nokia.maps.map.component.ZoomBar()
+            ]
+          },
         })
-        .simplicityBingMapResults()
-        .simplicityBingMapBoundsTracker();
+        .simplicityNokiaMapResults()
+        .simplicityNokiaMapBoundsTracker();
 
-      $('#map').bind('simplicitybingmapresultsmarker', function (evt, ui) {
-        var pin = ui.marker;
+      $('#map').bind('simplicitynokiamapresultsmarker', function (evt, ui) {
+        var marker = ui.marker;
         var properties = ui.row.properties;
-        pin.setOptions({
-          icon: 'images/markers/bing/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png'
-        });
-        Microsoft.Maps.Events.addHandler(pin, 'click', function (evt) {
+        marker.icon = new nokia.maps.gfx.BitmapImage('images/markers/nokia/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png');
+        marker.addListener('click', function (evt) {
           $('#result-' + ui.row.id).effect("highlight", {}, 3000);
-        });
+        }, true);
       });
 
       $('#locationFields2')
         .simplicityInputs()
-        .simplicityBingGeocoder({
-          url: '../test/bingGeocoderProxy.php',
-          requestTemplate: {
-            key: credentials
-          }
-        });
+        .simplicityNokiaGeocoder();
       // Position the map based on geocoded address
       var selectCallback = function (evt, ui) {
         if (ui.item && ui.item.bounds) {
-          var map = $('#map').simplicityBingMap('map');
+          var map = $('#map').simplicityNokiaMap('map');
           var bounds = ui.item.bounds;
-          map.setView({
-            bounds: Microsoft.Maps.LocationRect.fromEdges(bounds.north, bounds.west, bounds.south, bounds.east)
-          });
+          map.zoomTo(bounds.vendor);
         }
       };
+
       // Drive search from current map position
-      $('#map').bind('simplicitybingmapboundstrackerbounds', function (evt, ui) {
+      $('#map').bind('simplicitynokiamapboundstrackerbounds', function (evt, ui) {
         $('#north').val(ui.bounds.north);
         $('#east').val(ui.bounds.east);
         $('#south').val(ui.bounds.south);
         $('#west').val(ui.bounds.west);
         $('#locationFields2').change();
       });
+
       // Autocomplete based geocoder
       $('#address2').autocomplete({
         minLength: 0,
-        source: $('#locationFields2').simplicityBingGeocoder('autocompleteSource'),
+        source: $('#locationFields2').simplicityNokiaGeocoder('autocompleteSource'),
         select: selectCallback,
         change: selectCallback,
         search: function (evt, ui) {

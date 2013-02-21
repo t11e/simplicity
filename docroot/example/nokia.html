@@ -2,6 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9" />
     <title>Tutorial Search</title>
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -33,7 +34,7 @@
     </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search with MapQuest</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with Nokia</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
@@ -61,7 +62,6 @@
               <option value="sales">Sales</option>
             </select>
           </fieldset>
-
           <fieldset id="conditionCheckboxes">
             <legend>Condition</legend>
             <div class="row">
@@ -119,7 +119,7 @@
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
 
-    <script type="text/javascript" src="http://mapquestapi.com/sdk/js/v6.0.0/mqa.toolkit.js?key=Fmjtd%7Cluu22q68nq%2C75%3Do5-h67wg"></script>
+    <script type="text/javascript" src="http://api.maps.nokia.com/2.1.0/jsl.js"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
@@ -141,14 +141,12 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicitySearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFlyout.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMap.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsCoordinator.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsTracker.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityNokiaGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
-      MQA.withModule('mapinit', 'geocoder', 'shapes', 'zoomcontrol3', function() {
-
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
       $('body').simplicityState();
@@ -167,36 +165,27 @@
 
       (function () {
         $('#map')
-          .simplicityMapQuestMap()
-          .simplicityMapQuestMapResults()
-          .simplicityMapQuestMapBoundsCoordinator();
+          .simplicityNokiaMap()
+          .simplicityNokiaMapBoundsCoordinator()
+          .simplicityNokiaMapResults();
 
-        var map = $('#map').simplicityMapQuestMap('map');
-        map.addControl(new MQA.LargeZoomControl3(), new MQA.MapCornerPlacement(MQA.MapCorner.TOP_LEFT));
+        var map = $('#map').simplicityNokiaMap('map');
+        map.addComponent(new nokia.maps.map.component.Behavior());
+        map.addComponent(new nokia.maps.map.component.ZoomBar());
       }());
 
-      $('#map').bind('simplicitymapquestmapresultsmarker', function (evt, ui) {
-        var poi = ui.marker;
+      $('#map').bind('simplicitynokiamapresultsmarker', function (evt, ui) {
+        var marker = ui.marker;
         var properties = ui.row.properties;
-        var icon = new MQA.Icon('images/markers/mapquest/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png', 30, 30);
-        poi.setIcon(icon)
-        if (properties.type === 'rentals') {
-          poi.setRolloverContent('$' + properties.lease);
-        } else {
-          poi.setRolloverContent('$' + properties.price);
-        }
-        MQA.EventManager.addListener(poi, 'click', function (evt) {
+        marker.set({brush: {color: ui.row.exact ? '#e47009' : '#49afcd'}});
+        marker.addListener('click', function (evt) {
           $('#result-' + ui.row.id).effect("highlight", {}, 3000);
-        });
+        }, true);
       });
 
       $('#locationFields')
         .simplicityInputs()
-        .simplicityMapQuestGeocoder({
-          geocodeOptions: {
-            maxResults: 10
-          }
-        });
+        .simplicityNokiaGeocoder();
       var selectCallback = function (evt, ui) {
         var address = '';
         var latitude = '';
@@ -213,7 +202,7 @@
       };
       $('#address').autocomplete({
         minLength: 0,
-        source: $('#locationFields').simplicityMapQuestGeocoder('autocompleteSource'),
+        source: $('#locationFields').simplicityNokiaGeocoder('autocompleteSource'),
         select: selectCallback,
         change: selectCallback,
         search: function (evt, ui) {
@@ -251,8 +240,6 @@
           url: 'search_controller_real_estate.php'
         })
         .simplicityDiscoverySearch('search');
-
-      });
     //]]>--></script>
   </body>
 </html>

@@ -33,7 +33,7 @@
     </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search with Yahoo</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with Bing</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
@@ -84,21 +84,29 @@
               <label for="condition_4">Excellent condition</label>
             </div>
           </fieldset>
-          <fieldset id="locationFields">
+          <fieldset id="locationFields2">
             <legend>Location</legend>
-            <input id="address" name="address" />
+            <input id="address2" name="a" />
             <br />
-            <label for="latitude">Latitude</label>
-            <input id="latitude" name="lat" />
+            <label for="north">North</label>
+            <input id="north" name="n" />
             <br />
-            <label for="longitude">Longitude</label>
-            <input id="longitude" name="lon" />
+            <label for="east">East</label>
+            <input id="east" name="e" />
+            <br />
+            <label for="south">South</label>
+            <input id="south" name="s" />
+            <br />
+            <label for="west">West</label>
+            <input id="west" name="w" />
           </fieldset>
         </div>
         <div id="main" class="yui3-u">
           <div class="yui3-g">
             <fieldset class="ui-widget ui-widget-content">
-              <div id="map" style="width: 700px; height: 300px;"></div>
+              <div style="width: 700px; height: 300px">
+                <div id="map" style="position: absolute; width: 700px; height: 300px; letter-spacing: normal;"></div>
+              </div>
             </fieldset>
           </div>
           <fieldset class="ui-widget">
@@ -118,7 +126,7 @@
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
 
-    <script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H"></script>
+    <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
@@ -140,11 +148,15 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicitySearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFlyout.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMap.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapBoundsCoordinator.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooMapBoundsTracker.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityYahooGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/simplicity.degreesToRadians.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceRadians.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceMiles.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceKm.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
@@ -162,60 +174,60 @@
         placement: 'append-label'
       });
 
-      (function () {
-        $('#map')
-          .simplicityYahooMap()
-          .simplicityYahooMapBoundsCoordinator()
-          .simplicityYahooMapResults();
+      var credentials = 'AqsWuHqZWoV942yySq7z7YZcyz7skrvFfPX_if4OmK5FyHkyJDmQSvX17Z7ymtok';
 
-        var map = $('#map').simplicityYahooMap('map');
-        map.addPanControl();
-        map.addZoomShort();
-        map.setMapType(YAHOO_MAP_REG);
-        map.drawZoomAndCenter(new YGeoPoint(0, 0), 16);
-      }());
+      $('#map')
+        .simplicityBingMap({
+          credentials: credentials,
+          mapOptions: {
+            center: new Microsoft.Maps.Location(40.75792020879332, -74.00699615478442),
+            zoom: 10
+          }
+        })
+        .simplicityBingMapResults()
+        .simplicityBingMapBoundsTracker();
 
-      $('#map').bind('simplicityyahoomapresultsmarker', function (evt, ui) {
-        var marker = ui.marker;
+      $('#map').bind('simplicitybingmapresultsmarker', function (evt, ui) {
+        var pin = ui.marker;
         var properties = ui.row.properties;
-        marker.changeImage(new YImage('images/markers/yahoo/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png'));
-        if (properties.type === 'rentals') {
-          marker.addAutoExpand('$' + properties.lease);
-        } else {
-          marker.addAutoExpand('$' + properties.price);
-        }
-        YEvent.Capture(marker, EventsList.MouseClick, function (evt) {
+        pin.setOptions({
+          icon: 'images/markers/bing/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png'
+        });
+        Microsoft.Maps.Events.addHandler(pin, 'click', function (evt) {
           $('#result-' + ui.row.id).effect("highlight", {}, 3000);
         });
       });
 
-      var apikey = 'YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H';
-
-      $('#locationFields')
+      $('#locationFields2')
         .simplicityInputs()
-        .simplicityYahooGeocoder({
-          url: '../test/yahooGeocoderProxy.php',
+        .simplicityBingGeocoder({
+          url: '../sandbox/bingGeocoderProxy.php',
           requestTemplate: {
-            apikey: apikey
+            key: credentials
           }
         });
+      // Position the map based on geocoded address
       var selectCallback = function (evt, ui) {
-        var address = '';
-        var latitude = '';
-        var longitude = '';
-        if (ui.item) {
-          address = ui.item.value;
-          latitude = ui.item.latitude;
-          longitude = ui.item.longitude;
+        if (ui.item && ui.item.bounds) {
+          var map = $('#map').simplicityBingMap('map');
+          var bounds = ui.item.bounds;
+          map.setView({
+            bounds: Microsoft.Maps.LocationRect.fromEdges(bounds.north, bounds.west, bounds.south, bounds.east)
+          });
         }
-        $('#address').val(address);
-        $('#latitude').val(latitude);
-        $('#longitude').val(longitude);
-        $('#locationFields').change();
       };
-      $('#address').autocomplete({
+      // Drive search from current map position
+      $('#map').bind('simplicitybingmapboundstrackerbounds', function (evt, ui) {
+        $('#north').val(ui.bounds.north);
+        $('#east').val(ui.bounds.east);
+        $('#south').val(ui.bounds.south);
+        $('#west').val(ui.bounds.west);
+        $('#locationFields2').change();
+      });
+      // Autocomplete based geocoder
+      $('#address2').autocomplete({
         minLength: 0,
-        source: $('#locationFields').simplicityYahooGeocoder('autocompleteSource'),
+        source: $('#locationFields2').simplicityBingGeocoder('autocompleteSource'),
         select: selectCallback,
         change: selectCallback,
         search: function (evt, ui) {
@@ -246,7 +258,6 @@
 
       $('body')
         .simplicityState('mergeQueryParams')
-        .simplicityHistory()
         .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({

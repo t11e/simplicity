@@ -33,7 +33,7 @@
     </style>
   </head>
   <body>
-    <h1><a href="index.html">home</a> | Tutorial Search with Bing</h1>
+    <h1><a href="../index.html">home</a> | Tutorial Search with MapQuest</h1>
     <form id="myForm" onsubmit="return false;">
       <div class="yui3-g">
         <div id="nav" class="yui3-u">
@@ -61,6 +61,7 @@
               <option value="sales">Sales</option>
             </select>
           </fieldset>
+
           <fieldset id="conditionCheckboxes">
             <legend>Condition</legend>
             <div class="row">
@@ -84,23 +85,27 @@
               <label for="condition_4">Excellent condition</label>
             </div>
           </fieldset>
-          <fieldset id="locationFields">
+          <fieldset id="locationFields2">
             <legend>Location</legend>
-            <input id="address" name="address" />
+            <input id="address2" name="a" />
             <br />
-            <label for="latitude">Latitude</label>
-            <input id="latitude" name="lat" />
+            <label for="north">North</label>
+            <input id="north" name="n" />
             <br />
-            <label for="longitude">Longitude</label>
-            <input id="longitude" name="lon" />
+            <label for="east">East</label>
+            <input id="east" name="e" />
+            <br />
+            <label for="south">South</label>
+            <input id="south" name="s" />
+            <br />
+            <label for="west">West</label>
+            <input id="west" name="w" />
           </fieldset>
         </div>
         <div id="main" class="yui3-u">
           <div class="yui3-g">
             <fieldset class="ui-widget ui-widget-content">
-              <div style="width: 349px; height: 300px">
-                <div id="map" style="position: absolute; width: 700px; height: 300px;"></div>
-              </div>
+              <div id="map" style="width: 700px; height: 300px; letter-spacing: normal;"></div>
             </fieldset>
           </div>
           <fieldset class="ui-widget">
@@ -120,7 +125,7 @@
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
 
-    <script charset="UTF-8" type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script type="text/javascript" src="http://mapquestapi.com/sdk/js/v6.0.0/mqa.toolkit.js?key=Fmjtd%7Cluu22q68nq%2C75%3Do5-h67wg"></script>
 
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
@@ -142,16 +147,14 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicitySearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFlyout.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/simplicity.degreesToRadians.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceRadians.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceMiles.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/simplicity.haversineDistanceKm.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMap.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapBoundsCoordinator.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingMapBoundsTracker.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/simplicity/ui.simplicityBingGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestGeocoder.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
+      MQA.withModule('mapinit', 'geocoder', 'shapes', 'zoomcontrol3', function() {
+
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
       $('body').simplicityState();
@@ -168,53 +171,71 @@
         placement: 'append-label'
       });
 
-      var credentials = 'AqsWuHqZWoV942yySq7z7YZcyz7skrvFfPX_if4OmK5FyHkyJDmQSvX17Z7ymtok';
-
       (function () {
         $('#map')
-          .simplicityBingMap({
-            credentials: credentials
-          })
-          .simplicityBingMapResults()
-          .simplicityBingMapBoundsCoordinator();
+          .simplicityMapQuestMap()
+          .simplicityMapQuestMapResults()
+          .simplicityMapQuestMapBoundsTracker();
+
+        var map = $('#map').simplicityMapQuestMap('map');
+        map.addControl(new MQA.LargeZoomControl3(), new MQA.MapCornerPlacement(MQA.MapCorner.TOP_RIGHT));
+        map.setZoomLevel(7);
+        map.setCenter({lat:40.75792020879332, lng:-74.00699615478442})
       }());
 
-      $('#map').bind('simplicitybingmapresultsmarker', function (evt, ui) {
-        var pin = ui.marker;
+      $('#map').bind('simplicitymapquestmapresultsmarker', function (evt, ui) {
+        var poi = ui.marker;
         var properties = ui.row.properties;
-        pin.setOptions({
-          icon: 'images/markers/bing/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png'
-        });
-        Microsoft.Maps.Events.addHandler(pin, 'click', function (evt) {
+        var icon = new MQA.Icon('images/markers/mapquest/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png', 30, 30);
+        poi.setIcon(icon)
+        if (properties.type === 'rentals') {
+          poi.setRolloverContent('$' + properties.lease);
+        } else {
+          poi.setRolloverContent('$' + properties.price);
+        }
+        MQA.EventManager.addListener(poi, 'click', function (evt) {
           $('#result-' + ui.row.id).effect("highlight", {}, 3000);
         });
       });
 
-      $('#locationFields')
+      $('#locationFields2')
         .simplicityInputs()
-        .simplicityBingGeocoder({
-          url: '../test/bingGeocoderProxy.php',
-          requestTemplate: {
-            key: credentials
-          }
-        });
-      var selectCallback = function (evt, ui) {
-        var address = '';
-        var latitude = '';
-        var longitude = '';
-        if (ui.item) {
-          address = ui.item.value;
-          latitude = ui.item.latitude;
-          longitude = ui.item.longitude;
-        }
-        $('#address').val(address);
-        $('#latitude').val(latitude);
-        $('#longitude').val(longitude);
-        $('#locationFields').change();
+        .simplicityMapQuestGeocoder();
+      var mapQuestQualityZoomLevels = {
+        'POINT': 14,
+        'ADDRESS': 14,
+        'INTERSECTION': 13,
+        'STREET': 13,
+        'ZIP': 10,
+        'ZIP_EXTENDED': 11,
+        'CITY': 9,
+        'COUNTY': 7,
+        'STATE': 3,
+        'COUNTRY': 2
       };
-      $('#address').autocomplete({
+      // Position the map based on geocoded address
+      var selectCallback = function (evt, ui) {
+        if (ui.item) {
+          var map = $('#map').simplicityMapQuestMap('map');
+          var zoomLevel = mapQuestQualityZoomLevels[ui.item.vendor.geocodeQuality];
+          if (zoomLevel) {
+            map.setZoomLevel(zoomLevel);
+          }
+          map.setCenter({lat: ui.item.latitude, lng: ui.item.longitude});
+        }
+      };
+      // Drive search from current map position
+      $('#map').bind('simplicitymapquestmapboundstrackerbounds', function (evt, ui) {
+        $('#north').val(ui.bounds.north);
+        $('#east').val(ui.bounds.east);
+        $('#south').val(ui.bounds.south);
+        $('#west').val(ui.bounds.west);
+        $('#locationFields2').change();
+      });
+      // Autocomplete based geocoder
+      $('#address2').autocomplete({
         minLength: 0,
-        source: $('#locationFields').simplicityBingGeocoder('autocompleteSource'),
+        source: $('#locationFields2').simplicityMapQuestGeocoder('autocompleteSource'),
         select: selectCallback,
         change: selectCallback,
         search: function (evt, ui) {
@@ -245,13 +266,14 @@
 
       $('body')
         .simplicityState('mergeQueryParams')
-        .simplicityHistory()
         .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({
           url: 'search_controller_real_estate.php'
         })
         .simplicityDiscoverySearch('search');
+
+      });
     //]]>--></script>
   </body>
 </html>

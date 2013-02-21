@@ -94,8 +94,8 @@ groups:
     outputFileName: js/build/realestate_cors.js
     outputFileNameMinified: js/build/realestate_cors.min.js
     sourceFileNames:
-      - tutorial/js/real_estate_search_controller.js
-      - tutorial/js/real_estate_search_results.js
+      - example/js/real_estate_search_controller.js
+      - example/js/real_estate_search_results.js
 
 jslintOptions:
     - passfail
