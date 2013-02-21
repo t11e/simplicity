@@ -12,70 +12,70 @@ groups:
       - js/simplicity/simplicity.version.js
       - js/simplicity/simplicity.equiv.js
       - js/simplicity/simplicity.proxy.js
-      - js/simplicity/simplicityWidget.js
+      - js/simplicity/ui.simplicityWidget.js
       - js/simplicity/fn.simplicityFromState.js
       - js/simplicity/fn.simplicityToState.js
-      - js/simplicity/simplicityState.js
-      - js/simplicity/simplicityInputs.js
-      - js/simplicity/simplicityHistory.js
+      - js/simplicity/ui.simplicityState.js
+      - js/simplicity/ui.simplicityInputs.js
+      - js/simplicity/ui.simplicityHistory.js
       - js/simplicity/simplicity.ajaxHelper.js
-      - js/simplicity/simplicityDiscoverySearch.js
-      - js/simplicity/simplicityDebug.js
+      - js/simplicity/ui.simplicityDiscoverySearch.js
+      - js/simplicity/ui.simplicityDebug.js
       # Widget sensitive to search
-      - js/simplicity/simplicitySearchResults.js
-      - js/simplicity/simplicityRenderParamsSearchResults.js
-      - js/simplicity/simplicityPagination.js
-      - js/simplicity/simplicityPageSnapBack.js
-      - js/simplicity/simplicityFacetCount.js
-      - js/simplicity/simplicityFacetedInput.js
-      - js/simplicity/simplicityFacetedSelect.js
+      - js/simplicity/ui.simplicitySearchResults.js
+      - js/simplicity/ui.simplicityRenderParamsSearchResults.js
+      - js/simplicity/ui.simplicityPagination.js
+      - js/simplicity/ui.simplicityPageSnapBack.js
+      - js/simplicity/ui.simplicityFacetCount.js
+      - js/simplicity/ui.simplicityFacetedInput.js
+      - js/simplicity/ui.simplicityFacetedSelect.js
       # UI only
-      - js/simplicity/simplicitySlider.js
-      - js/simplicity/simplicitySelectSlider.js
-      - js/simplicity/simplicityFlyout.js
-      - js/simplicity/simplicityFancySelect.js
-      - js/simplicity/simplicityFancyFacets.js
+      - js/simplicity/ui.simplicitySlider.js
+      - js/simplicity/ui.simplicitySelectSlider.js
+      - js/simplicity/ui.simplicityFlyout.js
+      - js/simplicity/ui.simplicityFancySelect.js
+      - js/simplicity/ui.simplicityFancyFacets.js
       # Maps
       - js/simplicity/simplicity.degreesToRadians.js
       - js/simplicity/simplicity.radiansToDegrees.js
       - js/simplicity/simplicity.haversineDistanceRadians.js
       - js/simplicity/simplicity.haversineDistanceMiles.js
       - js/simplicity/simplicity.haversineDistanceKm.js
-      - js/simplicity/simplicityGoogleMap.js
-      - js/simplicity/simplicityGoogleMapResults.js
-      - js/simplicity/simplicityGoogleMapBoundsCoordinator.js
-      - js/simplicity/simplicityGoogleMapBoundsTracker.js
-      - js/simplicity/simplicityGoogleMarker.js
-      - js/simplicity/simplicityBingMap.js
-      - js/simplicity/simplicityBingMapResults.js
-      - js/simplicity/simplicityBingMapBoundsCoordinator.js
-      - js/simplicity/simplicityBingMapBoundsTracker.js
-      - js/simplicity/simplicityMapQuestMap.js
-      - js/simplicity/simplicityMapQuestMapResults.js
-      - js/simplicity/simplicityMapQuestMapBoundsCoordinator.js
-      - js/simplicity/simplicityMapQuestMapBoundsTracker.js
-      - js/simplicity/simplicityYahooMap.js
-      - js/simplicity/simplicityYahooMapResults.js
-      - js/simplicity/simplicityYahooMapBoundsCoordinator.js
-      - js/simplicity/simplicityYahooMapBoundsTracker.js
-      - js/simplicity/simplicityNokiaMap.js
-      - js/simplicity/simplicityNokiaMapResults.js
-      - js/simplicity/simplicityNokiaMapBoundsCoordinator.js
-      - js/simplicity/simplicityNokiaMapBoundsTracker.js
+      - js/simplicity/ui.simplicityGoogleMap.js
+      - js/simplicity/ui.simplicityGoogleMapResults.js
+      - js/simplicity/ui.simplicityGoogleMapBoundsCoordinator.js
+      - js/simplicity/ui.simplicityGoogleMapBoundsTracker.js
+      - js/simplicity/ui.simplicityGoogleMarker.js
+      - js/simplicity/ui.simplicityBingMap.js
+      - js/simplicity/ui.simplicityBingMapResults.js
+      - js/simplicity/ui.simplicityBingMapBoundsCoordinator.js
+      - js/simplicity/ui.simplicityBingMapBoundsTracker.js
+      - js/simplicity/ui.simplicityMapQuestMap.js
+      - js/simplicity/ui.simplicityMapQuestMapResults.js
+      - js/simplicity/ui.simplicityMapQuestMapBoundsCoordinator.js
+      - js/simplicity/ui.simplicityMapQuestMapBoundsTracker.js
+      - js/simplicity/ui.simplicityYahooMap.js
+      - js/simplicity/ui.simplicityYahooMapResults.js
+      - js/simplicity/ui.simplicityYahooMapBoundsCoordinator.js
+      - js/simplicity/ui.simplicityYahooMapBoundsTracker.js
+      - js/simplicity/ui.simplicityNokiaMap.js
+      - js/simplicity/ui.simplicityNokiaMapResults.js
+      - js/simplicity/ui.simplicityNokiaMapBoundsCoordinator.js
+      - js/simplicity/ui.simplicityNokiaMapBoundsTracker.js
       # Geocoders
-      - js/simplicity/simplicityGoogleGeocoder.js
-      - js/simplicity/simplicityBingGeocoder.js
-      - js/simplicity/simplicityMapQuestGeocoder.js
-      - js/simplicity/simplicityYahooGeocoder.js
-      - js/simplicity/simplicityNokiaGeocoder.js
+      - js/simplicity/ui.simplicityGoogleGeocoder.js
+      - js/simplicity/ui.simplicityBingGeocoder.js
+      - js/simplicity/ui.simplicityMapQuestGeocoder.js
+      - js/simplicity/ui.simplicityYahooGeocoder.js
+      - js/simplicity/ui.simplicityNokiaGeocoder.js
       # Shape Creators
       - js/simplicity/simplicityGeoFn.js
-      - js/simplicity/simplicityMapShapeCreator.js
-      - js/simplicity/simplicityMapShapeCreatorUi.js
-      - js/simplicity/simplicityBingMapShapeCreator.js
-      - js/simplicity/simplicityGoogleMapShapeCreator.js
-      - js/simplicity/simplicityNokiaMapShapeCreator.js
-      - js/simplicity/simplicityMapQuestMapShapeCreator.js
+      - js/simplicity/ui.simplicityMapShapeCreator.js
+      - js/simplicity/ui.simplicityMapShapeCreatorUi.js
+      - js/simplicity/ui.simplicityBingMapResults.js
+      - js/simplicity/ui.simplicityGoogleMapShapeCreator.js
+      - js/simplicity/ui.simplicityNokiaMapShapeCreator.js
+      - js/simplicity/ui.simplicityMapQuestMapShapeCreator.js
 
   - groupName: simplicity_css
     mediaType: css
