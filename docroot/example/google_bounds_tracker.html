@@ -1,13 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us">
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutorial Search</title>
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicity/simplicityPagination.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicity/simplicityGoogleMarker.css" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="../images/favicon.jpg"/>
+    <link rel="shortcut icon" href="images/favicon.jpg"/>
     <style>
       body {
         margin: auto; /* center in viewport */
@@ -42,6 +43,9 @@
         background: none;
       }
     </style>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
     <h1><a href="../index.html">home</a> | Tutorial Search with Google</h1>
@@ -143,7 +147,10 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
+    <!--[if IE]>
+      <script src="http://cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+    <![endif]-->
 
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
