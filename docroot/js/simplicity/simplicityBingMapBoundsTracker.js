@@ -107,9 +107,9 @@
           longitude: center.longitude
         }
       };
-      var radiusMiles1 = $.simplicityGeoFn.distanceMiles(
+      var radiusMiles1 = $.simplicity.haversineDistanceMiles(
         center.latitude, center.longitude, center.latitude, bounds.getEast());
-      var radiusMiles2 = $.simplicityGeoFn.distanceMiles(
+      var radiusMiles2 = $.simplicity.haversineDistanceMiles(
         center.latitude, center.longitude, bounds.getNorth(), center.longitude);
       var minMiles = Math.min(radiusMiles1, radiusMiles2);
       var maxMiles = Math.max(radiusMiles1, radiusMiles2);

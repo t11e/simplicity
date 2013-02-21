@@ -3,52 +3,12 @@
    * @namespace Contains various geographic related utility functions.
    */
 (function ($) {
-  var radiusMiles = 3956;
-  var radiusKm = 6367;
+  var degreesToRadians = $.simplicity.degreesToRadians;
+  var radiansToDegrees = $.simplicity.radiansToDegrees;
   var geoFn = {
     debug: false
   };
   $.simplicityGeoFn = geoFn;
-  $.simplicityGeoFn.degreesToRadians = function (v) {
-    return v * Math.PI / 180.0;
-  };
-  $.simplicityGeoFn.radiansToDegrees = function (v) {
-    return v * 180 / Math.PI;
-  };
-  $.simplicityGeoFn.distanceRadians = function (lat1, lng1, lat2, lng2) {
-    lat1 = geoFn.degreesToRadians(lat1);
-    lng1 = geoFn.degreesToRadians(lng1);
-    lat2 = geoFn.degreesToRadians(lat2);
-    lng2 = geoFn.degreesToRadians(lng2);
-    var dLat = lat2 - lat1;
-    var dLng = lng2 - lng1;
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return c;
-  };
-  /**
-   * Calculates the distance between two coordinates in miles.
-   *
-   * @param lat1
-   * @param lng1
-   * @param lat2
-   * @param lng2
-   */
-  $.simplicityGeoFn.distanceMiles = function (lat1, lng1, lat2, lng2) {
-    return radiusMiles * geoFn.distanceRadians(lat1, lng1, lat2, lng2);
-  };
-  /**
-   * Calculates the distance between two coordinates in kilometers.
-   *
-   * @param lat1
-   * @param lng1
-   * @param lat2
-   * @param lng2
-   */
-  $.simplicityGeoFn.distanceKm = function (lat1, lng1, lat2, lng2) {
-    return radiusKm * geoFn.distanceRadians(lat1, lng1, lat2, lng2);
-  };
   /**
    * Returns the (initial) heading from this point to the supplied point, in degrees.
    *
@@ -58,13 +18,13 @@
    * @returns {Number} Initial heading in degrees from North
    */
   $.simplicityGeoFn.computeHeading = function (p1, p2) {
-    var dLonr = geoFn.degreesToRadians(p2[1] - p1[1]);
-    var lat1r = geoFn.degreesToRadians(p1[0]);
-    var lat2r = geoFn.degreesToRadians(p2[0]);
+    var dLonr = degreesToRadians(p2[1] - p1[1]);
+    var lat1r = degreesToRadians(p1[0]);
+    var lat2r = degreesToRadians(p2[0]);
     var br = Math.atan2(
         Math.sin(dLonr) * Math.cos(lat2r),
         Math.cos(lat1r) * Math.sin(lat2r) - Math.sin(lat1r) * Math.cos(lat2r) * Math.cos(dLonr));
-    var result = geoFn.radiansToDegrees(br);
+    var result = radiansToDegrees(br);
     if (result < 0) {
       result += 360;
     }
@@ -81,16 +41,16 @@
    * @returns [{Number} lat, {Number} lng] Destination point
    */
   $.simplicityGeoFn.travel = function (p, dist, head) {
-    var d = dist / 1000 / radiusKm; // convert dist to km then to angular distance in radians
-    var h = geoFn.degreesToRadians(head);
-    var lat1 = geoFn.degreesToRadians(p[0]);
-    var lon1 = geoFn.degreesToRadians(p[1]);
+    var d = dist / 1000 / 6367; // convert dist to km then to angular distance in radians
+    var h = degreesToRadians(head);
+    var lat1 = degreesToRadians(p[0]);
+    var lon1 = degreesToRadians(p[1]);
     var lat2 = Math.asin(Math.sin(lat1) * Math.cos(d) +
                  Math.cos(lat1) * Math.sin(d) * Math.cos(h));
     var lon2 = lon1 + Math.atan2(Math.sin(h) * Math.sin(d) * Math.cos(lat1),
                  Math.cos(d) - Math.sin(lat1) * Math.sin(lat2));
     lon2 = (lon2 + 3 * Math.PI) % (2 * Math.PI) - Math.PI; // normalize to -180..+180º
-    return [geoFn.radiansToDegrees(lat2), geoFn.radiansToDegrees(lon2)];
+    return [radiansToDegrees(lat2), radiansToDegrees(lon2)];
   };
   /**
    * Returns the point of intersection of two paths defined by point and heading.
@@ -103,12 +63,12 @@
    * @param   {Number} heading2: Initial heading from second point
    */
   $.simplicityGeoFn.intersection = function (p1, heading1, p2, heading2) {
-    var lat1 = geoFn.degreesToRadians(p1[0]);
-    var lon1 = geoFn.degreesToRadians(p1[1]);
-    var lat2 = geoFn.degreesToRadians(p2[0]);
-    var lon2 = geoFn.degreesToRadians(p2[1]);
-    var heading13 = geoFn.degreesToRadians(heading1);
-    var heading23 = geoFn.degreesToRadians(heading2);
+    var lat1 = degreesToRadians(p1[0]);
+    var lon1 = degreesToRadians(p1[1]);
+    var lat2 = degreesToRadians(p2[0]);
+    var lon2 = degreesToRadians(p2[1]);
+    var heading13 = degreesToRadians(heading1);
+    var heading23 = degreesToRadians(heading2);
     var dLat = lat2 - lat1;
     var dLon = lon2 - lon1;
 
@@ -170,13 +130,6 @@
     var lon3 = lon1 + dLon13;
     lon3 = (lon3 + 3 * Math.PI) % (2 * Math.PI) - Math.PI; // normalize to -180..+180º
 
-    return [geoFn.radiansToDegrees(lat3), geoFn.radiansToDegrees(lon3)];
+    return [radiansToDegrees(lat3), radiansToDegrees(lon3)];
   };
-
-  // For backward compatibility
-  $.simplicityHaversineRadiusMiles = radiusMiles;
-  $.simplicityHaversineRadiusKm = radiusKm;
-  $.simplicityHaversineDistanceRadians = geoFn.distanceRadians;
-  $.simplicityHaversineDistanceMiles = geoFn.distanceMiles;
-  $.simplicityHaversineDistanceKm = geoFn.distanceKm;
 }(jQuery));

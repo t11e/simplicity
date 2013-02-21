@@ -36,7 +36,11 @@ groups:
       - js/simplicity/simplicityFancySelect.js
       - js/simplicity/simplicityFancyFacets.js
       # Maps
-      - js/simplicity/simplicityGeoFn.js
+      - js/simplicity/simplicity.degreesToRadians.js
+      - js/simplicity/simplicity.radiansToDegrees.js
+      - js/simplicity/simplicity.haversineDistanceRadians.js
+      - js/simplicity/simplicity.haversineDistanceMiles.js
+      - js/simplicity/simplicity.haversineDistanceKm.js
       - js/simplicity/simplicityGoogleMap.js
       - js/simplicity/simplicityGoogleMapResults.js
       - js/simplicity/simplicityGoogleMapBoundsCoordinator.js
@@ -65,6 +69,7 @@ groups:
       - js/simplicity/simplicityYahooGeocoder.js
       - js/simplicity/simplicityNokiaGeocoder.js
       # Shape Creators
+      - js/simplicity/simplicityGeoFn.js
       - js/simplicity/simplicityMapShapeCreator.js
       - js/simplicity/simplicityMapShapeCreatorUi.js
       - js/simplicity/simplicityBingMapShapeCreator.js

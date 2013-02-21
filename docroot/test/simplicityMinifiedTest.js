@@ -94,24 +94,25 @@ test("defines $.ui.simplicityFancyFacets", function() {
   ok('undefined' !== typeof($.ui.simplicityFancyFacets), 'undefined widget: $.ui.simplicityFancyFacets');
 });
 
+test("defines $.simplicity.degreesToRadians", function() {
+  ok('undefined' !== typeof($.simplicity.degreesToRadians), 'undefined function: $.simplicity.degreesToRadians');
+});
+test("defines $.simplicity.radiansToDegrees", function() {
+  ok('undefined' !== typeof($.simplicity.radiansToDegrees), 'undefined function: $.simplicity.radiansToDegrees');
+});
+test("defines $.simplicity.haversineDistanceRadians", function() {
+  ok('undefined' !== typeof($.simplicity.haversineDistanceRadians), 'undefined function: $.simplicity.haversineDistanceRadians');
+});
+test("defines $.simplicity.haversineDistanceMiles", function() {
+  ok('undefined' !== typeof($.simplicity.haversineDistanceMiles), 'undefined function: $.simplicity.haversineDistanceMiles');
+});
+test("defines $.simplicity.haversineDistanceKm", function() {
+  ok('undefined' !== typeof($.simplicity.haversineDistanceKm), 'undefined function: $.simplicity.haversineDistanceKm');
+});
+
 // Geographic functions
 test("defines $.simplicityGeoFn", function() {
   ok('undefined' !== typeof($.simplicityGeoFn), 'undefined widget: $.simplicityGeoFn');
-});
-test("defines $.simplicityGeoFn.degreesToRadians", function() {
-  ok('undefined' !== typeof($.simplicityGeoFn.degreesToRadians), 'undefined widget: $.simplicityGeoFn.degreesToRadians');
-});
-test("defines $.simplicityGeoFn.radiansToDegrees", function() {
-  ok('undefined' !== typeof($.simplicityGeoFn.radiansToDegrees), 'undefined widget: $.simplicityGeoFn.radiansToDegrees');
-});
-test("defines $.simplicityGeoFn.distanceRadians", function() {
-  ok('undefined' !== typeof($.simplicityGeoFn.distanceRadians), 'undefined widget: $.simplicityGeoFn.distanceRadians');
-});
-test("defines $.simplicityGeoFn.distanceMiles", function() {
-  ok('undefined' !== typeof($.simplicityGeoFn.distanceMiles), 'undefined widget: $.simplicityGeoFn.distanceMiles');
-});
-test("defines $.simplicityGeoFn.distanceKm", function() {
-  ok('undefined' !== typeof($.simplicityGeoFn.distanceKm), 'undefined widget: $.simplicityGeoFn.distanceKm');
 });
 test("defines $.simplicityGeoFn.computeHeading", function() {
   ok('undefined' !== typeof($.simplicityGeoFn.computeHeading), 'undefined widget: $.simplicityGeoFn.computeHeading');
@@ -121,22 +122,6 @@ test("defines $.simplicityGeoFn.travel", function() {
 });
 test("defines $.simplicityGeoFn.intersection", function() {
   ok('undefined' !== typeof($.simplicityGeoFn.intersection), 'undefined widget: $.simplicityGeoFn.intersection');
-});
-// Compatibility
-test("defines $.simplicityHaversineRadiusMiles", function() {
-  ok('undefined' !== typeof($.simplicityHaversineRadiusMiles), 'undefined widget: $.simplicityHaversineRadiusMiles');
-});
-test("defines $.simplicityHaversineRadiusKm", function() {
-  ok('undefined' !== typeof($.simplicityHaversineRadiusKm), 'undefined widget: $.simplicityHaversineRadiusKm');
-});
-test("defines $.simplicityHaversineDistanceRadians", function() {
-  ok('undefined' !== typeof($.simplicityHaversineDistanceRadians), 'undefined widget: $.simplicityHaversineDistanceRadians');
-});
-test("defines $.simplicityHaversineDistanceMiles", function() {
-  ok('undefined' !== typeof($.simplicityHaversineDistanceMiles), 'undefined widget: $.simplicityHaversineDistanceMiles');
-});
-test("defines $.simplicityHaversineDistanceKm", function() {
-  ok('undefined' !== typeof($.simplicityHaversineDistanceKm), 'undefined widget: $.simplicityHaversineDistanceKm');
 });
 
 // Maps

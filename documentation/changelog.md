@@ -46,8 +46,35 @@ Compatibility
       <td>$.simplicityAjaxHelper</td>
       <td>$.simplicity.ajaxHelper</td>
     </tr>
+    <tr>
+      <td>$.simplicityGeoFn.degreesToRadians</td>
+      <td>$.simplicity.degreesToRadians</td>
+    </tr>
+    <tr>
+      <td>$.simplicityGeoFn.radiansToDegrees</td>
+      <td>$.simplicity.radiansToDegrees</td>
+    </tr>
+    <tr>
+      <td>$.simplicityGeoFn.distanceRadians</td>
+      <td>$.simplicity.haversineDistanceRadians</td>
+    </tr>
+    <tr>
+      <td>$.simplicityGeoFn.distanceMiles</td>
+      <td>$.simplicity.haversineDistanceMiles</td>
+    </tr>
+    <tr>
+      <td>$.simplicityGeoFn.distanceKm</td>
+      <td>$.simplicity.haversineDistanceKm</td>
+    </tr>
   </tbody>
 </table>
+* Removes backwards compatible shims for the following methods:
+  * $.simplicityHaversineRadiusMiles
+  * $.simplicityHaversineRadiusKm
+  * $.simplicityHaversineDistanceRadians
+  * $.simplicityHaversineDistanceMiles
+  * $.simplicityHaversineDistanceKm
+
 
 <div class="page-header">
   <h1>3.2 <small>2012-10-15</small></h1>
