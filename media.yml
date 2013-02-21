@@ -97,6 +97,14 @@ groups:
       - example/js/real_estate_search_controller.js
       - example/js/real_estate_search_results.js
 
+  - groupName: search_js
+    mediaType: js
+    outputFileName: js/build/search.js
+    outputFileNameMinified: js/build/search.min.js
+    sourceFileNames:
+      - example/js/search_controller_gsa.js
+      - example/js/search_results_gsa.js
+
 jslintOptions:
     - passfail
     - indent=2

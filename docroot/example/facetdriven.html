@@ -276,10 +276,12 @@
     </form>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
-
+    <!--[if IE]>
+      <script src="//cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+      <script src="//cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js"></script>
+    <![endif]-->
     <script type="text/javascript" src="../js/simplicity/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.equiv.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/simplicity.proxy.js" charset="utf-8"></script>
@@ -300,6 +302,8 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFancySelect.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFancyFacets.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityFlyout.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_controller_gsa.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_results_gsa.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
@@ -456,14 +460,18 @@
         evt.stopPropagation();
       });
       $('#debug').simplicityDebug();
-      $('#searchResults').simplicitySearchResults();
+      $('#searchResults').simplicitySearchResults({
+        resultsCallback: window.search_results_gsa
+      });
       $('body')
         .simplicityState('mergeQueryParams')
         .simplicityHistory()
         .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({
-          url: 'search_controller_gsa.php'
+          url: 'http://gsa.discoverysearchengine.com:8090/ws/query',
+          backend: 'engine',
+          controllerCallback: window.search_controller_gsa
         })
         .simplicityDiscoverySearch('search');
     //]]>--></script>
