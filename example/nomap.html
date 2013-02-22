@@ -230,6 +230,12 @@
     <script type="text/javascript" src="js/search_controller_realestate.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/search_results_realestate.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
+      if (!$.support.cors) {
+        // Work around for an IE bug where CORS requests don't work from a file:// url, even with
+        // the xdr patch applied.
+        $.support.cors = true;
+      }
+
       $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
       $('body').simplicityState();
