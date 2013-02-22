@@ -89,21 +89,15 @@ groups:
       - css/simplicity/simplicityMapShapeCreator.css
       - css/simplicity/simplicityMapShapeCreatorUi.css
 
-  - groupName: real_estate_cors_js
-    mediaType: js
-    outputFileName: js/build/realestate_cors.js
-    outputFileNameMinified: js/build/realestate_cors.min.js
-    sourceFileNames:
-      - example/js/real_estate_search_controller.js
-      - example/js/real_estate_search_results.js
-
   - groupName: search_js
     mediaType: js
     outputFileName: js/build/search.js
     outputFileNameMinified: js/build/search.min.js
     sourceFileNames:
       - example/js/search_controller_gsa.js
+      - example/js/search_controller_realestate.js
       - example/js/search_results_gsa.js
+      - example/js/search_results_realestate.js
 
 jslintOptions:
     - passfail

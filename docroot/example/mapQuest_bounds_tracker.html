@@ -159,6 +159,8 @@
     <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsCoordinator.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestMapBoundsTracker.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity/ui.simplicityMapQuestGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_controller_realestate.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_results_realestate.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
       MQA.withModule('mapinit', 'geocoder', 'shapes', 'zoomcontrol3', function() {
 
@@ -269,14 +271,18 @@
       $('#debug').simplicityDebug();
 
       // Rendered search results
-      $('#searchResults').simplicitySearchResults();
+      $('#searchResults').simplicitySearchResults({
+        resultsCallback: window.search_results_realestate
+      });
 
       $('body')
         .simplicityState('mergeQueryParams')
         .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({
-          url: 'search_controller_real_estate.php'
+          url: 'http://tutorial.discoverysearchengine.com:8090/ws/query',
+          backend: 'engine',
+          controllerCallback: window.search_controller_realestate
         })
         .simplicityDiscoverySearch('search');
 
