@@ -3,14 +3,13 @@
   <target name="clean"
     description="Removes any temporary files or built resources.">
     <delete dir="build.ant"/>
-    <delete dir="docroot/js/build"/>
-    <delete dir="docroot/css/build"/>
     <delete dir="documentation/jsdoc"/>
   </target>
 
   <target name="compress-media"
     description="Lint, concatenate and compress media files as configured in media.yml.">
     <mkdir dir="build.ant/compressed"/>
+    <mkdir dir="build.ant/processed"/>
     <java jar="tools/mediacompressor-app-1.2.jar" fork="true" failonerror="true">
       <sysproperty key="file.encoding" value="UTF-8"/>
       <arg value="--config=media.yml"/>
@@ -34,7 +33,7 @@
       <arg value="-d=documentation/jsdoc/"/>
       <arg value="-t=tools/jsdoc-toolkit-2.4.0/templates/jekyll"/>
       <arg value="--private"/>
-      <arg value="docroot/js/simplicity/"/>
+      <arg value="js/"/>
     </java>
   </target>
 
@@ -44,12 +43,12 @@
     <delete dir="build.ant/dist"/>
     <mkdir dir="build.ant/dist"/>
     <!-- Copy and rename the Simplicity widgets, to add the current version -->
-    <copy todir="build.ant/dist" flatten="true">
-      <fileset dir="docroot">
-        <include name="js/build/simplicity.version.js"/>
-        <include name="js/build/simplicity.min.js"/>
-        <include name="css/build/simplicity.css"/>
-        <include name="css/build/simplicity.min.css"/>
+    <copy todir="build.ant/dist">
+      <fileset dir="build.ant/processed">
+        <include name="simplicity.js"/>
+        <include name="simplicity.min.js"/>
+        <include name="simplicity.css"/>
+        <include name="simplicity.min.css"/>
       </fileset>
     </copy>
     <!-- Splice the release version into the JavaScript files. -->
@@ -66,7 +65,7 @@
     <zip destfile="simplicity-${version}.zip">
       <!-- Simplicity Widgets -->
       <zipfileset prefix="simplicity-${version}/" dir="build.ant/dist"/>
-      <zipfileset prefix="simplicity-${version}/images" dir="docroot/css/simplicity/images"/>
+      <zipfileset prefix="simplicity-${version}/images" dir="css/images"/>
     </zip>
     <delete dir="build.ant/dist"/>
   </target>

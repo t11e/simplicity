@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Search</title>
+    <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="../css/simplicityPagination.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="images/favicon.jpg"/>
+    <style>
+      body {
+        margin: auto; /* center in viewport */
+        width: 960px;
+        font-size:62.5%;
+      }
+      #nav {
+        width: 200px;
+      }
+      #main {
+        width: 760px;
+      }
+      .result-set .result-row {
+        margin-top: 6px;
+        margin-bottom: 6px;
+      }
+      .ui-simplicity-facet-count {
+        float: right;
+      }
+      #styleCheckboxes ul {
+        list-style-type: none;
+        padding-left: 1em;
+      }
+    </style>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1><a href="../index.html">home</a> | Tutorial Search with MapQuest</h1>
+    <form id="myForm" onsubmit="return false;">
+      <div class="yui3-g">
+        <div id="nav" class="yui3-u">
+          <fieldset>
+            <legend>Search Controls</legend>
+            <button id="searchButton">Search</button>
+            <br />
+            <button id="resetButton">Reset</button>
+            <br />
+            <label for="pageSize">Page Size</label>
+            <select id="pageSize" name="pageSize">
+              <option value=""></option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Type</legend>
+            <select name="type">
+              <option value="">Select...</option>
+              <option value="rentals">Rentals</option>
+              <option value="sales">Sales</option>
+            </select>
+          </fieldset>
+
+          <fieldset id="conditionCheckboxes">
+            <legend>Condition</legend>
+            <div class="row">
+              <input type="checkbox" id="condition_0" name="condition" value="0" />
+              <label for="condition_0">Money pit</label>
+            </div>
+            <div class="row">
+              <input type="checkbox" id="condition_1" name="condition" value="1" />
+              <label for="condition_1">Fixer-upper</label>
+            </div>
+            <div class="row">
+              <input type="checkbox" id="condition_2" name="condition" value="2" />
+              <label for="condition_2">Needs work</label>
+            </div>
+            <div class="row">
+              <input type="checkbox" id="condition_3" name="condition" value="3" />
+              <label for="condition_3">Good shape</label>
+            </div>
+            <div class="row">
+              <input type="checkbox" id="condition_4" name="condition" value="4" />
+              <label for="condition_4">Excellent condition</label>
+            </div>
+          </fieldset>
+          <fieldset id="locationFields">
+            <legend>Location</legend>
+            <input id="address" name="address" />
+            <br />
+            <label for="latitude">Latitude</label>
+            <input id="latitude" name="lat" />
+            <br />
+            <label for="longitude">Longitude</label>
+            <input id="longitude" name="lon" />
+          </fieldset>
+        </div>
+        <div id="main" class="yui3-u">
+          <div class="yui3-g">
+            <fieldset class="ui-widget ui-widget-content">
+              <div id="map" style="width: 700px; height: 300px;"></div>
+            </fieldset>
+          </div>
+          <fieldset class="ui-widget">
+            <legend>Search Results</legend>
+            <div id="searchResults"></div>
+          </fieldset>
+          <fieldset class="ui-widget ui-widget-content">
+            <legend>Pagination</legend>
+            <div id="paginationWidget"></div>
+          </fieldset>
+          <div id="debug" class="yui3-g"></div>
+        </div>
+      </div>
+    </form>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
+    <!--[if IE]>
+      <script src="http://cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="http://mapquestapi.com/sdk/js/v6.0.0/mqa.toolkit.js?key=Fmjtd%7Cluu22q68nq%2C75%3Do5-h67wg"></script>
+
+    <script type="text/javascript" src="../js/simplicity.version.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity.equiv.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity.proxy.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityWidget.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityState.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/fn.simplicityFromState.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/fn.simplicityToState.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityHistory.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity.ajaxHelper.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityDiscoverySearch.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityInputs.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityDebug.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicitySlider.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityFacetCount.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityFacetedInput.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityPagination.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityPageSnapBack.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicitySearchResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityFlyout.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityMapQuestMap.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityMapQuestMapResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityMapQuestMapBoundsCoordinator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityMapQuestMapBoundsTracker.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityMapQuestGeocoder.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_controller_realestate.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_results_realestate.js" charset="utf-8"></script>
+    <script type="text/javascript"><!--//<![CDATA[
+      MQA.withModule('mapinit', 'geocoder', 'shapes', 'zoomcontrol3', function() {
+
+      $('#nav fieldset').addClass("ui-widget ui-widget-content");
+
+      $('body').simplicityState();
+
+      $('#nav :input[name="pageSize"]').simplicityInputs();
+
+      $('#nav :input[name="type"]').simplicityFacetedInput({
+        dimension: 'type',
+        placement: 'append-label'
+      });
+
+      $('#conditionCheckboxes :checkbox').simplicityFacetedInput({
+        dimension: 'condition',
+        placement: 'append-label'
+      });
+
+      (function () {
+        $('#map')
+          .simplicityMapQuestMap()
+          .simplicityMapQuestMapResults()
+          .simplicityMapQuestMapBoundsCoordinator();
+
+        var map = $('#map').simplicityMapQuestMap('map');
+        map.addControl(new MQA.LargeZoomControl3(), new MQA.MapCornerPlacement(MQA.MapCorner.TOP_LEFT));
+      }());
+
+      $('#map').bind('simplicitymapquestmapresultsmarker', function (evt, ui) {
+        var poi = ui.marker;
+        var properties = ui.row.properties;
+        var icon = new MQA.Icon('images/markers/mapquest/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png', 30, 30);
+        poi.setIcon(icon)
+        if (properties.type === 'rentals') {
+          poi.setRolloverContent('$' + properties.lease);
+        } else {
+          poi.setRolloverContent('$' + properties.price);
+        }
+        MQA.EventManager.addListener(poi, 'click', function (evt) {
+          $('#result-' + ui.row.id).effect("highlight", {}, 3000);
+        });
+      });
+
+      $('#locationFields')
+        .simplicityInputs()
+        .simplicityMapQuestGeocoder({
+          geocodeOptions: {
+            maxResults: 10
+          }
+        });
+      var selectCallback = function (evt, ui) {
+        var address = '';
+        var latitude = '';
+        var longitude = '';
+        if (ui.item) {
+          address = ui.item.value;
+          latitude = ui.item.latitude;
+          longitude = ui.item.longitude;
+        }
+        $('#address').val(address);
+        $('#latitude').val(latitude);
+        $('#longitude').val(longitude);
+        $('#locationFields').change();
+      };
+      $('#address').autocomplete({
+        minLength: 0,
+        source: $('#locationFields').simplicityMapQuestGeocoder('autocompleteSource'),
+        select: selectCallback,
+        change: selectCallback,
+        search: function (evt, ui) {
+          if ($(evt.target).val() === '') {
+            selectCallback(evt, ui);
+            return false;
+          }
+          return true;
+        },
+        autoFocus: true
+      });
+
+      $('#paginationWidget').simplicityPagination();
+
+      $('#searchButton').button().click(function (evt) {
+        $('body').simplicityDiscoverySearch('search');
+        evt.stopPropagation();
+      });
+      $('#resetButton').button().click(function (evt) {
+        $('body').simplicityState('reset');
+        evt.stopPropagation();
+      });
+
+      $('#debug').simplicityDebug();
+
+      // Rendered search results
+      $('#searchResults').simplicitySearchResults({
+        resultsCallback: window.search_results_realestate
+      });
+
+      $('body')
+        .simplicityState('mergeQueryParams')
+        .simplicityHistory()
+        .simplicityState('triggerChangeEvent')
+        .simplicityPageSnapBack()
+        .simplicityDiscoverySearch({
+          url: 'http://tutorial.discoverysearchengine.com:8090/ws/query',
+          backend: 'engine',
+          controllerCallback: window.search_controller_realestate
+        })
+        .simplicityDiscoverySearch('search');
+
+      });
+    //]]>--></script>
+  </body>
+</html>

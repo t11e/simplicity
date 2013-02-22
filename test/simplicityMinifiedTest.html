@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us">
+  <head>
+    <title>simplicityState tests</title>
+    <link href="http://code.jquery.com/qunit/qunit-1.11.0.css" rel="stylesheet" type="text/css" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="../build.ant/processed/simplicity.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1 id="qunit-header"><a href="../index.html">home</a> | simplicity minified tests</h1>
+    <h2 id="qunit-banner"></h2>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture"></div>
+
+    <script type="text/javascript">//<![CDATA[
+      window.simplicityMinifiedErrors = [];
+      window.onerror = function () {
+        var args = Array.prototype.slice.call(arguments, 0);
+        if ('undefined' !== typeof window.simplicityMinifiedErrors) {
+          window.simplicityMinifiedErrors.push(args);
+        }
+      };
+    //]]></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../build.ant/processed/simplicity.min.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.11.0.js" charset="utf-8"></script>
+    <script type="text/javascript" src="simplicityMinifiedTest.js" charset="utf-8"></script>
+  </body>
+</html>
