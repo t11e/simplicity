@@ -50,9 +50,6 @@ test("defines $.simplicity.ajaxHelper", function() {
 test("defines $.ui.simplicityDiscoverySearch", function() {
   ok('undefined' !== typeof($.ui.simplicityDiscoverySearch), 'undefined widget: $.ui.simplicityDiscoverySearch');
 });
-test("defines $.ui.simplicityDebug", function() {
-  ok('undefined' !== typeof($.ui.simplicityDebug), 'undefined widget: $.ui.simplicityDebug');
-});
 
 // Widgets sensitive to search
 test("defines $.ui.simplicitySearchResults", function() {

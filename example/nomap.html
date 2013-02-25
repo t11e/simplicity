@@ -193,9 +193,6 @@
             <legend>Pagination</legend>
             <div id="paginationWidget"></div>
           </fieldset>
-          <div class="yui3-g">
-            <div id="debug"></div>
-          </div>
         </div>
       </div>
     </form>
@@ -219,7 +216,6 @@
     <script type="text/javascript" src="../js/simplicity.ajaxHelper.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityDiscoverySearch.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityInputs.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/ui.simplicityDebug.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicitySlider.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityFacetCount.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityFacetedInput.js" charset="utf-8"></script>
@@ -369,8 +365,6 @@
         $('body').simplicityState('reset');
         evt.stopPropagation();
       });
-
-      $('#debug').simplicityDebug();
 
       $('#searchResults').simplicitySearchResults({
         resultsCallback: window.search_results_realestate
