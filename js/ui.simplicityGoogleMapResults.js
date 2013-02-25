@@ -40,9 +40,10 @@
      *   <dd>
      *     Whether or not the map bounds should be updated to include the result locations. Defaults to true.
      *   </dd>
-     *   <dt>markerType</dt>
+     *   <dt>markerCallback</dt>
      *   <dd>
-     *     Optional marker type, either "overlay" or "google". Defaults to <code>overlay</code>.
+     *     Optional marker callback that can be used to create alternative markers before the
+     *     <code>marker</code> event is fired. Defaults to <code>''</code>.
      *   </dd>
      * </dl>
      * @name $.ui.simplicityGoogleMapResults.options
@@ -53,7 +54,7 @@
       longitudeField: 'longitude',
       updateBounds: true,
       map: '',
-      markerType: 'overlay'
+      markerCallback: ''
     },
     _create: function () {
       this._addClass('ui-simplicity-google-map-results');
@@ -65,7 +66,7 @@
     },
     /**
      * Override of <code>_setOption</code> that is used to ensure that the
-     * map is refreshed when the <code>markerType</code> changes.
+     * map is refreshed when the <code>markerCallback</code> changes.
      *
      * @name $.ui.simplicityGoogleMapResults._setOption
      * @function
@@ -73,7 +74,7 @@
      */
     _setOption: function (option, value) {
       $.ui.simplicityWidget.prototype._setOption.apply(this, arguments);
-      if ('markerType' === option) {
+      if ('markerCallback' === option) {
         this.refreshMap();
       }
     },
@@ -152,14 +153,19 @@
       if ('undefined' === typeof searchResponse) {
         searchResponse = $(this.options.searchElement).simplicityDiscoverySearch('searchResponse');
       }
-      var markerFactory = $.simplicityGoogleMarker[this.options.markerType === 'google' ? 'createMarker' : 'createOverlayMarker'];
+      var markerCallback = $.isFunction(this.options.markerCallback) ? this.options.markerCallback : function (options) {
+        return new google.maps.Marker({
+          position: options.position,
+          zIndex: -row.index1
+        });
+      };
       $.fn.simplicityDiscoverySearchItemEnumerator(searchResponse, $.proxy(function (idx, row) {
         var properties = row.properties;
         if ('undefined' !== typeof properties) {
           var latitude = properties[this.options.latitudeField];
           var longitude = properties[this.options.longitudeField];
           if ('undefined' !== typeof latitude && 'undefined' !== typeof longitude) {
-            var marker = markerFactory(
+            var marker = markerCallback(
             {
               position: new google.maps.LatLng(latitude, longitude),
               row: row,

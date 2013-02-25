@@ -33,7 +33,7 @@
     <js>/js/ui.simplicityGoogleMapResults.js</js>
     <js>/js/ui.simplicityGoogleMapBoundsCoordinator.js</js>
     <js>/js/ui.simplicityGoogleMapBoundsTracker.js</js>
-    <js>/js/ui.simplicityGoogleMarker.js</js>
+    <js>/js/simplicityGoogleMarker.js</js>
     <js>/js/ui.simplicityBingMap.js</js>
     <js>/js/ui.simplicityBingMapResults.js</js>
     <js>/js/ui.simplicityBingMapBoundsCoordinator.js</js>

@@ -218,29 +218,21 @@
   };
   /**
    * Factory Method to create a new $.simplicityGoogleMarker.OverlayMarker. The
-   * parameters to the method are the same as for the constructor of
-   * $.simplicityGoogleMarker.OverlayMarker.
+   * parameters to the method are the same as those documented for
+   * $.simplicityGoogleMapResults.option.markerCallback.
    *
-   * @name $.simplicityGoogleMarker.createOverlayMarker
+   * @name $.simplicityGoogleMarker.resultsCallback
    * @function
    * @returns {$.simplicityGoogleMarker.OverlayMarker}
    * @public
    */
-  $.simplicityGoogleMarker.createOverlayMarker = function () {
+  $.simplicityGoogleMarker.resultsCallback = function (options) {
     $.simplicityGoogleMarker.setup();
-    return new $.simplicityGoogleMarker.OverlayMarker(arguments[0]);
-  };
-  /**
-   * Factory Method to create a new google.maps.Marker. The
-   * parameters to the method are the same as for the constructor of
-   * google.maps.Marker.
-   *
-   * @name $.simplicityGoogleMarker.createMarker
-   * @function
-   * @returns {google.maps.Marker}
-   * @public
-   */
-  $.simplicityGoogleMarker.createMarker = function () {
-    return new google.maps.Marker(arguments[0]);
+    return new $.simplicityGoogleMarker.OverlayMarker({
+      position: options.position,
+      row: options.row,
+      html: options.row.index1,
+      zIndex: -options.row.index1
+    });
   };
 }(jQuery));

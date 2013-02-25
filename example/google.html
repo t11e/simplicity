@@ -7,7 +7,6 @@
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicityPagination.css" rel="stylesheet" type="text/css" />
-    <link href="../css/simplicityGoogleMarker.css" rel="stylesheet" type="text/css" />
     <style>
       body {
         margin: auto; /* center in viewport */
@@ -30,16 +29,6 @@
       #styleCheckboxes ul {
         list-style-type: none;
         padding-left: 1em;
-      }
-      .simplicity-google-marker.exact div {
-        background: #E17009;
-      }
-      .simplicity-google-marker.fuzzy div {
-        background: #ccc;
-        color: #fff;
-      }
-      .simplicity-google-marker div.ptr {
-        background: none;
       }
     </style>
     <!--[if lt IE 9]>
@@ -108,17 +97,6 @@
             <label for="longitude">Longitude</label>
             <input id="longitude" name="lon" />
           </fieldset>
-          <fieldset id='mapControls'>
-            <legend>Map Controls</legend>
-            <label>
-              Marker style
-              <select name="markerType">
-                <option value="overlay">overlay</option>
-                <option value="google">google</option>
-              </select>
-            </label>
-          </fieldset>
-
         </div>
         <div id="main" class="yui3-u">
           <div class="yui3-g">
@@ -177,7 +155,6 @@
     <script type="text/javascript" src="../js/ui.simplicityGoogleMapBoundsCoordinator.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityGoogleMapBoundsTracker.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityGoogleGeocoder.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/ui.simplicityGoogleMarker.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/search_controller_realestate.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/search_results_realestate.js" charset="utf-8"></script>
     <script type="text/javascript"><!--//<![CDATA[
@@ -215,27 +192,6 @@
           })
           .simplicityGoogleMapResults()
           .simplicityGoogleMapBoundsCoordinator();
-        $('#map').bind('simplicitygooglemapresultsmarker', function (evt, ui) {
-          var marker = ui.marker;
-          var row = ui.row;
-          if ('undefined' !== typeof marker.setTitle) {
-            // Standard google marker
-            marker.setIcon('images/markers/google/' + (ui.row.exact ? 'exact' : 'fuzzy') + '.png');
-            marker.setTitle('$' + row.properties[row.properties.type === 'rentals' ? 'lease' : 'price']);
-            google.maps.event.addListener(marker, 'click', function() {
-              $('#result-' + ui.row.id).effect("highlight", {}, 3000);
-            });
-          } else {
-            // Overlay - $.simplicityGoogleMarker
-            marker.title('$' + row.properties[row.properties.type === 'rentals' ? 'lease' : 'price']);
-            marker.getElement()
-              .addClass(row.exact ? 'white exact' : 'white fuzzy')
-              .click(function(evt) {
-                var $ele = $(evt.target).closest('.simplicity-google-marker');
-                $('#result-' + $ele.data("row").id).effect("highlight", {}, 3000);
-              });
-          }
-        });
       }());
 
       $('#locationFields')
@@ -287,14 +243,6 @@
       $('#searchResults').simplicitySearchResults({
         resultsCallback: window.search_results_realestate
       });
-
-      $(':input[name="markerType"]')
-        // Update the markerType input for the currently configured one at page load
-        .val($('#map').simplicityGoogleMapResults('option', 'markerType'))
-        // Update the markerType when the user changes it in the dropdown
-        .bind('change', function (evt, ui) {
-          $('#map').simplicityGoogleMapResults('option', 'markerType', $(evt.target).val());
-        });
 
       $('body')
         .simplicityState('mergeQueryParams')
