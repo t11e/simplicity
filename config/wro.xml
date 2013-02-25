@@ -32,7 +32,6 @@
     <js>/js/ui.simplicityGoogleMapResults.js</js>
     <js>/js/ui.simplicityGoogleMapBoundsCoordinator.js</js>
     <js>/js/ui.simplicityGoogleMapBoundsTracker.js</js>
-    <js>/js/simplicityGoogleMarker.js</js>
     <js>/js/ui.simplicityBingMap.js</js>
     <js>/js/ui.simplicityBingMapResults.js</js>
     <js>/js/ui.simplicityBingMapBoundsCoordinator.js</js>
@@ -54,19 +53,9 @@
     <js>/js/ui.simplicityMapQuestGeocoder.js</js>
     <js>/js/ui.simplicityYahooGeocoder.js</js>
     <js>/js/ui.simplicityNokiaGeocoder.js</js>
-    <js>/js/simplicityGeoFn.js</js>
-    <js>/js/ui.simplicityMapShapeCreator.js</js>
-    <js>/js/ui.simplicityMapShapeCreatorUi.js</js>
-    <js>/js/ui.simplicityBingMapResults.js</js>
-    <js>/js/ui.simplicityGoogleMapShapeCreator.js</js>
-    <js>/js/ui.simplicityNokiaMapShapeCreator.js</js>
-    <js>/js/ui.simplicityMapQuestMapShapeCreator.js</js>
     <css>/css/simplicityPagination.css</css>
     <css>/css/simplicitySlider.css</css>
     <css>/css/simplicityFancySelect.css</css>
-    <css>/css/simplicityGoogleMarker.css</css>
-    <css>/css/simplicityMapShapeCreator.css</css>
-    <css>/css/simplicityMapShapeCreatorUi.css</css>
   </group>
   <group name="example">
     <js>/example/js/search_controller_gsa.js</js>

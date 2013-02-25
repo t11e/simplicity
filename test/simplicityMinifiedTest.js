@@ -134,12 +134,6 @@ test("defines $.ui.simplicityGoogleMapBoundsCoordinator", function() {
 test("defines $.ui.simplicityGoogleMapBoundsTracker", function() {
   ok('undefined' !== typeof($.ui.simplicityGoogleMapBoundsTracker), 'undefined widget: $.ui.simplicityGoogleMapBoundsTracker');
 });
-test("defines $.simplicityGoogleMarker", function() {
-  ok('undefined' !== typeof($.simplicityGoogleMarker), 'undefined widget: $.simplicityGoogleMarker');
-});
-test("defines $.simplicityGoogleMarker.OverlayMarker", function() {
-  ok('undefined' !== typeof($.simplicityGoogleMarker.OverlayMarker), 'undefined widget: $.simplicityGoogleMarker.OverlayMarker');
-});
 test("defines $.ui.simplicityBingMap", function() {
   ok('undefined' !== typeof($.ui.simplicityBingMap), 'undefined widget: $.ui.simplicityBingMap');
 });
