@@ -7,12 +7,10 @@ They are comprised of UI widgets and a server-sides search controller,
 The search controller uses a RESTful API with regular URL parameters for
 the request and expect a JSON response.
 
-To see the widgets in action run
+To see the widgets in action open `index.html` in your favorite browser.
 
-    ant compress-media
+To build a minified version of the widgets, run:
 
-And publish the docroot directory via your local apache install.
+    mvn clean package
 
-To generate jsdoc documentation for the widgets, run
-
-    ant jsdoc
+For more information see: http://simplicitywidgets.org

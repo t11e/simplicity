@@ -22,6 +22,13 @@
  */
 
 /**
+ * @name $.simplicity
+ * @namespace Simplicity function namespace.
+ *
+ * Reusable functions and constants from the Simplicity Widgets project.
+ */
+
+/**
  * @name google
  * @namespace Google JavaScript namespace
  */

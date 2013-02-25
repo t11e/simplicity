@@ -1,7 +1,3 @@
-/**
- * @name $.simplicity
- * @namespace Simplicity Widgets
- */
 (function ($) {
   $.simplicity = $.simplicity || {};
   /**
@@ -15,5 +11,5 @@
    * @example
    *   console.log('Simplicity Widgets:', $.simplicity.version);
    */
-  $.simplicity.version = 'dev';
+  $.simplicity.version = '3.2-dev';
 }(jQuery));
