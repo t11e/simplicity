@@ -71,14 +71,14 @@
      *   <dt>availableTemplate</dt>
      *   <dd>
      *     The default template to use for the available facets block of <code>simplicityFancySelect</code>,
-     *     (selector '.available-container'). Also acts as the default for <code>selectedTemplate</code>
+     *     (selector '.ui-simplicity-fancy-facets-available-container'). Also acts as the default for <code>selectedTemplate</code>
      *     and <code>overflowTemplate</code>.
      *     <p>Default:</p>
      *     <pre>
-     *&lt;ul class="options ui-helper-clearfix">
-     *  &lt;li class="option ui-helper-clearfix">
-     *    &lt;a href="#" class="label"/>
-     *    &lt;span class="count"/>
+     *&lt;ul class="ui-simplicity-fancy-select-options ui-helper-clearfix">
+     *  &lt;li class="ui-simplicity-fancy-select-option ui-helper-clearfix">
+     *    &lt;a href="#" class="ui-simplicity-fancy-select-label"/>
+     *    &lt;span class="ui-simplicity-fancy-select-count"/>
      *  &lt;/li>
      *&lt;/ul></pre>
      *   </dd>
@@ -86,19 +86,19 @@
      *   <dd>
      *     When <code>''</code> falls back to the value for option <code>availableTemplate</code>.
      *     Otherwise it determines the template to use for <code>simplicityFancySelect</code>
-     *     when rendering the selected facets (selector '.selected-container'). Default is <code>''</code>.
+     *     when rendering the selected facets (selector '.ui-simplicity-fancy-facets-selected-container'). Default is <code>''</code>.
      *   </dd>
      *   <dt>overflowTemplate</dt>
      *   <dd>
      *     When <code>''</code> falls back to the value for option <code>availableTemplate</code>.
      *     Otherwise it determines the template to use for <code>simplicityFancySelect</code>
-     *     when rendering the overflow facets (selector '.overflow-container'). Default is <code>''</code>.
+     *     when rendering the overflow facets (selector '.ui-simplicity-fancy-facets-overflow-container'). Default is <code>''</code>.
      *   </dd>
      *   <dt>pathTemplate</dt>
      *   <dd>
      *     When <code>''</code> falls back to the value for option <code>availableTemplate</code>.
      *     Otherwise it determines the template to use for <code>simplicityFancySelect</code>
-     *     when rendering the facets navigation path (selector '.path-container'). Default is <code>''</code>.
+     *     when rendering the facets navigation path (selector '.ui-simplicity-fancy-facets-path-container'). Default is <code>''</code>.
      *   </dd>
      * </dl>
      * @name $.ui.simplicityFancyFacets.options
@@ -112,20 +112,20 @@
       availableLimit: 5,
       hideWhenEmpty: false,
       template:
-        '<div class="path-container"/>' +
-        '<div class="selected-container"/>' +
-        '<div class="available-container"/>' +
-        '<div class="overflow-opener"><a href="#more">More&hellip;</a></div>' +
-        '<div class="overflow-closer"><a href="#less">Less&hellip;</a></div>' +
-        '<div class="overflow-flyout">' +
-          '<div class="overflow-container"/>' +
-          '<div class="overflow-closer">Less&hellip;</div>' +
+        '<div class="ui-simplicity-fancy-facets-path-container"/>' +
+        '<div class="ui-simplicity-fancy-facets-selected-container"/>' +
+        '<div class="ui-simplicity-fancy-facets-available-container"/>' +
+        '<div class="ui-simplicity-fancy-facets-overflow-opener"><a href="#more">More&hellip;</a></div>' +
+        '<div class="ui-simplicity-fancy-facets-overflow-closer"><a href="#less">Less&hellip;</a></div>' +
+        '<div class="ui-simplicity-fancy-facets-overflow-flyout">' +
+          '<div class="ui-simplicity-fancy-facets-overflow-container"/>' +
+          '<div class="ui-simplicity-fancy-facets-overflow-closer">Less&hellip;</div>' +
         '</div>',
       availableTemplate: '' +
-        '<ul class="options ui-helper-clearfix">' +
-          '<li class="option ui-helper-clearfix">' +
-            '<a href="#" class="label"/>' +
-            '<span class="count"/>' +
+        '<ul class="ui-simplicity-fancy-select-options ui-helper-clearfix">' +
+          '<li class="ui-simplicity-fancy-select-option ui-helper-clearfix">' +
+            '<a href="#" class="ui-simplicity-fancy-select-label"/>' +
+            '<span class="ui-simplicity-fancy-select-count"/>' +
           '</li>' +
         '</ul>',
       selectedTemplate: '',
@@ -142,7 +142,7 @@
         this.element.children().remove();
         $(this.options.template).appendTo(this.element);
       }
-      this.element.find('.path-container')
+      this.element.find('.ui-simplicity-fancy-facets-path-container')
         .simplicityFancySelect({
           select: select,
           firstPathOnly: true,
@@ -150,7 +150,7 @@
           hideWhenEmpty: true,
           template: this.options.pathTemplate || this.options.availableTemplate
         });
-      this.element.find('.selected-container')
+      this.element.find('.ui-simplicity-fancy-facets-selected-container')
         .simplicityFancySelect({
           select: select,
           refreshOnCreate: false,
@@ -158,7 +158,7 @@
           firstPathSelections: true,
           template: this.options.selectedTemplate || this.options.availableTemplate
         });
-      this.element.find('.available-container')
+      this.element.find('.ui-simplicity-fancy-facets-available-container')
         .simplicityFancySelect({
           select: select,
           refreshOnCreate: false,
@@ -166,7 +166,7 @@
           firstPathSelections: true,
           template: this.options.overflowTemplate || this.options.availableTemplate
         });
-      this.element.find('.overflow-container')
+      this.element.find('.ui-simplicity-fancy-facets-overflow-container')
         .simplicityFancySelect({
           select: select,
           refreshOnCreate: false,
@@ -177,10 +177,10 @@
       // This change handler must be bound *after* the contained widgets are
       // created so we can be sure it is called after their change handlers.
       this._bind(select, 'change', this._changeHandler);
-      this.element.find('.overflow-flyout').simplicityFlyout();
+      this.element.find('.ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout();
       this._overflowOpen = false;
-      var overflowOpener = this.element.find('.overflow-opener');
-      var overflowCloser = this.element.find('.overflow-closer');
+      var overflowOpener = this.element.find('.ui-simplicity-fancy-facets-overflow-opener');
+      var overflowCloser = this.element.find('.ui-simplicity-fancy-facets-overflow-closer');
       overflowOpener.hide();
       overflowCloser.hide();
       this
@@ -196,17 +196,17 @@
           this.element.hide();
         }
       }
-      var overflowOpener = this.element.find('.overflow-opener');
-      var overflowCloser = this.element.find('.overflow-closer');
-      if (this.element.find('.overflow-container').simplicityFancySelect('size') > 0) {
-        overflowOpener.addClass('overflow-contains-selected');
-        overflowCloser.addClass('overflow-contains-selected');
+      var overflowOpener = this.element.find('.ui-simplicity-fancy-facets-overflow-opener');
+      var overflowCloser = this.element.find('.ui-simplicity-fancy-facets-overflow-closer');
+      if (this.element.find('.ui-simplicity-fancy-facets-overflow-container').simplicityFancySelect('size') > 0) {
+        overflowOpener.addClass('ui-simplicity-fancy-facets-overflow-contains-selected');
+        overflowCloser.addClass('ui-simplicity-fancy-facets-overflow-contains-selected');
         if (!this._overflowOpen) {
           this.closeOverflow(true);
         }
       } else {
-        overflowOpener.removeClass('overflow-contains-selected');
-        overflowCloser.removeClass('overflow-contains-selected');
+        overflowOpener.removeClass('ui-simplicity-fancy-facets-overflow-contains-selected');
+        overflowCloser.removeClass('ui-simplicity-fancy-facets-overflow-contains-selected');
         this.closeOverflow(true);
       }
     },
@@ -227,7 +227,7 @@
      */
     size: function () {
       var size = 0;
-      this.element.find('.path-container, .selected-container, .available-container, .overflow-container').each(function (idx, elem) {
+      this.element.find('.ui-simplicity-fancy-facets-path-container, .ui-simplicity-fancy-facets-selected-container, .ui-simplicity-fancy-facets-available-container, .ui-simplicity-fancy-facets-overflow-container').each(function (idx, elem) {
         size += $(elem).simplicityFancySelect('size');
       });
       return size;
@@ -249,9 +249,9 @@
     openOverflow: function () {
       if (!this._overflowOpen) {
         this._overflowOpen = true;
-        this.element.find('.overflow-opener').hide();
-        this.element.find('.overflow-closer').show();
-        this.element.find('.overflow-flyout').simplicityFlyout('open');
+        this.element.find('.ui-simplicity-fancy-facets-overflow-opener').hide();
+        this.element.find('.ui-simplicity-fancy-facets-overflow-closer').show();
+        this.element.find('.ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout('open');
       }
     },
     /**
@@ -263,16 +263,16 @@
     closeOverflow: function (force) {
       if (this._overflowOpen || force) {
         this._overflowOpen = false;
-        var container = this.element.find('.overflow-container');
-        var opener = this.element.find('.overflow-opener');
-        var closer = this.element.find('.overflow-closer');
+        var container = this.element.find('.ui-simplicity-fancy-facets-overflow-container');
+        var opener = this.element.find('.ui-simplicity-fancy-facets-overflow-opener');
+        var closer = this.element.find('.ui-simplicity-fancy-facets-overflow-closer');
         if (container.simplicityFancySelect('size') > 0) {
           opener.show();
         } else {
           opener.hide();
         }
         closer.hide();
-        this.element.find('.overflow-flyout').simplicityFlyout('close');
+        this.element.find('.ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout('close');
       }
     },
     _setOptions: function () {
@@ -291,7 +291,7 @@
       }
     },
     _applyOptions: function () {
-      this.element.find('.selected-container')
+      this.element.find('.ui-simplicity-fancy-facets-selected-container')
         .simplicityFancySelect('option', {
           displaySelected: true,
           displayUnselected: false,
@@ -300,7 +300,7 @@
           hideWhenEmpty: true,
           template: this.options.selectedTemplate || this.options.availableTemplate
         });
-      this.element.find('.available-container')
+      this.element.find('.ui-simplicity-fancy-facets-available-container')
         .simplicityFancySelect({
           displaySelected: this.options.availableContainsSelected,
           displayUnselected: true,
@@ -308,7 +308,7 @@
           skipCount: 0,
           template: this.options.availableTemplate
         });
-      this.element.find('.overflow-container')
+      this.element.find('.ui-simplicity-fancy-facets-overflow-container')
         .simplicityFancySelect({
           displaySelected: this.options.overflowContainsSelected,
           displayUnselected: true,

@@ -131,13 +131,12 @@
     },
     _create : function () {
       this
-        ._addClass('ui-simplicity-pagination')
+        ._addClass('ui-simplicity-pagination ui-helper-clearfix')
         ._bind(this.options.searchElement, 'simplicitySearchResponse', this._searchResponseHandler)
         ._bind(this.options.stateElement, 'simplicityStateReset', this._stateResetHandler)
         ._bind(this.element, 'setPage', this.setPage)
         ._bind(this.element, 'prevPage', this.prevPage)
         ._bind(this.element, 'nextPage', this.nextPage);
-      this.element.append($('<div class="pagination"/>'));
       this._currentPage = 0;
     },
     /**
@@ -197,11 +196,11 @@
           var start = startEnd[0];
           var end = startEnd[1];
           if (this.options.prev_text && (this.options.prev_show_always || this._currentPage > 0)) {
-            target.append(this._makeLink(this._currentPage - 1, this.options.prev_text, 'prev'));
+            target.append(this._makeLink(this._currentPage - 1, this.options.prev_text, 'ui-simplicity-pagination-prev'));
           }
           if (start > 0 && this.options.num_edge_entries > 0) {
             var lowEnd = Math.min(this.options.num_edge_entries, start);
-            this._makeLinks(target, 0, lowEnd, 'sp');
+            this._makeLinks(target, 0, lowEnd, 'ui-simplicity-pagination-sp');
             if (this.options.ellipse_text && this.options.num_edge_entries < start) {
               $('<span/>').text(this.options.ellipse_text).appendTo(target);
             }
@@ -212,12 +211,12 @@
               $('<span/>').text(this.options.ellipse_text).appendTo(target);
             }
             var startHigh = Math.max(this._numPages - this.options.num_edge_entries, end);
-            this._makeLinks(target, startHigh, this._numPages, 'ep');
+            this._makeLinks(target, startHigh, this._numPages, 'ui-simplicity-pagination-ep');
           }
           if (this.options.next_text && (this.options.next_show_always || this._currentPage < this._numPages - 1)) {
-            target.append(this._makeLink(this._currentPage + 1, this.options.next_text, 'next'));
+            target.append(this._makeLink(this._currentPage + 1, this.options.next_text, 'ui-simplicity-pagination-next'));
           }
-          this.element.find('div.pagination').html(target);
+          this.element.html(target.contents());
         } finally {
           this._ignoreCallback = false;
         }
@@ -252,7 +251,7 @@
       }
       var result = $('<a/>');
       if (page === this._currentPage) {
-        result = $('<span/>').addClass('current ui-priority-primary').text(text);
+        result = $('<span/>').addClass('ui-simplicity-pagination-current ui-priority-primary').text(text);
       } else {
         result = $('<a/>')
           .attr('href', this.options.link_to.replace(/__id__/, page))
@@ -266,7 +265,7 @@
       result.addClass(this.options.applyClass);
       result.data('page', page);
       if (page === this._currentPage) {
-        cssClass = ((result.attr('class') || '').match(/\bprev\b|\bnext\b/g)) ? 'ui-state-disabled' : 'ui-state-active';
+        cssClass = (result.hasClass('ui-simplicity-pagination-prev') || result.hasClass('ui-simplicity-pagination-next')) ? 'ui-state-disabled' : 'ui-state-active';
         result.addClass(cssClass);
       }
       return result;

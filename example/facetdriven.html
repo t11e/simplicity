@@ -7,7 +7,7 @@
     <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicityPagination.css" rel="stylesheet" type="text/css" />
-    <link href="../css/simplicitySlider.css" rel="stylesheet" type="text/css" />
+    <link href="../css/simplicitySelectSlider.css" rel="stylesheet" type="text/css" />
     <link href="../css/simplicityFancySelect.css" rel="stylesheet" type="text/css" />
     <style>
       body {
@@ -27,7 +27,7 @@
         margin-top: 6px;
         margin-bottom: 6px;
       }
-      .ui-simplicity-slider {
+      .ui-simplicity-select-slider {
         margin: 1.4em;
       }
       fieldset {
@@ -40,75 +40,75 @@
       #privacySlider {
         margin-top: 3.4em;
       }
-      #catFancy .option,
-      #agencyFancy .option {
+      #catFancy .ui-simplicity-fancy-select-option,
+      #agencyFancy .ui-simplicity-fancy-select-option {
         padding-top: 0.4em;
         padding-bottom: 0.4em;
       }
       /* fancy facets */
-      .ui-simplicity-fancy-facets .path-container,
-      .ui-simplicity-fancy-facets .selected-container,
-      .ui-simplicity-fancy-facets .available-container,
-      .ui-simplicity-fancy-facets .overflow-container {
+      .ui-simplicity-fancy-facets-path-container,
+      .ui-simplicity-fancy-facets-selected-container,
+      .ui-simplicity-fancy-facets-available-container,
+      .ui-simplicity-fancy-facets-overflow-container {
         margin-top: 0;
         margin-bottom: 0;
       }
 
-      .ui-simplicity-fancy-facets .path-container {
+      .ui-simplicity-fancy-facets-path-container {
         margin-top: 0.4em;
         margin-bottom: 0.4em;
         padding-bottom: 0.8em;
         border-bottom: 2px dashed #A6C9E2;
       }
-      .ui-simplicity-fancy-facets .path-container ul {
+      .ui-simplicity-fancy-facets-path-container ul {
         list-style-type: none;
         padding-left: 0;
         margin-top: 0;
         margin-bottom: 0;
       }
-      .ui-simplicity-fancy-facets .path-container li {
+      .ui-simplicity-fancy-facets-path-container li {
         display: block;
         float: left;
         padding-left: 0;
         padding-right: 2em;
         white-space: nowrap;
       }
-      .ui-simplicity-fancy-facets .path-container .count {
+      .ui-simplicity-fancy-facets-path-container .ui-simplicity-fancy-select-count {
         display: none;
       }
-      .ui-simplicity-fancy-facets .path-container .option a {
+      .ui-simplicity-fancy-facets-path-container .ui-simplicity-fancy-select-option a {
         text-decoration: none;
       }
 
-      .ui-simplicity-fancy-facets .selected-container {
+      .ui-simplicity-fancy-facets-selected-container {
         padding-bottom: 0.8em;
         margin-bottom: 0.4em;
         border-bottom: 2px dashed #A6C9E2;
       }
 
-      .ui-simplicity-fancy-facets .overflow-contains-selected {
+      .ui-simplicity-fancy-facets-overflow-contains-selected {
         font-weight: bold;
       }
-      .ui-simplicity-fancy-facets .overflow-opener,
-      .ui-simplicity-fancy-facets .overflow-closer {
+      .ui-simplicity-fancy-facets-overflow-opener,
+      .ui-simplicity-fancy-facets-overflow-closer {
         padding: 0.4em;
       }
 
       /** border and icon for the opener and closer */
-      .ui-simplicity-fancy-facets .overflow-opener,
-      .ui-simplicity-fancy-facets .overflow-closer {
+      .ui-simplicity-fancy-facets-overflow-opener,
+      .ui-simplicity-fancy-facets-overflow-closer {
         margin-top: 0.4em;
         margin-bottom: 0.4em;
         border: 1px solid #A6C9E2;
       }
-      .ui-simplicity-fancy-facets .overflow-opener .ui-icon,
-      .ui-simplicity-fancy-facets .overflow-closer .ui-icon {
+      .ui-simplicity-fancy-facets-overflow-opener .ui-icon,
+      .ui-simplicity-fancy-facets-overflow-closer .ui-icon {
         float: right;
       }
 
       /* Look and feel customizations for the various configurations inline/dropdown/flyout/blocks. */
-      .ui-simplicity-flyout-dropdown,
-      .ui-simplicity-flyout-flyout {
+      .flyout-dropdown,
+      .flyout-flyout {
         padding: 1em;
         border: 1px solid #A6C9E2;
         background-color: #FFFFFF;
@@ -116,17 +116,17 @@
       }
 
       /* Flyout blocks */
-      .ui-simplicity-fancy-facets .ui-simplicity-flyout-blocks {
+      .flyout-blocks {
         border: none;
         background-color: transparent;
       }
-      .ui-simplicity-fancy-facets .ui-simplicity-flyout-blocks .overflow-closer {
+      .flyout-blocks .ui-simplicity-fancy-facets-overflow-closer {
         background-color: #FFFFFF;
         margin-top: 0;
         margin-bottom: 0;
         width: 17.2em;
       }
-      .ui-simplicity-fancy-facets .ui-simplicity-flyout-blocks .options li {
+      .flyout-blocks .ui-simplicity-fancy-select-options li {
         display: block;
         float: left;
         padding: 0.8em;
@@ -136,7 +136,7 @@
         border: 1px solid #A6C9E2;
         background-color: #FFFFFF;
       }
-      .ui-simplicity-fancy-facets .ui-simplicity-flyout-blocks ..options .count {
+      .flyout-blocks .ui-simplicity-fancy-select-count {
         float: right;
         padding-left: 1em;
       }
@@ -169,24 +169,24 @@
           <fieldset>
             <legend>Category Type with checkboxes</legend>
             <ul id="catFancyWithCheckboxes">
-              <li class="option ui-helper-clearfix">
+              <li class="ui-simplicity-fancy-select-option ui-helper-clearfix">
                 <label>
-                  <input type="checkbox" class="option-checkbox"/>
-                  <span class="label"></span>
+                  <input type="checkbox" class="ui-simplicity-fancy-select-checkbox"/>
+                  <span class="ui-simplicity-fancy-select-label"></span>
                 </label>
-                <span class="count"></span>
+                <span class="ui-simplicity-fancy-select-count"></span>
               </li>
             </ul>
           </fieldset>
           <fieldset>
             <legend>Category Type with radio</legend>
             <ul id="catFancyWithRadios">
-              <li class="option ui-helper-clearfix">
+              <li class="ui-simplicity-fancy-select-option ui-helper-clearfix">
                 <label>
-                  <input type="radio" class="option-radio"/>
-                  <span class="label"></span>
+                  <input type="radio" class="ui-simplicity-fancy-select-radio"/>
+                  <span class="ui-simplicity-fancy-select-label"></span>
                 </label>
-                <span class="count"></span>
+                <span class="ui-simplicity-fancy-select-count"></span>
               </li>
             </ul>
           </fieldset>
@@ -331,7 +331,6 @@
       $('#catFancyWithRadios').simplicityFancySelect({
         select: '#catSelect',
         template: '',
-        checkableInputSelector: ':radio.option-radio',
         radioStyle: true
       });
       $('#formatsSelect')
@@ -362,21 +361,21 @@
 
       // The following chunk of code deals with reconfiguring the fancy select to
       // help demonstrate the different configuration options.
-      $('#agencyFancy .overflow-closer').append($('<div class="ui-icon"/>'));
-      $('#agencyFancy .overflow-opener').append($('<div class="ui-icon"/>'));
+      $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer').append($('<div class="ui-icon"/>'));
+      $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener').append($('<div class="ui-icon"/>'));
       $('#agencyOverflowKind').change(function (evt) {
         var val = $(evt.target).val();
         $('#agencyFancy').simplicityFancyFacets('closeOverflow');
-        $('#agencyFancy .overflow-closer .ui-icon').removeClass('ui-icon-triangle-1-n');
-        $('#agencyFancy .overflow-closer .ui-icon').removeClass('ui-icon-triangle-1-w');
-        $('#agencyFancy .overflow-opener .ui-icon').removeClass('ui-icon-triangle-1-s');
-        $('#agencyFancy .overflow-opener .ui-icon').removeClass('ui-icon-triangle-1-e');
-        $('#agencyFancy .overflow-flyout').removeClass('ui-simplicity-flyout-inline');
-        $('#agencyFancy .overflow-flyout').removeClass('ui-simplicity-flyout-dropdown');
-        $('#agencyFancy .overflow-flyout').removeClass('ui-simplicity-flyout-flyout');
-        $('#agencyFancy .overflow-flyout').removeClass('ui-simplicity-flyout-blocks');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer .ui-icon').removeClass('ui-icon-triangle-1-n');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer .ui-icon').removeClass('ui-icon-triangle-1-w');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener .ui-icon').removeClass('ui-icon-triangle-1-s');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener .ui-icon').removeClass('ui-icon-triangle-1-e');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').removeClass('flyout-inline');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').removeClass('flyout-dropdown');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').removeClass('flyout-flyout');
+        $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').removeClass('flyout-blocks');
         if (val === 'inline') {
-          $('#agencyFancy .overflow-flyout').simplicityFlyout('option', {
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout('option', {
             position: '',
             effect: 'slide',
             effectOptions: {
@@ -384,15 +383,15 @@
               duration: 500
             }
           });
-          $('#agencyFancy .overflow-flyout').addClass('ui-simplicity-flyout-inline');
-          $('#agencyFancy .overflow-closer .ui-icon').addClass('ui-icon-triangle-1-n');
-          $('#agencyFancy .overflow-opener .ui-icon').addClass('ui-icon-triangle-1-s');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').addClass('flyout-inline');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer .ui-icon').addClass('ui-icon-triangle-1-n');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener .ui-icon').addClass('ui-icon-triangle-1-s');
         } else if (val === 'dropdown') {
-          $('#agencyFancy .overflow-flyout').simplicityFlyout('option', {
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout('option', {
             position: {
               my: 'left top',
               at: 'left bottom',
-              of: '#agencyFancy .overflow-closer',
+              of: '#agencyFancy .ui-simplicity-fancy-facets-overflow-closer',
               collision: 'none'
             },
             effect: 'slide',
@@ -401,11 +400,11 @@
               duration: 500
             }
           });
-          $('#agencyFancy .overflow-flyout').addClass('ui-simplicity-flyout-dropdown');
-          $('#agencyFancy .overflow-closer .ui-icon').addClass('ui-icon-triangle-1-n');
-          $('#agencyFancy .overflow-opener .ui-icon').addClass('ui-icon-triangle-1-s');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').addClass('flyout-dropdown');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer .ui-icon').addClass('ui-icon-triangle-1-n');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener .ui-icon').addClass('ui-icon-triangle-1-s');
         } else if (val === 'flyout') {
-          $('#agencyFancy .overflow-flyout').simplicityFlyout('option', {
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout('option', {
             position: {
               my: 'left top',
               at: 'right top',
@@ -418,11 +417,11 @@
               duration: 500
             }
           });
-          $('#agencyFancy .overflow-flyout').addClass('ui-simplicity-flyout-flyout');
-          $('#agencyFancy .overflow-closer .ui-icon').addClass('ui-icon-triangle-1-w');
-          $('#agencyFancy .overflow-opener .ui-icon').addClass('ui-icon-triangle-1-e');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').addClass('flyout-flyout');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer .ui-icon').addClass('ui-icon-triangle-1-w');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener .ui-icon').addClass('ui-icon-triangle-1-e');
         } else if (val === 'blocks') {
-          $('#agencyFancy .overflow-flyout').simplicityFlyout('option', {
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').simplicityFlyout('option', {
             position: {
               my: 'left top',
               at: 'right top',
@@ -435,10 +434,9 @@
               duration: 500
             }
           });
-          $('#agencyFancy .overflow-flyout').addClass('ui-simplicity-flyout-blocks');
-          $('#agencyFancy .overflow-closer .ui-icon').addClass('ui-icon-triangle-1-w');
-          $('#agencyFancy .overflow-opener .ui-icon').addClass('ui-icon-triangle-1-e');
-        $('#agencyFancy .overflow-flyout').addClass('ui-simplicity-flyout-blocks');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-flyout').addClass('flyout-blocks');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-closer .ui-icon').addClass('ui-icon-triangle-1-w');
+          $('#agencyFancy .ui-simplicity-fancy-facets-overflow-opener .ui-icon').addClass('ui-icon-triangle-1-e');
         }
       });
       $('#agencyAvailableLimit, #agencySelectedArea, ' +

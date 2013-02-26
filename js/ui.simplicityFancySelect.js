@@ -111,7 +111,7 @@
      *   <dt>checkableInputSelector</dt>
      *   <dd>
      *     Determines the selector (within the option template) to use to identify a checkable DOM input that reflects the current
-     *     widget state. Defaults to <code>:checkbox.option-checkbox,:radio.option-radio</code>.
+     *     widget state. Defaults to <code>:checkbox.ui-simplicity-fancy-select-checkbox,:radio.ui-simplicity-fancy-select-radio</code>.
      *   </dd>
      *   <dt>radioStyle</dt>
      *   <dd>
@@ -142,12 +142,14 @@
       refreshOnCreate: true,
       hideWhenEmpty: false,
       radioStyle: false,
-      checkableInputSelector: ':checkbox.option-checkbox,:radio.option-radio',
+      checkableInputSelector: ':checkbox.ui-simplicity-fancy-select-checkbox,:radio.ui-simplicity-fancy-select-radio',
+      optionLabelSelector: '.ui-simplicity-fancy-select-label',
+      optionCountSelector: '.ui-simplicity-fancy-select-count',
       template: '' +
-        '<ul class="options ui-helper-clearfix">' +
-          '<li class="option ui-helper-clearfix">' +
-            '<a href="#" class="label"/>' +
-            '<span class="count"/>' +
+        '<ul class="ui-simplicity-fancy-select-options ui-helper-clearfix">' +
+          '<li class="ui-simplicity-fancy-select-option ui-helper-clearfix">' +
+            '<a href="#" class="ui-simplicity-fancy-select-label"/>' +
+            '<span class="ui-simplicity-fancy-select-count"/>' +
           '</li>' +
         '</ul>'
     },
@@ -164,9 +166,9 @@
         this.element.children().remove();
         $(this.options.template).appendTo(this.element);
       }
-      var template = this.element.find('.option:first');
+      var template = this.element.find('.ui-simplicity-fancy-select-option:first');
       if (template.length === 0) {
-        template = $('<div class="option"/>');
+        template = $('<div class="ui-simplicity-fancy-select-option"/>');
       }
       this._optionTemplate = template.detach();
       this._checkableInputSelector = '';
@@ -207,7 +209,7 @@
      * @function
      */
     refresh: function () {
-      var target = this.element.find('.options:first');
+      var target = this.element.find('.ui-simplicity-fancy-select-options:first');
       if (target.length === 0) {
         target = this.element;
       }
@@ -278,8 +280,8 @@
     },
     /**
      * Creates an option from the template. Adds <code>facet-id</code>, <code>is-path</code>
-     * and <code>count</code> data attributes to the created element. Sets the label (<code>.label</code>)
-     * and count (</code>.count</code>) to contained elements that match the appropriate class.
+     * and <code>count</code> data attributes to the created element. Sets the label (<code>.ui-simplicity-fancy-select-label</code>)
+     * and count (</code>.ui-simplicity-fancy-select-count</code>) to contained elements that match the appropriate class.
      * Triggers a <code>createOption</code> widget event (externally seen as <code>simplicityfancyfacetscreateoption</code>)
      * which can be used to customize the generated DOM element.
      *
@@ -296,8 +298,8 @@
         .data('facet-id', option.val())
         .data('is-path', 'undefined' !== typeof isPath ? isPath : false)
         .data('path', 'undefined' !== typeof path ? path : []);
-      elem.find('.label').text(option.text());
-      elem.find('.count').text('undefined' !== typeof count ? count : 0);
+      elem.find(this.options.optionLabelSelector).text(option.text());
+      elem.find(this.options.optionCountSelector).text('undefined' !== typeof count ? count : 0);
       var eventOptions = {
         target: elem,
         source: option,
@@ -322,9 +324,9 @@
      */
     _markOptionSelected: function (option, selected) {
       if (selected) {
-        option.addClass('selected');
+        option.addClass('ui-simplicity-fancy-select-selected');
       } else {
-        option.removeClass('selected');
+        option.removeClass('ui-simplicity-fancy-select-selected');
       }
       if (this._checkableInputSelector !== '') {
         option.find(this._checkableInputSelector).each(function () {
@@ -334,8 +336,8 @@
     },
     _clickHandler: function (evt) {
       var option = $(evt.target);
-      if (!option.is('.option')) {
-        option = option.parentsUntil(this.element, '.option').first();
+      if (!option.is('.ui-simplicity-fancy-select-option')) {
+        option = option.parentsUntil(this.element, '.ui-simplicity-fancy-select-option').first();
       }
       if (option.length !== 0) {
         var facetId = option.data('facet-id');
@@ -356,7 +358,7 @@
               $.each(path, function (idx, id) {
                 selected.push(id);
               });
-              this.element.find('.option')
+              this.element.find('.ui-simplicity-fancy-select-option')
                 .each($.proxy(function (idx, elem) {
                   elem = $(elem);
                   var isSelected = $.inArray(elem.data('facet-id'), selected) !== -1;
@@ -371,7 +373,7 @@
         } else if (selected !== facetId) {
           // Single select change
           if (selected !== null) {
-            this.element.find('.option')
+            this.element.find('.ui-simplicity-fancy-select-option')
               .each($.proxy(function (idx, elem) {
                 elem = $(elem);
                 if (elem.data('facet-id') === selected) {

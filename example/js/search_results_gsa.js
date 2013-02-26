@@ -10,19 +10,19 @@
         var row = $('' +
           '<div class="result-row ui-widget-content ui-corner-all">' +
           '  <div class="info1">' +
-          '    <label>Item Id: <span class="itemId"/> <span class="match"/></label>' +
-          '    <label>Title: <span class="title"/></label>' +
+          '    <div>Item Id: <span class="itemId"/> <span class="match"/></div>' +
+          '    <div>Title: <span class="title"/></div>' +
           '  </div>' +
           '  <div class="info2">' +
-          '    <label>Category: <span class="category"/></label>' +
-          '    <label>Agency: <span class="agency"/></label>' +
-          '    <label>Sub Agency: <span class="subagency"/></label>' +
+          '    <div>Category: <span class="category"/></div>' +
+          '    <div>Agency: <span class="agency"/></div>' +
+          '    <div>Sub Agency: <span class="subagency"/></div>' +
           '  </div>' +
           '  <div class="info3">' +
-          '    <label>Description: <span class="description"/></label>' +
-          '    <label>Keywords: <span class="keywords"/></label>' +
-          '    <label>Formats: <span class="formats_avail"/></label>' +
-          '    <label>Privacy: <span class="privacy_and_confidentiality"/></label>' +
+          '    <div>Description: <span class="description"/></div>' +
+          '    <div>Keywords: <span class="keywords"/></div>' +
+          '    <div>Formats: <span class="formats_avail"/></div>' +
+          '    <div>Privacy: <span class="privacy_and_confidentiality"/></div>' +
           '  </div>' +
           '</div>')
           .attr('id', 'result-' + itemId)

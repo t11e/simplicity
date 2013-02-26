@@ -106,17 +106,17 @@
       showTooltip: true,
       centerTooltip: true,
       scaleTemplate: '' +
-        '<ol class="scale ui-helper-reset">' +
-          '<li class="position">' +
-            '<span class="label"></span>' +
-            '<span class="tick ui-widget-content"></span>' +
+        '<ol class="ui-simplicity-select-slider-scale ui-helper-reset">' +
+          '<li class="ui-simplicity-select-slider-position">' +
+            '<span class="ui-simplicity-select-slider-label"></span>' +
+            '<span class="ui-simplicity-select-slider-tick ui-widget-content"></span>' +
           '</li>' +
         '</ol>',
       tooltipTemplate: '' +
-        '<span class="tooltip ui-widget-content ui-corner-all">' +
-          '<span class="tooltip-content"></span>' +
-          '<span class="tooltip-pointer-down ui-widget-content">' +
-            '<span class="tooltip-pointer-down-inner"></span>' +
+        '<span class="ui-simplicity-select-slider-tooltip ui-widget-content ui-corner-all">' +
+          '<span class="ui-simplicity-select-slider-tooltip-content"></span>' +
+          '<span class="ui-simplicity-select-slider-tooltip-pointer-down ui-widget-content">' +
+            '<span class="ui-simplicity-select-slider-tooltip-pointer-down-inner"></span>' +
           '</span>' +
         '</span>'
     },
@@ -125,7 +125,7 @@
       if (this._select.length === 0 || !this._select.is('select')) {
         return;
       }
-      this._addClass('ui-simplicity-select-slider ui-simplicity-slider');
+      this._addClass('ui-simplicity-select-slider');
       this._secondSelect = $(this.options.secondSelect);
       if (this._secondSelect.length !== 0 && !this._secondSelect.is('select')) {
         this._secondSelect = $('');
@@ -143,7 +143,7 @@
       this.element.slider($.extend(sliderOptions, this.options));
 
       var scale = $(this.options.scaleTemplate);
-      scale.find('.position').remove();
+      scale.find('.ui-simplicity-select-slider-position').remove();
       this.element.append(scale);
 
       var tooltip = $(this.options.tooltipTemplate);
@@ -233,25 +233,25 @@
      * @private
      */
     refreshScale: function () {
-      var scale = this.element.find('.scale');
-      scale.find('.position').remove();
-      var positionTemplate = $(this.options.scaleTemplate).find('.position').remove();
+      var scale = this.element.find('.ui-simplicity-select-slider-scale');
+      scale.find('.ui-simplicity-select-slider-position').remove();
+      var positionTemplate = $(this.options.scaleTemplate).find('.ui-simplicity-select-slider-position').remove();
       if (positionTemplate.length) {
         var min = this.element.slider('option', 'min');
         var max = this.element.slider('option', 'max');
         for (var i = min; i <= max; i += 1) {
           var left = (i / (max - min) * 100).toFixed(2);
           var position = positionTemplate.clone()
-            .addClass(i === min ? 'first' : i === max ? 'last' : '')
+            .addClass(i === min ? 'ui-simplicity-select-slider-position-first' : i === max ? 'ui-simplicity-select-slider-position-last' : '')
             .attr('style', 'left:' + left + '%');
           if (!this.options.showTicks) {
-            position.find('.tick').hide();
+            position.find('.ui-simplicity-select-slider-tick').hide();
           }
           var label = null;
           if (this.options.showLabels) {
             var selectVal = this._sliderIndexToVal(i);
             var labelText = this._selectValToLabel(selectVal);
-            label = position.find('.label');
+            label = position.find('.ui-simplicity-select-slider-label');
             label.text(labelText);
           }
           scale.append(position);
@@ -284,7 +284,7 @@
         }
         return;
       }
-      var tooltip = this.element.find('.tooltip:' + (handleNum === 1 ? 'last' : 'first'));
+      var tooltip = this.element.find('.ui-simplicity-select-slider-tooltip:' + (handleNum === 1 ? 'last' : 'first'));
       if (tooltip.length) {
         if (!this.options.showTooltip) {
           tooltip.hide();
@@ -298,7 +298,7 @@
         }
         var selectVal = this._sliderIndexToVal(sliderIndex);
         var label = this._selectValToLabel(selectVal, handleNum);
-        tooltip.find('.tooltip-content').text(label);
+        tooltip.find('.ui-simplicity-select-slider-tooltip-content').text(label);
         if (this.options.showTooltip && this.options.centerTooltip) {
           var left = -(tooltip.width() / 2) - 2;
           tooltip.css('marginLeft', left + 'px');

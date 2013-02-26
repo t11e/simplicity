@@ -11,7 +11,7 @@ test("checkbox basic", function() {
   var input = content.find('input');
   equal(input.hasClass('ui-simplicity-faceted-input'), false);
   equal(input.hasClass('ui-simplicity-inputs'), false);
-  equal(content.find('span.count').length, 0);
+  equal(content.find('span.ui-simplicity-fancy-select-count').length, 0);
   
   input.simplicityFacetedInput({
     stateElement: '#state',

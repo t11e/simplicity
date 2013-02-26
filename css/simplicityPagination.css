@@ -1,9 +1,9 @@
-.ui-simplicity-pagination .pagination a {
+.ui-simplicity-pagination a {
   text-decoration: none;
 }
 
-.ui-simplicity-pagination .pagination a,
-.ui-simplicity-pagination .pagination span {
+.ui-simplicity-pagination a,
+.ui-simplicity-pagination span {
   display: block;
   float: left;
   padding: 0.3em 0.5em;
@@ -13,6 +13,6 @@
   text-align: center;
 }
 
-.ui-simplicity-pagination .pagination span {
+.ui-simplicity-pagination span {
   cursor: default;
 }
