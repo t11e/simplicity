@@ -30,6 +30,24 @@
      *   <dd>
      *     A single <code>select</code> input to associate the slider handle with.
      *   </dd>
+     *   <dt>secondSelect</dt>
+     *   <dd>
+     *     Enables dual-handle mode and specifies a single <code>select</code> input to associate
+     *     the second slider handle with. Defaults to <code>''</code> which leaves the widget in
+     *     single handle mode.
+     *   </dd>
+     *   <dt>allowHandleOverlap</dt>
+     *   <dd>
+     *     Only affects dual-handled sliders and controls whether the two handles can have
+     *     the same position. Defaults to <code>false</code>.
+     *   </dd>
+     *   <dt>populateSecondSelect</dt>
+     *   <dd>
+     *     Only affects dual-handled sliders and controls how the widget deals with missing
+     *     options in the second <code>select</code> input. When <code>true</code> it will
+     *     automatically populate them with the label from the primary <code>select</code>.
+     *     Defaults to <code>false</code>.
+     *   </dd>
      *   <dt>changeOnSlide</dt>
      *   <dd>
      *      Set this to <code>true</code> to cause <code>slide</code> events to change the
@@ -77,6 +95,9 @@
      */
     options : {
       select: '',
+      secondSelect: '',
+      allowHandleOverlap: false,
+      populateSecondSelect: false,
       changeOnSlide: false,
       showTicks: true,
       showLabels: true,
@@ -100,15 +121,26 @@
         '</span>'
     },
     _create : function () {
-      var select = $(this.options.select);
-      if (select.length === 0 || !select.is('select')) {
+      this._select = $(this.options.select);
+      if (this._select.length === 0 || !this._select.is('select')) {
         return;
       }
       this._addClass('ui-simplicity-select-slider ui-simplicity-slider');
-      this.element.slider($.extend({
-          min: 0,
-          max: select.find('option').length - 1
-        }, this.options));
+      this._secondSelect = $(this.options.secondSelect);
+      if (this._secondSelect.length !== 0 && !this._secondSelect.is('select')) {
+        this._secondSelect = $('');
+      }
+      var sliderOptions = {
+        min: 0,
+        max: this._sliderMax()
+      };
+      if (this._secondSelect.length !== 0) {
+        $.extend(sliderOptions, {
+          values: [sliderOptions.min, sliderOptions.max],
+          range: true
+        });
+      }
+      this.element.slider($.extend(sliderOptions, this.options));
 
       var scale = $(this.options.scaleTemplate);
       scale.find('.position').remove();
@@ -122,11 +154,10 @@
 
       this._bind('slidechange', this._sliderChangeHandler);
       this._bind('slide', this._sliderChangeHandler);
-      if (this.options.changeOnSlide) {
-      }
-      this._bind(select, 'change', this._selectChangeHandler);
-      this._refreshScale();
-      this._refreshTooltip();
+      this._bind(this._select, 'change', this._selectChangeHandler);
+      this._bind(this._secondSelect, 'change', this._selectChangeHandler);
+      this.refreshScale();
+      this.refreshTooltip();
     },
     /**
     * Override of <code>_setOption</code> that is used to refresh the
@@ -144,11 +175,11 @@
       case 'showLabels':
       case 'centerLabels':
       case 'justifyEndLabels':
-        this._refreshScale();
+        this.refreshScale();
         break;
       case 'showTooltip':
       case 'centerTooltip':
-        this._refreshTooltip();
+        this.refreshTooltip();
         break;
       }
     },
@@ -164,17 +195,30 @@
     _selectChangeHandler: function (evt, ui) {
       if (!this._ignoreChangeEvent) {
         var changed = false;
-        var max = $(this.options.select).find('option').length - 1;
+        var max = this._sliderMax();
         if (max !== this.element.slider('option', 'max')) {
           // The select input was dynamically changed, alter the accepted range of
           // values for the slider.
           this.element.slider('option', 'max', max);
-          this._refreshScale();
+          this.refreshScale();
           changed = true;
         }
-        var value = evt.target.selectedIndex;
-        if (changed || value !== this.element.slider('option', 'value')) {
-          this.element.slider('option', 'value', value);
+        if (this._secondSelect.length === 0) {
+          // Single handled slider, no mapping necessary
+          var selectIndex = this._select[0].selectedIndex;
+          var sliderIndex = this.element.slider('option', 'value');
+          if (changed || selectIndex !== sliderIndex) {
+            this.element.slider('option', 'value', selectIndex);
+          }
+        } else {
+          // Dual handled slider, use this._select to convert val to/from slider index.
+          var selectVals = [this._select.val(), this._secondSelect.val()];
+          var sliderIndexes = this.element.slider('option', 'values');
+          var sliderVals = [this._sliderIndexToVal(sliderIndexes[0]), this._sliderIndexToVal(sliderIndexes[1])];
+          if (changed || selectVals[0] !== sliderVals[0] || selectVals[1] != sliderVals[1]) {
+            var selectIndexes = [this._sliderIndexFromVal(selectVals[0]), this._sliderIndexFromVal(selectVals[1], 1)];
+            this.element.slider('option', 'values', selectIndexes);
+          }
         }
       }
     },
@@ -184,11 +228,11 @@
      * or <code>showLabels</code> options will cause this method to be called and the
      * ticks or labels to be created.
      *
-     * @name $.ui.simplicitySelectSlider._refreshScale
+     * @name $.ui.simplicitySelectSlider.refreshScale
      * @function
      * @private
      */
-    _refreshScale: function () {
+    refreshScale: function () {
       var scale = this.element.find('.scale');
       scale.find('.position').remove();
       var positionTemplate = $(this.options.scaleTemplate).find('.position').remove();
@@ -205,8 +249,9 @@
           }
           var label = null;
           if (this.options.showLabels) {
+            var selectVal = this._sliderIndexToVal(i);
+            var labelText = this._selectValToLabel(selectVal);
             label = position.find('.label');
-            var labelText = $(this.options.select).find('option:eq(' + i + ')').text();
             label.text(labelText);
           }
           scale.append(position);
@@ -225,28 +270,40 @@
       }
     },
     /**
-     * Updates the content of the tooltip and hides or shows it as appropriate.
+     * Updates the content of the tooltip(s) and hides or shows it as appropriate.
      *
-     * @name $.ui.simplicitySelectSlider._refreshTooltip
+     * @name $.ui.simplicitySelectSlider.refreshTooltip
      * @function
      * @private
      */
-    _refreshTooltip: function (value) {
-      var tooltip = this.element.find('.tooltip');
+    refreshTooltip: function (handleNum, sliderIndex) {
+      if (arguments.length === 0) {
+        this.refreshTooltip(0);
+        if (this._secondSelect.length !== 0) {
+          this.refreshTooltip(1);
+        }
+        return;
+      }
+      var tooltip = this.element.find('.tooltip:' + (handleNum === 1 ? 'last' : 'first'));
       if (tooltip.length) {
         if (!this.options.showTooltip) {
           tooltip.hide();
         }
-        if ('undefined' === typeof value) {
-          value = this.element.slider('value');
+        if ('undefined' === typeof sliderIndex) {
+          if (this._secondSelect.length === 0) {
+            sliderIndex = this.element.slider('value');
+          } else {
+            sliderIndex = this.element.slider('values')[handleNum];
+          }
         }
-        var label = $(this.options.select).find('option:eq(' + value + ')').text();
+        var selectVal = this._sliderIndexToVal(sliderIndex);
+        var label = this._selectValToLabel(selectVal, handleNum);
         tooltip.find('.tooltip-content').text(label);
         if (this.options.showTooltip && this.options.centerTooltip) {
           var left = -(tooltip.width() / 2) - 2;
           tooltip.css('marginLeft', left + 'px');
         }
-        if (this.options.showTooltip) {
+        if (this.options.showTooltip && label !== '') {
           tooltip.show();
         }
       }
@@ -263,24 +320,89 @@
      * @private
      */
     _sliderChangeHandler: function (evt, ui) {
-      try {
-        this._ignoreChangeEvent = true;
-        var select = $(this.options.select)[0];
-        var value = select.selectedIndex;
-        var newVal = ui.value;
-        if (value !== newVal) {
-          select.selectedIndex = newVal;
+      if (typeof ui.values === 'undefined') {
+        // Single handled slider
+        this._sliderHandleToSelect(evt.type, ui.value);
+      } else {
+        // Dual handled slider
+        if (!this.options.allowHandleOverlap && ui.values[0] === ui.values[1]) {
+          return false;
         }
-        this._refreshTooltip(newVal);
-        if (evt.type !== 'slide' || this.options.changeOnSlide) {
-          $(select).change();
-        }
-      } finally {
-        this._ignoreChangeEvent = false;
+        this._sliderHandleToSelect(evt.type, ui.values[0]);
+        this._sliderHandleToSelect(evt.type, ui.values[1], 1);
       }
+    },
+    _sliderHandleToSelect: function (eventType, sliderIndex, handleNum) {
+      var select = handleNum === 1 ? this._secondSelect : this._select;
+      if (select.length > 0) {
+        this._ignoreChangeEvent = true;
+        try {
+          // Lookup the canonical value from the primary select
+          var newVal = this._sliderIndexToVal(sliderIndex);
+          // Use to sync with the select bound to this particular handle
+          if (newVal !== select.val()) {
+            select.val(newVal);
+            if (this.options.populateSecondSelect && handleNum === 1 && select.val() !== newVal) {
+              $('<option/>')
+                .val(newVal)
+                .text(this._selectValToLabel(newVal))
+                .appendTo(select);
+              select.val(newVal);
+            }
+          }
+          this.refreshTooltip(handleNum, sliderIndex);
+          if (eventType !== 'slide' || this.options.changeOnSlide) {
+            select.change();
+          }
+        } finally {
+          this._ignoreChangeEvent = false;
+        }
+      }
+    },
+    _sliderMax: function () {
+      var max = this._select.find('option').length - 1;
+      if (this._secondSelect.length !== 0 && this._select.find('option[value=""]').length === 1) {
+        max += 1;
+      }
+      return max;
+    },
+    _sliderIndexToVal: function (index) {
+      var val = $(this._select).find('option:eq(' + index + ')').val();
+      return typeof val !== 'undefined' ? val : '';
+    },
+    _sliderIndexFromVal: function (val, handleNum) {
+      var result = -1;
+      var options = this._select.find('option');
+      if (val !== '') {
+        options.each(function (idx, option) {
+          if ($(option).val() === val) {
+            result = idx;
+            return false;
+          }
+        });
+      }
+      return result !== -1 ? result : handleNum === 1 ? options.length : 0;
+    },
+    _selectValToLabel: function (val, handleNum) {
+      var select = handleNum == 1 ? this._secondSelect : this._select;
+      var options = select.find('option');
+      var result = '';
+      options.each(function (idx, option) {
+        option = $(option);
+        if (option.val() === val) {
+          result = option.text();
+          return false;
+        }
+      });
+      if (result === '' && handleNum === 1) {
+        // Missing label in second select, use the label from the primary select instead.
+        result = this._selectValToLabel(val);
+      }
+      return result;
     },
     destroy: function () {
       this.element.slider('destroy');
+      this.element.children().remove();
       $.ui.simplicityWidget.prototype.destroy.apply(this, arguments);
     }
   });
