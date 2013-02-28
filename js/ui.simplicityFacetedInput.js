@@ -113,19 +113,22 @@
         } else if (this.options.placement === 'after-input') {
           this.element.after(countElement);
         } else {
-          var inputId = this.element.attr('id');
-          if ('undefined' !== typeof inputId) {
-            var label = $('label[for="' + inputId + '"]');
-            if (label.length > 0) {
-              if (this.options.placement === 'before-label') {
-                label.before(countElement);
-              } else if (this.options.placement === 'after-label') {
-                label.after(countElement);
-              } else if (this.options.placement === 'append-label') {
-                label.append(countElement);
-              } else if (this.options.placement === 'prepend-label') {
-                label.prepend(countElement);
-              }
+          var label = this.element.parent('label');
+          if (label.length === 0) {
+            var inputId = this.element.attr('id');
+            if ('undefined' !== typeof inputId) {
+              label = $('label[for="' + inputId + '"]');
+            }
+          }
+          if (label.length > 0) {
+            if (this.options.placement === 'before-label') {
+              label.before(countElement);
+            } else if (this.options.placement === 'after-label') {
+              label.after(countElement);
+            } else if (this.options.placement === 'append-label') {
+              label.append(countElement);
+            } else if (this.options.placement === 'prepend-label') {
+              label.prepend(countElement);
             }
           }
         }
