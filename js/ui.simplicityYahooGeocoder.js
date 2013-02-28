@@ -174,7 +174,7 @@
       if (typeof response !== 'undefined' &&
           typeof response.vendor !== 'undefined' &&
           typeof response.vendor.ResultSet !== 'undefined' &&
-          response.vendor.ResultSet.Error === 0 &&
+          response.vendor.ResultSet.Error === '0' &&
           $.isArray(response.vendor.ResultSet.Results)) {
         $.each(response.vendor.ResultSet.Results, $.proxy(function (i, result) {
           var value = this.normalizeAddress(result);
