@@ -11,5 +11,5 @@
    * @example
    *   console.log('Simplicity Widgets:', $.simplicity.version);
    */
-  $.simplicity.version = '3.2-dev';
+  $.simplicity.version = '4.0';
 }(jQuery));

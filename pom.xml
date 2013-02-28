@@ -7,7 +7,7 @@
     <groupId>com.t11e.simplicity</groupId>
     <artifactId>simplicity</artifactId>
     <packaging>pom</packaging>
-    <version>3.2-dev</version>
+    <version>4.0</version>
     <name>Simplicity Widgets</name>
     <url>http://simplicitywidgets.org</url>
     <prerequisites>
