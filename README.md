@@ -7,7 +7,8 @@ They are comprised of UI widgets and a server-sides search controller,
 The search controller uses a RESTful API with regular URL parameters for
 the request and expect a JSON response.
 
-To see the widgets in action open `index.html` in your favorite browser.
+To see the widgets in action open `index.html` in your favorite browser
+or [view online](http://t11e.github.com/simplicity).
 
 To build a minified version of the widgets, run:
 
