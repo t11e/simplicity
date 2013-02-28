@@ -39,7 +39,6 @@
       </div>
     </form>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
     <script type="text/javascript">//<![CDATA[
@@ -51,50 +50,37 @@
           mapTypeId: Microsoft.Maps.MapTypeId.road,
           credentials: apiKey
         });
-        var autoCompleteCallback = function (response, responseCallback) {
-          var items = [];
-          if (response && response.statusCode === 200) {
-            $.each(response.resourceSets[0].resources, function (i, result) {
-              items.push({
-                label: result.address.formattedAddress,
-                latitude: result.point.coordinates[0],
-                longitude: result.point.coordinates[1],
-                response: result
-              });
-            });
-            responseCallback(items);
-          }
-        };
-        var selectCallback = function (evt, ui) {
+
+        var perform_geocode = function (request) {
+          $('#response').text('Geocoding...');
           map.entities.clear();
-          var point = new Microsoft.Maps.Location(ui.item.latitude, ui.item.longitude);
-          map.entities.push(new Microsoft.Maps.Pushpin(point));
-          var bbox = ui.item.response.bbox;
-          map.setView({
-            bounds: Microsoft.Maps.LocationRect.fromEdges(bbox[0], bbox[1], bbox[2], bbox[3])
+          $.ajax({
+            url: 'http://proxy.discoverysearchengine.com/bing_geocoder.php',
+            dataType: 'json',
+            data: request,
+            success: function(response, textStatus, xhr) {
+              $('#response').text(JSON.stringify(response, null, '  '));
+              if (response && response.statusCode === 200) {
+                $.each(response.resourceSets[0].resources, function (idx, resource) {
+                  if (idx === 0) {
+                    var bbox = resource.bbox;
+                    map.setView({
+                      bounds: Microsoft.Maps.LocationRect.fromEdges(bbox[0], bbox[1], bbox[2], bbox[3])
+                    });
+                  }
+                  var point = new Microsoft.Maps.Location(resource.point.coordinates[0], resource.point.coordinates[1]);
+                  map.entities.push(new Microsoft.Maps.Pushpin(point));
+                });
+              }
+            }
           });
         };
-        $('#geocodeGlobal').autocomplete({
-          source: function (request, responseCallback) {
-            $.ajax({
-              url: 'http://proxy.discoverysearchengine.com/bing_geocoder.php',
-              data: {
-                query: request.term,
-                key: apiKey
-              },
-              dataType: 'json',
-              error: function (request, textStatus, errorThrown) {
-                $('#response').text('Error');
-                responseCallback(['Error']);
-              },
-              success: function (data, status, xhr) {
-                $('#response').text(JSON.stringify(data, null, '  '));
-                autoCompleteCallback(data, responseCallback);
-              }
-            });
-          },
-          select: selectCallback,
-          change: selectCallback
+
+        $('#geocodeGlobal').change(function (evt) {
+          perform_geocode({
+            key: apiKey,
+            query: $(evt.target).val()
+          });
         });
         $('#geocodeLocal').attr('disabled', 'true');
       });

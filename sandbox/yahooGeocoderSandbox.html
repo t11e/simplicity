@@ -37,7 +37,6 @@
       </div>
     </form>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=YD-eQRpTl0_JX2E95l_xAFs5UwZUlNQhhn7lj1H"></script>
     <script type="text/javascript">//<![CDATA[
@@ -47,60 +46,41 @@
         map.setMapType(YAHOO_MAP_REG);
         map.drawZoomAndCenter(new YGeoPoint(0, 0), 16);
         map.addZoomLong();
-        var autoCompleteCallback = function (response, responseCallback) {
-          var items = [];
-          if (response.ResultSet.Error !== 0) {
-            items.push(response.ResultSet.ErrorMessage);
-          } else {
-            if (response.ResultSet.Results) {
-              $.each(response.ResultSet.Results, function (i, result) {
-                items.push({
-                  label: result.line1 + ' ' + result.line2,
-                  latitude: Number(result.latitude),
-                  longitude: Number(result.longitude),
-                  response: result
-                });
-              });
-              responseCallback(items);
-            }
-          }
-        };
-        var selectCallback = function (evt, ui) {
+
+        var perform_geocode = function (request) {
+          $('#response').text('Geocoding...');
           map.removeMarkersAll();
-          if (ui.item) {
-            var point = new YGeoPoint(ui.item.latitude, ui.item.longitude);
-            map.addOverlay(new YMarker(point));
-            var bb = ui.item.response.boundingbox;
-            var ul = new YGeoPoint(bb.north, bb.west);
-            var ur = new YGeoPoint(bb.north, bb.east);
-            var ll = new YGeoPoint(bb.south, bb.west);
-            var lr = new YGeoPoint(bb.south, bb.east);
-            var bounds = map.getBestZoomAndCenter([ul, ur, ll, lr]);
-            map.drawZoomAndCenter(bounds.YGeoPoint, bounds.zoomLevel);
-          }
-        };
-        $('#geocodeGlobal').autocomplete({
-          source: function (request, responseCallback) {
-            $.ajax({
-              url: 'http://proxy.discoverysearchengine.com/yahoo_geocoder.php',
-              data: {
-                q: request.term,
-                flags: 'JX', // J = JSON, X = bounding box
-                appid: apiKey
-              },
-              dataType: 'json',
-              error: function (request, textStatus, errorThrown) {
-                $('#response').text('Error');
-                responseCallback(['Error']);
-              },
-              success: function (data, status, xhr) {
-                $('#response').text(JSON.stringify(data, null, '  '));
-                autoCompleteCallback(data, responseCallback);
+          $.ajax({
+            url: 'http://proxy.discoverysearchengine.com/yahoo_geocoder.php',
+            dataType: 'json',
+            data: request,
+            success: function(response, textStatus, xhr) {
+              $('#response').text(JSON.stringify(response, null, '  '));
+              if (response.ResultSet.Error === "0" && response.ResultSet.Results) {
+                $.each(response.ResultSet.Results, function (idx, result) {
+                  if (idx === 0) {
+                    var bb = result.boundingbox;
+                    var ul = new YGeoPoint(bb.north, bb.west);
+                    var ur = new YGeoPoint(bb.north, bb.east);
+                    var ll = new YGeoPoint(bb.south, bb.west);
+                    var lr = new YGeoPoint(bb.south, bb.east);
+                    var bounds = map.getBestZoomAndCenter([ul, ur, ll, lr]);
+                    map.drawZoomAndCenter(bounds.YGeoPoint, bounds.zoomLevel);
+                  }
+                  var point = new YGeoPoint(Number(result.latitude), Number(result.longitude));
+                  map.addOverlay(new YMarker(point));
+                });
               }
-            });
-          },
-          select: selectCallback,
-          change: selectCallback
+            }
+          });
+        };
+
+        $('#geocodeGlobal').change(function (evt) {
+          perform_geocode({
+            appid: apiKey,
+            flags: 'JX', // J = JSON, X = bounding box
+            q: $(evt.target).val()
+          });
         });
         $('#geocodeLocal').attr('disabled', 'true');
       });

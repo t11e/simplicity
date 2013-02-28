@@ -38,7 +38,6 @@
       </div>
     </form>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://api.maps.nokia.com/2.1.0/jsl.js"></script>
     <script type="text/javascript">//<![CDATA[
@@ -49,82 +48,37 @@
             new nokia.maps.map.component.ZoomBar()
           ]
         });
-        var autoCompleteCallback = function (response, responseCallback) {
-          var items = [];
-          if ($.isArray(response.locations)) {
-            $.each(response.locations, function (i, location) {
-              items.push({
-                label: location.label,
-                latitude: location.displayPosition.latitude,
-                longitude: location.displayPosition.longitude,
-                response: location
+
+        var searchManager = new nokia.maps.search.Manager();
+        searchManager.addObserver("state", function(response, key, value) {
+          if (value === 'finished' || value == 'failed') {
+            $('#response').text(JSON.stringify(response, null, '  '));
+            if ($.isArray(response.locations)) {
+              $.each(response.locations, function (idx, location) {
+                if (idx === 0 && typeof location.mapView !== 'undefined') {
+                  map.zoomTo(location.mapView);
+                }
+                map.objects.add(new nokia.maps.map.Marker(location.displayPosition));
               });
-            });
-            responseCallback(items);
+            }
           }
+        });
+
+        var perform_geocode = function (address, options) {
+          $('#response').text('Geocoding...');
+          map.objects.clear();
+          searchManager.search(address, options);
         };
-        var markers = [];
-        var selectCallback = function (evt, ui) {
-          $.each(markers, function (i, marker) {
-            map.objects.remove(marker);
+
+        $('#geocodeGlobal').change(function (evt) {
+          perform_geocode($(evt.target).val());
+        });
+        $('#geocodeLocal').change(function (evt) {
+          perform_geocode($(evt.target).val(), {
+            center: new nokia.maps.geo.Coordinate(42.32463145, -85.2422825),
+            radius: 16094 // 10 miles, in meters
           });
-          markers.length = 0;
-          if (ui.item) {
-            if ('undefined' !== typeof ui.item.response.mapView) {
-              map.zoomTo(ui.item.response.mapView);
-            }
-            var marker = new nokia.maps.map.Marker([ui.item.latitude, ui.item.longitude]);
-            map.objects.add(marker);
-            markers.push(marker);
-          }
-        };
-        (function () {
-          var mySearchManager = new nokia.maps.search.Manager();
-          mySearchManager.maxResults = 5;
-          var myResponseCallback = null;
-          mySearchManager.addObserver("state", function(observedManager, key, value) {
-            if (value === 'finished' || value == 'failed') {
-              $('#response').text(JSON.stringify(observedManager, null, '  '));
-              if (myResponseCallback !== null) {
-                autoCompleteCallback(observedManager, myResponseCallback);
-              }
-              $('#response').val(JSON.stringify(observedManager, null, '  '));
-            }
-          });
-          $('#geocodeGlobal').autocomplete({
-            source: function (request, responseCallback) {
-              myResponseCallback = responseCallback;
-              mySearchManager.search(request.term);
-            },
-            select: selectCallback,
-            change: selectCallback
-          });
-        }());
-        (function () {
-          var mySearchManager = new nokia.maps.search.Manager();
-          mySearchManager.maxResults = 5;
-          var myResponseCallback = null;
-          mySearchManager.addObserver("state", function(observedManager, key, value) {
-            if (value === 'finished' || value == 'failed') {
-              $('#response').text(JSON.stringify(observedManager, null, '  '));
-              if (myResponseCallback !== null) {
-                autoCompleteCallback(observedManager, myResponseCallback);
-              }
-              $('#response').val(JSON.stringify(observedManager, null, '  '));
-            }
-          });
-          $('#geocodeLocal').autocomplete({
-            source: function (request, responseCallback) {
-              myResponseCallback = responseCallback;
-              mySearchManager.search(request.term, {
-                center: new nokia.maps.geo.Coordinate(42.32463145, -85.2422825),
-                radius: 16094 // 10 miles, in meters
-              });
-            },
-            select: selectCallback,
-            change: selectCallback
-          });
-        }());
+        });
       });
     //]]></script>
   </body>

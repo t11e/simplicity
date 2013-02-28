@@ -34,147 +34,58 @@
       </div>
     </form>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js" charset="utf-8"></script>
     <script src="http://mapquestapi.com/sdk/js/v6.0.0/mqa.toolkit.js?key=Fmjtd%7Cluu22q68nq%2C75%3Do5-h67wg"></script>
     <script type="text/javascript"><!--//<![CDATA[
-      // TODO Caching ??
-      // TODO What to do when what the user typed was a single match and the user
-      // presses ENTER?
-      function mapQuestRequestLocations(searchText) {
-        // To search structured text or more than one address
-        // return an array of locations:
-        // var locations = [];
-        // locations[0] = searchText;
-        // locations[1] = {street: searchText, country: 'CA'};
-        return searchText;
-      }
-      var mapQuestQualityZoomLevels = {
-          'POINT': 14,
-          'ADDRESS': 14,
-          'INTERSECTION': 13,
-          'STREET': 13,
-          'ZIP': 10,
-          'ZIP_EXTENDED': 11,
-          'CITY': 9,
-          'COUNTY':7,
-          'STATE': 3,
-          'COUNTRY': 2};
-      var autocompleteSuggestionsLength = 10;
-      var mapQuestBoundingBox = new MQA.RectLL();
-//      mapQuestBoundingBox.lr = new MQA.LatLng(42.3373459, -85.209457);
-//      mapQuestBoundingBox.ul = new MQA.LatLng(42.311917, -85.275108);
-// Big bounding box for Michigan
-      mapQuestBoundingBox.lr = new MQA.LatLng(41.66, -82.4);
-      mapQuestBoundingBox.ul = new MQA.LatLng(47.5, -90.2);
-      function formatSuggestionValue(location) {
-        var value = location.street;
-        if (location.adminArea5 !== '') {
-          if (value !== '') { value += ', '; }
-          value += location.adminArea5;
-        }
-        if (location.adminArea4 !== '' && location.geocodeQuality === 'COUNTY') {
-          if (value !== '') { value += ', '; }
-          value += location.adminArea4;
-        }
-        if (location.adminArea3 !== '') {
-          if (value !== '') { value += ', '; }
-          value += location.adminArea3;
-        }
-        if (location.postalCode !== '') {
-          if (value !== '') { value += ' '; }
-          value += location.postalCode;
-        }
-        return value;
-      };
-      var onLoad = function () {
-        var map = new MQA.TileMap($('#map')[0], 1, {lat: 0, lng: 0}, 'map');
-        map.addControl(new MQA.LargeZoomControl3(), new MQA.MapCornerPlacement(MQA.MapCorner.TOP_LEFT));
-        var autoCompleteCallback = function (response, responseCallback) {
-          var items = [];
-          if (response.info.statuscode === 0) {
-            $.each(response.results, function (i, result) {
-              $.each(result.locations, function(i, location) {
-                var value = formatSuggestionValue(location);
-                if (value !== '') {
-                  items.push({
-                    value: value,
-                    latitude: location.latLng.lat,
-                    longitude: location.latLng.lng,
-                    response: location
-                   });
-                }
-              });
-            });
-            labelToItem={};
-            $.each(items, function (i, item) {
-              var suggestionLabel = item.value;
-              var duplicateItem = labelToItem[suggestionLabel];
-              if (duplicateItem === undefined) {
-                if (item.response.geocodeQuality === 'STATE') {
-                  if (item.response.adminArea1 === 'US') {
-                    suggestionLabel = 'State of ' + suggestionLabel;
-                  }
-                }
-                labelToItem[suggestionLabel] = item;
-              } else {
-                // Duplicate label -- disambiguate via County
-                suggestionLabel += ' (' + item.response.adminArea4 + ')';
-                var labelToDisambiguate = duplicateItem.label;
-                labelToDisambiguate += ' (' + duplicateItem.response.adminArea4 + ')';
-                duplicateItem.label = labelToDisambiguate;
-              }
-              item.label = suggestionLabel;
-            });
-            responseCallback(items);
-          }
-        };
-        var selectCallback = function (evt, ui) {
-          if (ui.item !== null) {
-            map.removeAllShapes();
-            var poi = new MQA.Poi({lat: ui.item.latitude, lng: ui.item.longitude});
-            map.addShape(poi);
-            var quality = ui.item.response.geocodeQuality;
-            var zoomLevel = mapQuestQualityZoomLevels[quality];
-            map.setZoomLevel(zoomLevel);
-            map.setCenter({lat: ui.item.latitude, lng: ui.item.longitude});
-          } else {
-            //alert("User left field.");
-          }
-        };
-        $('#geocodeGlobal').autocomplete({
-          source: function (request, responseCallback) {
-            var locations = mapQuestRequestLocations(request.term);
-            var options = {
-              thumbMaps: false,
-              maxResults: autocompleteSuggestionsLength
-            };
-            MQA.Geocoder.geocode(locations, options, null, function (response) {
-              $('#response').text(JSON.stringify(response, null, '  '));
-              autoCompleteCallback(response, responseCallback);
-            });
-          },
-          select: selectCallback,
-          change: selectCallback
-        });
-        $('#geocodeLocal').autocomplete({
-          source: function (request, responseCallback) {
-            var options = {
-              thumbMaps: false,
-              boundingBox: mapQuestBoundingBox
-            };
-            MQA.Geocoder.geocode(request.term, options, null, function (response) {
-              $('#response').text(JSON.stringify(response, null, '  '));
-              autoCompleteCallback(response, responseCallback);
-            });
-          },
-          select: selectCallback,
-          change: selectCallback
-        });
-      };
       $(function () {
         MQA.withModule("geocoder", 'zoomcontrol3', function() {
-          onLoad();
+          var map = new MQA.TileMap($('#map')[0], 1, {lat: 0, lng: 0}, 'map');
+          map.addControl(new MQA.LargeZoomControl3(), new MQA.MapCornerPlacement(MQA.MapCorner.TOP_LEFT));
+
+          var qualityToZoomLevel = {
+            'POINT': 14,
+            'ADDRESS': 14,
+            'INTERSECTION': 13,
+            'STREET': 13,
+            'ZIP': 10,
+            'ZIP_EXTENDED': 11,
+            'CITY': 9,
+            'COUNTY':7,
+            'STATE': 3,
+            'COUNTRY': 2
+          };
+          var perform_geocode = function (address, options) {
+            $('#response').text('Geocoding...');
+            map.removeAllShapes();
+            MQA.Geocoder.geocode(address, options, null, function (response) {
+              $('#response').text(JSON.stringify(response, null, '  '));
+              if (response.info.statuscode === 0) {
+                $.each(response.results, function (i, result) {
+                  $.each(result.locations, function(j, location) {
+                    if (i === 0 && j === 0) {
+                      var zoomLevel = qualityToZoomLevel[location.geocodeQuality];
+                      map.setZoomLevel(zoomLevel);
+                      map.setCenter(location.latLng);
+                    }
+                    map.addShape(new MQA.Poi(location.latLng));
+                  });
+                });
+              }
+            });
+          };
+
+          $('#geocodeGlobal').change(function (evt) {
+            perform_geocode($(evt.target).val());
+          });
+          $('#geocodeLocal').change(function (evt) {
+            var bbox = new MQA.RectLL();
+            bbox.lr = new MQA.LatLng(41.66, -82.4);
+            bbox.ul = new MQA.LatLng(47.5, -90.2);
+            perform_geocode($(evt.target).val(), {
+              thumbMaps: false,
+              boundingBox: bbox
+            });
+          });
         });
       });
     //]]>--></script>
