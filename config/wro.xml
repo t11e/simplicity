@@ -53,10 +53,10 @@
     <js>/js/ui.simplicityMapQuestGeocoder.js</js>
     <js>/js/ui.simplicityYahooGeocoder.js</js>
     <js>/js/ui.simplicityNokiaGeocoder.js</js>
-    <css>/css/simplicityPagination.css</css>
-    <css>/css/simplicitySlider.css</css>
-    <css>/css/simplicitySelectSlider.css</css>
-    <css>/css/simplicityFancySelect.css</css>
+    <css>/css/ui-simplicity-pagination.css</css>
+    <css>/css/ui-simplicity-slider.css</css>
+    <css>/css/ui-simplicity-select-slider.css</css>
+    <css>/css/ui-simplicity-fancy-select.css</css>
   </group>
   <group name="example">
     <js>/example/js/search_controller_gsa.js</js>
