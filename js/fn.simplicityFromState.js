@@ -62,6 +62,7 @@
                   options[value] = true;
                   $('<option/>')
                     .val(value)
+                    .text(value)
                     .appendTo(element);
                 }
               });
