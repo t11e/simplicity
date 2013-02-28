@@ -3,39 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial Search - Facet Driven</title>
-    <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
+    <title>Facet Driven Search</title>
+    <link href="http://cdn.transparensee.com/lib/bootstrap/2.3.0/bootstrap.min.css" rel="stylesheet">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/ui-simplicity-pagination.css" rel="stylesheet" type="text/css" />
     <link href="../css/ui-simplicity-select-slider.css" rel="stylesheet" type="text/css" />
     <link href="../css/ui-simplicity-fancy-select.css" rel="stylesheet" type="text/css" />
     <style>
-      body {
-        font-size:62.5%;
-      }
-      #layout {
-        padding-left: 360px;
-      }
-      #nav {
-        margin-left: -360px;
-        width: 360px;
-      }
-      #main {
-        width: 100%;
-      }
       .result-set .result-row {
         margin-top: 6px;
         margin-bottom: 6px;
       }
       .ui-simplicity-select-slider {
         margin: 1.4em;
-      }
-      fieldset {
-        margin-bottom: 1em;
-      }
-      fieldset legend {
-        font-weight: bold;
-        font-size: larger;
       }
       #privacySlider {
         margin-top: 3.4em;
@@ -45,7 +25,6 @@
         padding-top: 0.4em;
         padding-bottom: 0.4em;
       }
-      /* fancy facets */
       .ui-simplicity-fancy-facets-path-container,
       .ui-simplicity-fancy-facets-selected-container,
       .ui-simplicity-fancy-facets-available-container,
@@ -53,7 +32,6 @@
         margin-top: 0;
         margin-bottom: 0;
       }
-
       .ui-simplicity-fancy-facets-path-container {
         margin-top: 0.4em;
         margin-bottom: 0.4em;
@@ -79,13 +57,11 @@
       .ui-simplicity-fancy-facets-path-container .ui-simplicity-fancy-select-option a {
         text-decoration: none;
       }
-
       .ui-simplicity-fancy-facets-selected-container {
         padding-bottom: 0.8em;
         margin-bottom: 0.4em;
         border-bottom: 2px dashed #A6C9E2;
       }
-
       .ui-simplicity-fancy-facets-overflow-contains-selected {
         font-weight: bold;
       }
@@ -93,7 +69,6 @@
       .ui-simplicity-fancy-facets-overflow-closer {
         padding: 0.4em;
       }
-
       /** border and icon for the opener and closer */
       .ui-simplicity-fancy-facets-overflow-opener,
       .ui-simplicity-fancy-facets-overflow-closer {
@@ -146,142 +121,160 @@
     <![endif]-->
   </head>
   <body>
-    <h1><a href="../index.html">home</a> | Tutorial Search - Facet Driven</h1>
-    <form id="myForm" onsubmit="return false;">
-      <div id="layout" class="yui3-g">
-        <div id="nav" class="yui3-u">
-          <fieldset>
-            <legend>Search Controls</legend>
-            <button id="searchButton">Search</button>
-            <button id="resetButton">Reset</button>
-          </fieldset>
-          <fieldset>
-            <legend>Keyword</legend>
-            <input id="keywordInput" name="dataset_freetext">
-          </fieldset>
-          <fieldset>
-            <legend>Category Type</legend>
-            <select id="catSelect" name="category_type" class="ui-helper-hidden-accessible">
-              <option value="">Any</option>
-            </select>
-            <div id="catFancy"></div>
-          </fieldset>
-          <fieldset>
-            <legend>Category Type with checkboxes</legend>
-            <ul id="catFancyWithCheckboxes">
-              <li class="ui-simplicity-fancy-select-option ui-helper-clearfix">
-                <label>
-                  <input type="checkbox" class="ui-simplicity-fancy-select-checkbox"/>
-                  <span class="ui-simplicity-fancy-select-label"></span>
-                </label>
-                <span class="ui-simplicity-fancy-select-count"></span>
-              </li>
-            </ul>
-          </fieldset>
-          <fieldset>
-            <legend>Category Type with radio</legend>
-            <ul id="catFancyWithRadios">
-              <li class="ui-simplicity-fancy-select-option ui-helper-clearfix">
-                <label>
-                  <input type="radio" class="ui-simplicity-fancy-select-radio"/>
-                  <span class="ui-simplicity-fancy-select-label"></span>
-                </label>
-                <span class="ui-simplicity-fancy-select-count"></span>
-              </li>
-            </ul>
-          </fieldset>
-          <fieldset id="agencyControls">
-            <legend>Agency Controls</legend>
-            <div>
-              <label>
-                Overflow style
-                <select id="agencyOverflowKind">
-                  <option>inline</option>
-                  <option>dropdown</option>
-                  <option>flyout</option>
-                  <option>blocks</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label>
-                Available limit
-                <select id="agencyAvailableLimit">
-                  <option value="-1">All</option>
-                  <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
-                  <option selected="selected">5</option>
-                  <option>6</option><option>7</option><option>8</option><option>9</option>
-                  <option>10</option><option>20</option><option>30</option><option>40</option><option>50</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label>
-                <input id="agencySelectedArea" type="checkbox">
-                selected area
-              </label>
-            </div>
-            <div>
-              <label>
-                <input id="agencyAvailableContainsSelected" type="checkbox" checked="checked">
-                available contains selected
-              </label>
-            </div>
-            <div>
-              <label>
-                <input id="agencyOverflowContainsAvailable" type="checkbox">
-                overflow contains available
-              </label>
-            </div>
-            <div>
-              <label>
-                <input id="agencyOverflowContainsSelected" type="checkbox" checked="checked">
-                overflow contains selected
-              </label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>Agency</legend>
-            <select id="agencySelect" name="agency" multiple="multiple">
-              <option value="">Any</option>
-            </select>
-            <div id="agencyFancy"></div>
-          </fieldset>
-          <fieldset>
-            <legend>Formats Available</legend>
-            <select id="formatsSelect" name="formats_avail">
-              <option value="">Any</option>
-            </select>
-            <div id="formatsSlider"></div>
-          </fieldset>
-          <fieldset>
-            <legend>Privacy</legend>
-            <select id="privacySelect" name="privacy">
-              <option value="">Any</option>
-            </select>
-            <div id="privacySlider"></div>
-          </fieldset>
-        </div>
-        <div id="main" class="yui3-u">
-          <fieldset class="ui-widget">
-            <legend>Search Results</legend>
-            <div id="searchResults"></div>
-          </fieldset>
-          <fieldset class="ui-widget ui-widget-content">
-            <legend>Pagination</legend>
-            <div id="paginationWidget"></div>
-          </fieldset>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="../index.html">simplicity@github</a>
+          <ul class="nav">
+            <li><a href="http://simplicitywidgets.org">simplicitywidgets.org</a><li>
+            <li><a href="http://github.com/t11e/simplicity">github.com/t11e/simplicity</a><li>
+          </ul>
         </div>
       </div>
-    </form>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
+    </div>
+    <div class="container">
+      <div class="page-header">
+        <h1>Facet Driven Search</h1>
+      </div>
+      <div class="row">
+        <div class="span5">
+          <form id="searchNav" onsubmit="return false;">
+            <fieldset>
+              <legend>Search Controls</legend>
+              <button id="searchButton" class="btn">Search</button>
+              <button id="resetButton" class="btn">Reset</button>
+            </fieldset>
+            <fieldset>
+              <legend>Keyword</legend>
+              <input id="keywordInput" name="dataset_freetext">
+            </fieldset>
+            <fieldset>
+              <legend>Category Type</legend>
+              <select id="catSelect" name="category_type" class="ui-helper-hidden-accessible">
+                <option value="">Any</option>
+              </select>
+              <div id="catFancy"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Category Type (checkbox)</legend>
+              <div id="catFancyWithCheckboxes">
+                <div class="ui-simplicity-fancy-select-option ui-helper-clearfix">
+                  <label>
+                    <input type="checkbox" class="ui-simplicity-fancy-select-checkbox"/>
+                    <span class="ui-simplicity-fancy-select-label"></span>
+                    <span class="ui-simplicity-fancy-select-count"></span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Category Type (radio)</legend>
+              <div id="catFancyWithRadios">
+                <div class="ui-simplicity-fancy-select-option ui-helper-clearfix">
+                  <label>
+                    <input type="radio" class="ui-simplicity-fancy-select-radio"/>
+                    <span class="ui-simplicity-fancy-select-label"></span>
+                    <span class="ui-simplicity-fancy-select-count"></span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset id="agencyControls">
+              <legend>Agency Controls</legend>
+              <div>
+                <label>
+                  Overflow style
+                  <select id="agencyOverflowKind">
+                    <option>inline</option>
+                    <option>dropdown</option>
+                    <option>flyout</option>
+                    <option>blocks</option>
+                  </select>
+                </label>
+              </div>
+              <div>
+                <label>
+                  Available limit
+                  <select id="agencyAvailableLimit">
+                    <option value="-1">All</option>
+                    <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+                    <option selected="selected">5</option>
+                    <option>6</option><option>7</option><option>8</option><option>9</option>
+                    <option>10</option><option>20</option><option>30</option><option>40</option><option>50</option>
+                  </select>
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input id="agencySelectedArea" type="checkbox">
+                  selected area
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input id="agencyAvailableContainsSelected" type="checkbox" checked="checked">
+                  available contains selected
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input id="agencyOverflowContainsAvailable" type="checkbox">
+                  overflow contains available
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input id="agencyOverflowContainsSelected" type="checkbox" checked="checked">
+                  overflow contains selected
+                </label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Agency</legend>
+              <select id="agencySelect" name="agency" multiple="multiple">
+                <option value="">Any</option>
+              </select>
+              <div id="agencyFancy"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Formats Available</legend>
+              <select id="formatsSelect" name="formats_avail">
+                <option value="">Any</option>
+              </select>
+              <div id="formatsSlider"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Privacy</legend>
+              <select id="privacySelect" name="privacy">
+                <option value="">Any</option>
+              </select>
+              <div id="privacySlider"></div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="span7">
+          <div id="paginationTop"></div>
+          <div id="searchResults"></div>
+          <div id="paginationBottom"></div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <hr />
+      <div class="container">
+        <p>Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.</p>
+      </div>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="http://cdn.transparensee.com/lib/bootstrap/2.3.0/bootstrap.min.js"></script>
+    <script src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
     <!--[if IE]>
       <script src="http://cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
       <script src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
       <script src="http://cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js"></script>
     <![endif]-->
+
     <script type="text/javascript" src="../js/simplicity.version.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity.equiv.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity.proxy.js" charset="utf-8"></script>
@@ -309,8 +302,6 @@
         // the xdr patch applied.
         $.support.cors = true;
       }
-
-      $('#nav fieldset').addClass("ui-widget ui-widget-content");
 
       $('body').simplicityState();
 
@@ -453,7 +444,7 @@
       });
       $('#agencyControls :input').change();
 
-      $('#paginationWidget').simplicityPagination();
+      $('#paginationTop,#paginationBottom').simplicityPagination();
       $('#searchButton').button().click(function (evt) {
         $('body').simplicityDiscoverySearch('search');
         evt.stopPropagation();

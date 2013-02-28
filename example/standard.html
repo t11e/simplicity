@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Search</title>
+    <link href="http://cdn.transparensee.com/lib/bootstrap/2.3.0/bootstrap.min.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="../css/ui-simplicity-pagination.css" rel="stylesheet" type="text/css" />
+    <link href="../css/ui-simplicity-slider.css" rel="stylesheet" type="text/css" />
+    <style>
+      .result-set .result-row {
+        margin-top: 6px;
+        margin-bottom: 6px;
+      }
+      #styleCheckboxes ul {
+        list-style-type: none;
+      }
+      .ui-simplicity-facet-count {
+        padding-left: 1em;
+        padding-right: 0.5em;
+        float: right;
+      }
+    </style>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="../index.html">simplicity@github</a>
+          <ul class="nav">
+            <li><a href="http://simplicitywidgets.org">simplicitywidgets.org</a><li>
+            <li><a href="http://github.com/t11e/simplicity">github.com/t11e/simplicity</a><li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="page-header">
+        <h1>Standard Search</h1>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <form id="searchNav" onsubmit="return false;">
+            <fieldset>
+              <legend>Search Controls</legend>
+              <button id="searchButton" class="btn">Search</button>
+              <button id="resetButton" class="btn">Reset</button>
+              <label for="pageSize">Page Size</label>
+              <select id="pageSize" name="pageSize">
+                <option value=""></option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+              <label><input id="autoSearch" type="checkbox" name="autoSearch" value="true" checked="checked"/> Auto Search</label>
+            </fieldset>
+            <fieldset>
+              <legend>Type</legend>
+              <select id="type" name="type">
+                <option value="">Select...</option>
+                <option value="rentals">Rentals</option>
+                <option value="sales">Sales</option>
+              </select>
+            </fieldset>
+            <fieldset id="conditionCheckboxes">
+              <legend>Condition</legend>
+              <label><input type="checkbox" name="condition" value="0" /> Money pit </label>
+              <label><input type="checkbox" name="condition" value="1" /> Fixer-upper </label>
+              <label><input type="checkbox" name="condition" value="2" /> Needs work </label>
+              <label><input type="checkbox" name="condition" value="3" /> Good shape </label>
+              <label><input type="checkbox" name="condition" value="4" /> Excellent condition </label>
+            </fieldset>
+            <fieldset>
+              <legend>Bedrooms</legend>
+              <input type="hidden" id="bed" name="bed"/>
+              <div id="bedLabel"></div>
+              <div id="bedSlider"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Bathrooms</legend>
+              <input type="hidden" id="bath" name="bath"/>
+              <div id="bathLabel"></div>
+              <div id="bathSlider"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Price (sales)</legend>
+              <input type="hidden" id="priceMin" name="priceMin"/>
+              <input type="hidden" id="priceMax" name="priceMax"/>
+              <div id="priceRange"></div>
+              <div id="priceSlider"></div>
+            </fieldset>
+            <fieldset>
+              <legend>Lease (rentals)</legend>
+              <input type="hidden" id="leaseMin" name="leaseMin"/>
+              <input type="hidden" id="leaseMax" name="leaseMax"/>
+              <div id="leaseRange"></div>
+              <div id="leaseSlider"></div>
+            </fieldset>
+            <fieldset id="styleCheckboxes">
+              <legend>Style</legend>
+              <ul>
+                <li>
+                  <label><input type="checkbox" name="style" value="multi-family" /> Multi Family</label>
+                  <ul>
+                    <li><label><input type="checkbox" name="style" value="apartment" /> Apartment</label></li>
+                    <li><label><input type="checkbox" name="style" value="condo" /> Condo</label></li>
+                    <li><label><input type="checkbox" name="style" value="co-op" /> Co-op</label></li>
+                    <li><label><input type="checkbox" name="style" value="townhome" /> Townhome</label></li>
+                  </ul>
+                </li>
+                <li>
+                  <label><input type="checkbox" name="style" value="single-family" /> Single Family</label>
+                  <ul>
+                    <li><label><input type="checkbox" name="style" value="colonial" /> Colonial</label></li>
+                    <li><label><input type="checkbox" name="style" value="classical" /> Classical</label></li>
+                    <li><label><input type="checkbox" name="style" value="victorian" /> Victorian</label></li>
+                    <li><label><input type="checkbox" name="style" value="contemporary" /> Contemporary</label></li>
+                  </ul>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        </div>
+        <div class="span8">
+          <div id="paginationTop"></div>
+          <div id="searchResults"></div>
+          <div id="paginationBottom"></div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <hr />
+      <div class="container">
+        <p>Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.</p>
+      </div>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="http://cdn.transparensee.com/lib/bootstrap/2.3.0/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
+    <!--[if IE]>
+      <script src="http://cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
+      <script src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
+      <script src="http://cdn.transparensee.com/lib/jquery-plugin/bgiframe/2.1.2/jquery.bgiframe.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="../js/simplicity.version.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity.equiv.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity.proxy.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityWidget.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityState.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/fn.simplicityFromState.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/fn.simplicityToState.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityHistory.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/simplicity.ajaxHelper.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityDiscoverySearch.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityInputs.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicitySlider.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityFacetCount.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityFacetedInput.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityPagination.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicityPageSnapBack.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/ui.simplicitySearchResults.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_controller_realestate.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/search_results_realestate.js" charset="utf-8"></script>
+    <script type="text/javascript"><!--//<![CDATA[
+      if (!$.support.cors) {
+        // Work around for an IE bug where CORS requests don't work from a file:// url, even with
+        // the xdr patch applied.
+        $.support.cors = true;
+      }
+
+      $('body').simplicityState();
+
+      $('#pageSize').simplicityInputs();
+
+      $('#type').simplicityFacetedInput({
+        dimension: 'type',
+        placement: 'append-label'
+      });
+
+      $('#conditionCheckboxes :checkbox').simplicityFacetedInput({
+        dimension: 'condition',
+        placement: 'append-label'
+      });
+
+      $('#bed').simplicityInputs();
+      (function () {
+        var display = function (evt, ui) {
+          var label;
+          if (ui.value === 0) {
+            label = 'Any';
+          } else {
+            label = ui.value + ' BR'
+          }
+          $('#bedLabel').text(label);
+        };
+        $('#bedSlider').simplicitySlider({
+          input: '#bed',
+          any: 0,
+          min: 0,
+          max: 5,
+          change: display,
+          slide: display
+        });
+      }());
+
+      $('#bath').simplicityInputs();
+      (function () {
+        var display = function (evt, ui) {
+          var label;
+          if (ui.value === 0) {
+            label = 'Any';
+          } else {
+            label = ui.value + ' BA'
+          }
+          $('#bathLabel').text(label);
+        };
+        $('#bathSlider').simplicitySlider({
+          input: '#bath',
+          any: 0,
+          min: 0,
+          max: 3,
+          change: display,
+          slide: display
+        });
+      }());
+
+      $('#priceMin,#priceMax').simplicityInputs();
+      (function () {
+        var rangeDisplay = function (evt, ui) {
+          var label;
+          if (ui.values[0] === 199 && ui.values[1] === 701) {
+            label = 'Any';
+          } else if (ui.values[0] === 199) {
+            label = 'Less than $' + ui.values[1] + 'K';
+          } else if (ui.values[1] === 701) {
+            label = 'More than $' + ui.values[0] + 'K';
+          } else {
+            label = 'Between $' + ui.values[0] + "K and $" + ui.values[1] + 'K';
+          }
+          $('#priceRange').text(label);
+        };
+        $('#priceSlider').simplicitySlider({
+          input: ['#priceMin', '#priceMax'],
+          any: [199, 701],
+          min: 199,
+          max: 701,
+          range: true,
+          change: rangeDisplay,
+          slide: rangeDisplay,
+          handleToInput: function (v) {
+            return v * 1000;
+          },
+          inputToHandle: function (v) {
+            return v / 1000;
+          }
+        });
+      }());
+
+      $('#leaseMin,#leaseMax').simplicityInputs();
+      (function () {
+        var rangeDisplay = function (evt, ui) {
+          var label;
+          if (ui.values[0] === 950 && ui.values[1] === 3050) {
+            label = 'Any';
+          } else if (ui.values[0] === 950) {
+            label = 'Less than $' + ui.values[1];
+          } else if (ui.values[1] === 3050) {
+            label = 'More than $' + ui.values[0];
+          } else {
+            label = 'Between $' + ui.values[0] + " and $" + ui.values[1];
+          }
+          $('#leaseRange').text(label);
+        };
+        $('#leaseSlider').simplicitySlider({
+          input: ['#leaseMin', '#leaseMax'],
+          any: [950, 3050],
+          min: 950,
+          max: 3050,
+          step: 50,
+          range: true,
+          change: rangeDisplay,
+          slide: rangeDisplay
+        });
+      }());
+
+      $('#styleCheckboxes :checkbox').simplicityFacetedInput({
+        dimension: 'style',
+        placement: 'append-label'
+      });
+
+      $('#paginationTop,#paginationBottom').simplicityPagination();
+
+      $('#searchNavButton').button().click(function (evt) {
+        $('body').simplicityDiscoverySearch('search');
+        evt.stopPropagation();
+      });
+      $('#resetButton').button().click(function (evt) {
+        $('body').simplicityState('reset');
+        evt.stopPropagation();
+      });
+
+      $('#searchResults').simplicitySearchResults({
+        resultsCallback: window.search_results_realestate
+      });
+
+      $('#autoSearch').change(function (evt) {
+        $('body').simplicityDiscoverySearch('option', 'searchOnStateChange', evt.target.checked);
+      });
+
+      $('body')
+        .simplicityState('mergeQueryParams')
+        .simplicityHistory()
+        .simplicityState('triggerChangeEvent')
+        .simplicityPageSnapBack()
+        .simplicityDiscoverySearch({
+          url: 'http://tutorial.discoverysearchengine.com:8090/ws/query',
+          backend: 'engine',
+          controllerCallback: window.search_controller_realestate,
+          searchOnStateChange: $('#autoSearch')[0].checked
+        })
+        .simplicityDiscoverySearch('search');
+    //]]>--></script>
+  </body>
+</html>

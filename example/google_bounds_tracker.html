@@ -3,22 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial Search</title>
-    <link href="http://yui.yahooapis.com/3.8.1/build/cssgrids/grids-min.css" rel="stylesheet" type="text/css" />
+    <title>Google Maps Bounds Tracker</title>
+    <link href="http://cdn.transparensee.com/lib/bootstrap/2.3.0/bootstrap.min.css" rel="stylesheet">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link href="../css/ui-simplicity-pagination.css" rel="stylesheet" type="text/css" />
     <style>
-      body {
-        margin: auto; /* center in viewport */
-        width: 960px;
-        font-size:62.5%;
-      }
-      #nav {
-        width: 200px;
-      }
-      #main {
-        width: 760px;
-      }
       .result-set .result-row {
         margin-top: 6px;
         margin-bottom: 6px;
@@ -26,104 +15,78 @@
       .ui-simplicity-facet-count {
         float: right;
       }
-      #styleCheckboxes ul {
-        list-style-type: none;
-        padding-left: 1em;
-      }
     </style>
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body>
-    <h1><a href="../index.html">home</a> | Tutorial Search with Google</h1>
-    <form id="myForm" onsubmit="return false;">
-      <div class="yui3-g">
-        <div id="nav" class="yui3-u">
-          <fieldset>
-            <legend>Search Controls</legend>
-            <button id="searchButton">Search</button>
-            <br />
-            <button id="resetButton">Reset</button>
-            <br />
-            <label for="pageSize">Page Size</label>
-            <select id="pageSize" name="pageSize">
-              <option value=""></option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-            </select>
-          </fieldset>
-          <fieldset>
-            <legend>Type</legend>
-            <select name="type">
-              <option value="">Select...</option>
-              <option value="rentals">Rentals</option>
-              <option value="sales">Sales</option>
-            </select>
-          </fieldset>
-          <fieldset id="conditionCheckboxes">
-            <legend>Condition</legend>
-            <div class="row">
-              <input type="checkbox" id="condition_0" name="condition" value="0" />
-              <label for="condition_0">Money pit</label>
-            </div>
-            <div class="row">
-              <input type="checkbox" id="condition_1" name="condition" value="1" />
-              <label for="condition_1">Fixer-upper</label>
-            </div>
-            <div class="row">
-              <input type="checkbox" id="condition_2" name="condition" value="2" />
-              <label for="condition_2">Needs work</label>
-            </div>
-            <div class="row">
-              <input type="checkbox" id="condition_3" name="condition" value="3" />
-              <label for="condition_3">Good shape</label>
-            </div>
-            <div class="row">
-              <input type="checkbox" id="condition_4" name="condition" value="4" />
-              <label for="condition_4">Excellent condition</label>
-            </div>
-          </fieldset>
-          <fieldset id="locationFields2">
-            <legend>Location</legend>
-            <input id="address2" name="a" />
-            <br />
-            <label for="north">North</label>
-            <input id="north" name="n" />
-            <br />
-            <label for="east">East</label>
-            <input id="east" name="e" />
-            <br />
-            <label for="south">South</label>
-            <input id="south" name="s" />
-            <br />
-            <label for="west">West</label>
-            <input id="west" name="w" />
-          </fieldset>
-        </div>
-        <div id="main" class="yui3-u">
-          <div class="yui3-g">
-            <fieldset class="ui-widget ui-widget-content">
-              <div id="map" style="width: 700px; height: 300px; letter-spacing: normal;"></div>
-            </fieldset>
-          </div>
-          <fieldset class="ui-widget">
-            <legend>Search Results</legend>
-            <div id="searchResults"></div>
-          </fieldset>
-          <fieldset class="ui-widget ui-widget-content">
-            <legend>Pagination</legend>
-            <div id="paginationWidget"></div>
-          </fieldset>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="../index.html">simplicity@github</a>
+          <ul class="nav">
+            <li><a href="http://simplicitywidgets.org">simplicitywidgets.org</a><li>
+            <li><a href="http://github.com/t11e/simplicity">github.com/t11e/simplicity</a><li>
+          </ul>
         </div>
       </div>
-    </form>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://cdn.transparensee.com/lib/jquery-plugin/bbq/1.2.1/jquery.ba-bbq.min.js" charset="utf-8"></script>
+    </div>
+    <div class="container">
+      <div class="page-header">
+        <h1>Google Maps Bounds Tracker</h1>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <form id="searchForm" onsubmit="return false;">
+            <fieldset>
+              <legend>Search Controls</legend>
+              <button id="searchButton" class="btn">Search</button>
+              <button id="resetButton" class="btn">Reset</button>
+            </fieldset>
+            <fieldset>
+              <legend>Type</legend>
+              <select id="type" name="type">
+                <option value="">Select...</option>
+                <option value="rentals">Rentals</option>
+                <option value="sales">Sales</option>
+              </select>
+            </fieldset>
+            <fieldset id="conditionCheckboxes">
+              <legend>Condition</legend>
+              <label><input type="checkbox" name="condition" value="0" /> Money pit </label>
+              <label><input type="checkbox" name="condition" value="1" /> Fixer-upper </label>
+              <label><input type="checkbox" name="condition" value="2" /> Needs work </label>
+              <label><input type="checkbox" name="condition" value="3" /> Good shape </label>
+              <label><input type="checkbox" name="condition" value="4" /> Excellent condition </label>
+            </fieldset>
+            <fieldset id="locationFields">
+              <legend>Location</legend>
+              <label><input id="address" name="address" /> Address</label>
+              <label><input id="north" name="n" /> North</label>
+              <label><input id="east" name="e" /> East</label>
+              <label><input id="south" name="s" /> South</label>
+              <label><input id="west" name="w" /> West</label>
+            </fieldset>
+          </form>
+        </div>
+        <div class="span8">
+          <div id="map" style="width: 700px; height: 300px; letter-spacing: normal;"></div>
+          <div id="paginationTop"></div>
+          <div id="searchResults"></div>
+          <div id="paginationBottom"></div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <hr />
+      <div class="container">
+        <p>Designed and built by the good folks at <a href="http://transparensee.com">Transparensee Systems</a>.</p>
+      </div>
+    </footer>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="http://cdn.transparensee.com/lib/bootstrap/2.3.0/bootstrap.min.js"></script>
     <!--[if IE]>
       <script src="http://cdn.transparensee.com/lib/xdr/984c41/xdr.min.js"></script>
       <script src="http://cdn.transparensee.com/lib/json2/2010-11-17/json2.min.js"></script>
@@ -138,18 +101,14 @@
     <script type="text/javascript" src="../js/ui.simplicityState.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/fn.simplicityFromState.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/fn.simplicityToState.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/ui.simplicityHistory.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity.ajaxHelper.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityDiscoverySearch.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityInputs.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/ui.simplicitySlider.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityFacetCount.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityFacetedInput.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityPagination.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicityPageSnapBack.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/ui.simplicitySearchResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/ui.simplicityRenderParamsSearchResults.js" charset="utf-8"></script>
-    <script type="text/javascript" src="../js/ui.simplicityFlyout.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity.degreesToRadians.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity.haversineDistanceRadians.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/simplicity.haversineDistanceMiles.js" charset="utf-8"></script>
@@ -168,13 +127,11 @@
         $.support.cors = true;
       }
 
-      $('#nav fieldset').addClass("ui-widget ui-widget-content");
-
       $('body').simplicityState();
 
-      $('#nav :input[name="pageSize"]').simplicityInputs();
+      $('#pageSize').simplicityInputs();
 
-      $('#nav :input[name="type"]').simplicityFacetedInput({
+      $('#type').simplicityFacetedInput({
         dimension: 'type',
         placement: 'append-label'
       });
@@ -208,7 +165,7 @@
         });
       });
 
-      $('#locationFields2')
+      $('#locationFields')
         .simplicityInputs()
         .simplicityGoogleGeocoder();
       // Position the map based on geocoded address
@@ -224,12 +181,12 @@
         $('#east').val(ui.bounds.east);
         $('#south').val(ui.bounds.south);
         $('#west').val(ui.bounds.west);
-        $('#locationFields2').change();
+        $('#locationFields').change();
       });
       // Autocomplete based geocoder
-      $('#address2').autocomplete({
+      $('#address').autocomplete({
         minLength: 0,
-        source: $('#locationFields2').simplicityGoogleGeocoder('autocompleteSource'),
+        source: $('#locationFields').simplicityGoogleGeocoder('autocompleteSource'),
         select: selectCallback,
         change: selectCallback,
         search: function (evt, ui) {
@@ -242,7 +199,7 @@
         autoFocus: true
       });
 
-      $('#paginationWidget').simplicityPagination();
+      $('#paginationTop,#paginationBottom').simplicityPagination();
 
       $('#searchButton').button().click(function (evt) {
         $('body').simplicityDiscoverySearch('search');
@@ -253,14 +210,11 @@
         evt.stopPropagation();
       });
 
-      // Rendered search results
       $('#searchResults').simplicitySearchResults({
         resultsCallback: window.search_results_realestate
       });
 
       $('body')
-        .simplicityState('mergeQueryParams')
-        .simplicityState('triggerChangeEvent')
         .simplicityPageSnapBack()
         .simplicityDiscoverySearch({
           url: 'http://tutorial.discoverysearchengine.com:8090/ws/query',
