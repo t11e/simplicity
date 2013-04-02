@@ -132,7 +132,7 @@
     <script type="text/javascript"><!--//<![CDATA[
       MQA.withModule('mapinit', 'geocoder', 'shapes', 'zoomcontrol3', function() {
 
-      if (!$.support.cors) {
+      if (!$.support.cors && window.location.protocol === 'file:') {
         // Work around for an IE bug where CORS requests don't work from a file:// url, even with
         // the xdr patch applied.
         $.support.cors = true;
