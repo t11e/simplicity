@@ -156,7 +156,7 @@
       var markerCallback = $.isFunction(this.options.markerCallback) ? this.options.markerCallback : function (options) {
         return new google.maps.Marker({
           position: options.position,
-          zIndex: -row.index1
+          zIndex: options.zIndex
         });
       };
       $.fn.simplicityDiscoverySearchItemEnumerator(searchResponse, $.proxy(function (idx, row) {
