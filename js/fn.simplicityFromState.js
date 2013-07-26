@@ -47,8 +47,11 @@
             changed = true;
           }
         } else {
-          if (element.val() !== searchValue) {
-            if (element.is('select') && 'undefined' !== typeof searchValue && searchValue !== null) {
+          if (typeof searchValue == 'undefined') {
+            searchValue = '';
+          }
+          if (element.val() || '' !== searchValue) {
+            if (element.is('select') && searchValue !== '') {
               // Automatically add any missing options to a select input
               var options = {};
               element.find('option').each(function (idx, option) {
