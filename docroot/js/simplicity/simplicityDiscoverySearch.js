@@ -446,10 +446,14 @@
         }
         $.each(itemIds, function (idx, itemId) {
           row = {
-            id: itemId,
-            exact: exactMatches[idx],
-            score: relevanceValues[idx]
+            id: itemId
           };
+          if (exactMatches) {
+            row.exact = exactMatches[idx];
+          }
+          if (relevanceValues) {
+            row.score = relevanceValues[idx];
+          }
           if (properties !== null) {
             row.properties = properties[idx];
           }
